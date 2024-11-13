@@ -19,12 +19,12 @@ struct TaskInstance {
 };
 
 struct TaskInstancePair {
-    TaskInstance currentInstance;
+    TaskInstance instance;
     TaskInstance nextInstance;
 
     TaskInstancePair(const TaskInstance& currentInstance,
                      const TaskInstance& nextInstance)
-        : currentInstance(currentInstance), nextInstance(nextInstance) {}
+        : instance(currentInstance), nextInstance(nextInstance) {}
 };
 
 #endif
