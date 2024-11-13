@@ -18,4 +18,13 @@ struct TaskInstance {
         : baseTask(baseTask), activationTime(activationTime) {}
 };
 
+struct TaskInstancePair {
+    TaskInstance currentInstance;
+    TaskInstance nextInstance;
+
+    TaskInstancePair(const TaskInstance& currentInstance,
+                     const TaskInstance& nextInstance)
+        : currentInstance(currentInstance), nextInstance(nextInstance) {}
+};
+
 #endif

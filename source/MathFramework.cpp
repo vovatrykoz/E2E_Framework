@@ -62,6 +62,18 @@ bool MathFramework::reach(const TaskInstance& currentWriterTaskInstance,
     return false;
 }
 
-bool MathFramework::pathReach(const std::vector<TaskInstance>& timedPath) {
+bool MathFramework::pathReach(const std::vector<TaskInstancePair>& timedPath) {
+    if(timedPath.empty()) {
+        return false;
+    }
+
+    if(timedPath.size() == 1) {
+        return true;
+    }
+
+    for(int i = 0; i < timedPath.size() - 2; i++) {
+        
+    }
+
     return true;
 }

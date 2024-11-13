@@ -177,3 +177,94 @@ TEST(MathFramework, ReachCanDetectNoOverwrites) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(MathFramework, PathReachReturnsFalseIfPathIsEmpty) {
+    std::vector<TaskInstancePair> timedPath;
+
+    bool expected = false;
+    bool actual = pathReach(timedPath);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(MathFramework, PathReachReturnsFalseIfPathOnlyHasOneTask) {
+    Task task(10, 5, 1);
+    TaskInstance currentTaskInstance(task, 10);
+    TaskInstance nextTaskInstance(task, currentTaskInstance.activationTime + currentTaskInstance.baseTask.period);
+
+    TaskInstancePair taskPair(currentTaskInstance, nextTaskInstance);
+
+    std::vector<TaskInstancePair> timedPath;
+    timedPath.push_back(taskPair);
+
+    bool expected = true;
+    bool actual = pathReach(timedPath);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(MathFramework, PathReachKnowsWhenTaskChainIsReachable) {
+    Task t1(40, 4, 1);
+    Task t2(10, 3, 1);
+    Task t3(30, 2, 1);
+    Task t4(20, 1, 1);
+
+    TaskInstance t1Instance(t1, 0);
+    TaskInstance t2Instance(t2, 11);
+    TaskInstance t3Instance(t3, 15);
+    TaskInstance t4Instance(t4, 22);
+
+    TaskInstance t1NextInstance(t1, t1Instance.activationTime + t1.period);
+    TaskInstance t2NextInstance(t2, t2Instance.activationTime + t2.period);
+    TaskInstance t3NextInstance(t3, t3Instance.activationTime + t3.period);
+    TaskInstance t4NextInstance(t4, t4Instance.activationTime + t4.period);
+
+    TaskInstancePair t1Pair(t1Instance, t1NextInstance);
+    TaskInstancePair t2Pair(t2Instance, t2NextInstance);
+    TaskInstancePair t3Pair(t3Instance, t3NextInstance);
+    TaskInstancePair t4Pair(t4Instance, t4NextInstance);
+
+    std::vector<TaskInstancePair> timedPath;
+    timedPath.push_back(t1Pair);
+    timedPath.push_back(t2Pair);
+    timedPath.push_back(t3Pair);
+    timedPath.push_back(t4Pair);
+
+    bool expected = true;
+    bool actual = pathReach(timedPath);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(MathFramework, PathReachKnowsWhenTaskChainIsUnreachable) {
+    Task t1(40, 4, 1);
+    Task t2(10, 3, 1);
+    Task t3(30, 2, 1);
+    Task t4(20, 1, 1);
+
+    TaskInstance t1Instance(t1, 0);
+    TaskInstance t2Instance(t2, 11);
+    TaskInstance t3Instance(t3, 5);
+    TaskInstance t4Instance(t4, 22);
+
+    TaskInstance t1NextInstance(t1, t1Instance.activationTime + t1.period);
+    TaskInstance t2NextInstance(t2, t2Instance.activationTime + t2.period);
+    TaskInstance t3NextInstance(t3, t3Instance.activationTime + t3.period);
+    TaskInstance t4NextInstance(t4, t4Instance.activationTime + t4.period);
+
+    TaskInstancePair t1Pair(t1Instance, t1NextInstance);
+    TaskInstancePair t2Pair(t2Instance, t2NextInstance);
+    TaskInstancePair t3Pair(t3Instance, t3NextInstance);
+    TaskInstancePair t4Pair(t4Instance, t4NextInstance);
+
+    std::vector<TaskInstancePair> timedPath;
+    timedPath.push_back(t1Pair);
+    timedPath.push_back(t2Pair);
+    timedPath.push_back(t3Pair);
+    timedPath.push_back(t4Pair);
+
+    bool expected = false;
+    bool actual = pathReach(timedPath);
+
+    EXPECT_EQ(expected, actual);
+}
