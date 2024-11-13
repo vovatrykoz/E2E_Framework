@@ -31,9 +31,14 @@ bool MathFramework::wait(const Task& writerTask, const Task& readerTask) {
 
 bool MathFramework::forw(const TaskInstance& writerTaskInstance,
                          const TaskInstance& readerTaskInstance) {
-    bool instancesDoNotTimeTravel = !att(writerTaskInstance, readerTaskInstance);
+    bool instancesDoNotTimeTravel =
+        !att(writerTaskInstance, readerTaskInstance);
+    bool instancesAreNonCritical =
+        !crit(writerTaskInstance, readerTaskInstance);
+    bool readerHasToWait =
+        wait(writerTaskInstance.baseTask, readerTaskInstance.baseTask);
 
-    if(instancesDoNotTimeTravel) {
+    if (instancesDoNotTimeTravel && (instancesAreNonCritical || readerHasToWait)) {
         return true;
     }
 
