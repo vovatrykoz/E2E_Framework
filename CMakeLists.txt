@@ -35,6 +35,7 @@ add_executable(
 )
 
 target_compile_features(runner PUBLIC cxx_std_17)
+target_link_libraries(mathFramework task)
 target_link_libraries(runner analysis task mathFramework timedPath)
 
 include(FetchContent)

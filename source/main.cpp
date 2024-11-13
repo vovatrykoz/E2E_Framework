@@ -6,27 +6,42 @@
 
 int readInt(const std::string& message);
 TaskInstance readTaskInstance();
+TimedPath readTimedPath(const std::string& name);
+std::set<TimedPath> readPathsSet();
 
 int main(void) {
-    Task task(10, 5, 1);
-    std::string taskChainName;
-    int numOfTasks;
+    std::set<TimedPath> pathSet = readPathsSet();
+    std::set<TimedPath> validPathSet = analysis::removeUnreachablePaths(pathSet);
+    int maximumLatency = analysis::calculateMaximumLatency(validPathSet);
 
-    std::cout << "Enter task chain name: ";
-    std::cin >> taskChainName;
-
-    TimedPath timedPath;
-
-    numOfTasks = readInt("How many tasks should be in the chain: ");
-
-    for (int i = 0; i < numOfTasks; i++) {
-        std::cout << "Reading Task " << i + 1 << std::endl;
-        TaskInstance taskInstance = readTaskInstance();
-        timedPath.appendTaskInstance(taskInstance);
-        std::cout << std::endl;
+    std::set<TimedPath> invalidPathSet;
+    for(const auto& path : pathSet) {
+        if(validPathSet.find(path) == validPathSet.end()) {
+            invalidPathSet.insert(path);
+        }
     }
 
-    std::cout << "End to end timing: " << timedPath.endToEndDelay() << std::endl;
+    std::cout << std::endl << "Results" << std::endl;
+    std::cout << "Number of analyzed paths: " << pathSet.size() << std::endl;
+
+    std::cout << "Number of unreachable paths: " << invalidPathSet.size() << std::endl;
+    std::cout << "Unreachable paths: " << std::endl;
+    for(const auto& invalidPath : invalidPathSet) {
+        std::cout << invalidPath.getName() << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    std::cout << "Number of reachable paths: " << validPathSet.size() << std::endl;
+    std::cout << "Reachable paths: " << std::endl;
+    for(const auto& validPath : validPathSet) {
+        std::cout << validPath.getName() << std::endl;
+    }
+
+    std::cout << std::endl;
+
+    std::cout << "Maximum latency over all reachable paths: " << maximumLatency << std::endl;
+    std::cout << std::endl;
 
     return 0;
 }
@@ -60,4 +75,36 @@ TaskInstance readTaskInstance() {
     int activationTime = readInt("Enter task activation time or offset: ");
 
     return TaskInstance(Task(period, wcet, priority), activationTime);
+}
+
+TimedPath readTimedPath(const std::string& name) {
+    TimedPath timedPath(name);
+
+    int numOfTasks = readInt("How many tasks should be in the chain: ");
+
+    for (int i = 0; i < numOfTasks; i++) {
+        std::cout << "Reading Task " << i + 1 << std::endl;
+        TaskInstance taskInstance = readTaskInstance();
+        timedPath.appendTaskInstance(taskInstance);
+        std::cout << std::endl;
+    }
+
+    return timedPath;
+}
+
+std::set<TimedPath> readPathsSet() {
+    std::set<TimedPath> result;
+    std::string name;
+    int numOfChains = readInt("How many task chains do you want to analyse: ");
+
+    for (int i = 0; i < numOfChains; i++) {
+        std::cout << "Enter task chain name: ";
+        std::cin >> name;
+        std::cout << std::endl;
+
+        TimedPath timedPath = readTimedPath(name);
+        result.insert(timedPath);
+    }
+
+    return result;
 }
