@@ -8,6 +8,8 @@
 
 #include <Task.h>
 
+namespace MathFramework {
+
 /**
  * @brief Checks if "activation time travel" occurs between two tasks.
  *
@@ -52,5 +54,7 @@ bool crit(const TaskInstance& writerTaskInstance,
  * @return false if the reader does not need to wait for the writer.
  */
 bool wait(const Task& writerTask, const Task& readerTask);
+
+}
 
 #endif

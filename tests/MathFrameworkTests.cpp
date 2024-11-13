@@ -1,6 +1,8 @@
 #include <MathFramework.h>
 #include <gtest/gtest.h>
 
+using namespace MathFramework;
+
 TEST(MathFramework, CanDetectTimeTravel) {
     Task writerTask(10, 5, 1);
     Task readerTask(5, 5, 1);

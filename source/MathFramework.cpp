@@ -1,6 +1,6 @@
 #include "MathFramework.h"
 
-bool att(const TaskInstance& writerTaskInstance,
+bool MathFramework::att(const TaskInstance& writerTaskInstance,
          const TaskInstance& readerTaskInstance) {
     if (readerTaskInstance.activationTime < writerTaskInstance.activationTime) {
         return true;
@@ -9,7 +9,7 @@ bool att(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool crit(const TaskInstance& writerTaskInstance,
+bool MathFramework::crit(const TaskInstance& writerTaskInstance,
           const TaskInstance& readerTaskInstance) {
     int writerTaskTerminationTime =
         writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcet;
@@ -21,7 +21,7 @@ bool crit(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool wait(const Task& writerTask, const Task& readerTask) {
+bool MathFramework::wait(const Task& writerTask, const Task& readerTask) {
     if(readerTask.priority < writerTask.priority) {
         return true;
     }
