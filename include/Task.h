@@ -9,10 +9,11 @@ struct Task {
 };
 
 struct TaskInstance {
+    Task baseTask;
     int activationTime;
-    int wcet;
 
-    TaskInstance(int activationTime, int wcet) : activationTime(activationTime), wcet(wcet) {}
+    TaskInstance(const Task& baseTask, int activationTime)
+        : baseTask(baseTask), activationTime(activationTime) {}
 };
 
 #endif

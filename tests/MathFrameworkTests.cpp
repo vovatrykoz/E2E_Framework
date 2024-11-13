@@ -2,41 +2,53 @@
 #include <gtest/gtest.h>
 
 TEST(MathFramework, CanDetectTimeTravel) {
-    const TaskInstance writerTask(10, 5);
-    const TaskInstance readerTask(5, 5);
+    Task writerTask(10, 5);
+    Task readerTask(5, 5);
+
+    TaskInstance writerTaskInstance(writerTask, 10);
+    TaskInstance readerTaskInstance(readerTask, 5);
 
     bool expected = true;
-    bool actual = att(writerTask, readerTask);
+    bool actual = att(writerTaskInstance, readerTaskInstance);
 
     EXPECT_EQ(expected, actual);
 }
 
 TEST(MathFramework, CanDetectWhenThereIsNoTimeTravel) {
-    const TaskInstance writerTask(5, 5);
-    const TaskInstance readerTask(10, 5);
+    Task writerTask(10, 5);
+    Task readerTask(5, 5);
+
+    TaskInstance writerTaskInstance(writerTask, 5);
+    TaskInstance readerTaskInstance(readerTask, 10);
 
     bool expected = false;
-    bool actual = att(writerTask, readerTask);
+    bool actual = att(writerTaskInstance, readerTaskInstance);
 
     EXPECT_EQ(expected, actual);
 }
 
 TEST(MathFramework, CritFunctionCanDetectExecutionOverlap) {
-    const TaskInstance writerTask(10, 5);
-    const TaskInstance readerTask(12, 5);
+    Task writerTask(10, 5);
+    Task readerTask(5, 5);
+
+    TaskInstance writerTaskInstance(writerTask, 10);
+    TaskInstance readerTaskInstance(readerTask, 12);
 
     bool expected = true;
-    bool actual = crit(writerTask, readerTask);
+    bool actual = crit(writerTaskInstance, readerTaskInstance);
 
     EXPECT_EQ(expected, actual);
 }
 
 TEST(MathFramework, CritFunctionCanDetectWhenThereIsNoExecutionOverlap) {
-    const TaskInstance writerTask(10, 5);
-    const TaskInstance readerTask(16, 5);
+    Task writerTask(10, 5);
+    Task readerTask(5, 5);
+
+    TaskInstance writerTaskInstance(writerTask, 10);
+    TaskInstance readerTaskInstance(readerTask, 16);
 
     bool expected = false;
-    bool actual = crit(writerTask, readerTask);
+    bool actual = crit(writerTaskInstance, readerTaskInstance);
 
     EXPECT_EQ(expected, actual);
 }

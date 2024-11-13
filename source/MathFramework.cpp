@@ -12,7 +12,7 @@ bool att(const TaskInstance& writerTaskInstance,
 bool crit(const TaskInstance& writerTaskInstance,
           const TaskInstance& readerTaskInstance) {
     int writerTaskTerminationTime =
-        writerTaskInstance.activationTime + writerTaskInstance.wcet;
+        writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcet;
 
     if (readerTaskInstance.activationTime < writerTaskTerminationTime) {
         return true;
