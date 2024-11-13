@@ -20,3 +20,5 @@ bool crit(const TaskInstance& writerTaskInstance,
 
     return false;
 }
+
+bool wait(const Task& writerTask, const Task& readerTask) { return false; }

@@ -52,3 +52,23 @@ TEST(MathFramework, CritFunctionCanDetectWhenThereIsNoExecutionOverlap) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(MathFramework, WaitFunctionCanDetectReaderWaiting) {
+    Task writerTask(10, 5);
+    Task readerTask(5, 5);
+
+    bool expected = true;
+    bool actual = wait(writerTask, readerTask);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(MathFramework, WaitFunctionCanDetectWhenReaderDoesNotHaveToWait) {
+    Task writerTask(10, 5);
+    Task readerTask(5, 5);
+
+    bool expected = false;
+    bool actual = wait(writerTask, readerTask);
+
+    EXPECT_EQ(expected, actual);
+}

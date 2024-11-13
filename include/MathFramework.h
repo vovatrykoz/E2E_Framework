@@ -39,4 +39,18 @@ bool att(const TaskInstance& writerTaskInstance,
 bool crit(const TaskInstance& writerTaskInstance,
           const TaskInstance& readerTaskInstance);
 
+/**
+ * @brief Determines if the reader task must wait due to the writer's priority.
+ * 
+ * The waiting function wait determines if (in case of
+ * overlapped but not time-traveling execution) the writer finishes
+ * first, because the reader has to wait due to its priority
+ * 
+ * @param writerTask The task representing the writer.
+ * @param readerTask The task representing the reader.
+ * @return true if the reader must wait for the writer to finish due to priority.
+ * @return false if the reader does not need to wait for the writer.
+ */
+bool wait(const Task& writerTask, const Task& readerTask);
+
 #endif
