@@ -2,8 +2,8 @@
 #include <gtest/gtest.h>
 
 TEST(MathFramework, CanDetectTimeTravel) {
-    Task writerTask(10, 5);
-    Task readerTask(5, 5);
+    Task writerTask(10, 5, 1);
+    Task readerTask(5, 5, 1);
 
     TaskInstance writerTaskInstance(writerTask, 10);
     TaskInstance readerTaskInstance(readerTask, 5);
@@ -15,8 +15,8 @@ TEST(MathFramework, CanDetectTimeTravel) {
 }
 
 TEST(MathFramework, CanDetectWhenThereIsNoTimeTravel) {
-    Task writerTask(10, 5);
-    Task readerTask(5, 5);
+    Task writerTask(10, 5, 1);
+    Task readerTask(5, 5, 1);
 
     TaskInstance writerTaskInstance(writerTask, 5);
     TaskInstance readerTaskInstance(readerTask, 10);
@@ -28,8 +28,8 @@ TEST(MathFramework, CanDetectWhenThereIsNoTimeTravel) {
 }
 
 TEST(MathFramework, CritFunctionCanDetectExecutionOverlap) {
-    Task writerTask(10, 5);
-    Task readerTask(5, 5);
+    Task writerTask(10, 5, 1);
+    Task readerTask(5, 5, 1);
 
     TaskInstance writerTaskInstance(writerTask, 10);
     TaskInstance readerTaskInstance(readerTask, 12);
@@ -41,8 +41,8 @@ TEST(MathFramework, CritFunctionCanDetectExecutionOverlap) {
 }
 
 TEST(MathFramework, CritFunctionCanDetectWhenThereIsNoExecutionOverlap) {
-    Task writerTask(10, 5);
-    Task readerTask(5, 5);
+    Task writerTask(10, 5, 1);
+    Task readerTask(5, 5, 1);
 
     TaskInstance writerTaskInstance(writerTask, 10);
     TaskInstance readerTaskInstance(readerTask, 16);
@@ -54,8 +54,8 @@ TEST(MathFramework, CritFunctionCanDetectWhenThereIsNoExecutionOverlap) {
 }
 
 TEST(MathFramework, WaitFunctionCanDetectReaderWaiting) {
-    Task writerTask(10, 5);
-    Task readerTask(5, 5);
+    Task writerTask(10, 5, 2);
+    Task readerTask(5, 5, 1);
 
     bool expected = true;
     bool actual = wait(writerTask, readerTask);
@@ -64,8 +64,8 @@ TEST(MathFramework, WaitFunctionCanDetectReaderWaiting) {
 }
 
 TEST(MathFramework, WaitFunctionCanDetectWhenReaderDoesNotHaveToWait) {
-    Task writerTask(10, 5);
-    Task readerTask(5, 5);
+    Task writerTask(10, 5, 2);
+    Task readerTask(5, 5, 2);
 
     bool expected = false;
     bool actual = wait(writerTask, readerTask);

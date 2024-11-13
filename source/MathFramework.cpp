@@ -21,4 +21,10 @@ bool crit(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool wait(const Task& writerTask, const Task& readerTask) { return false; }
+bool wait(const Task& writerTask, const Task& readerTask) {
+    if(readerTask.priority < writerTask.priority) {
+        return true;
+    }
+
+    return false;
+}

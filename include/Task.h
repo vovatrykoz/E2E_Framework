@@ -4,8 +4,10 @@
 struct Task {
     int period;
     int wcet;
+    int priority;
 
-    Task(int period, int wcet) : period(period), wcet(wcet) {}
+    Task(int period, int wcet, int priority)
+        : period(period), wcet(wcet), priority(priority) {}
 };
 
 struct TaskInstance {
