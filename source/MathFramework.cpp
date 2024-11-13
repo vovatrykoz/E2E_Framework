@@ -61,3 +61,7 @@ bool MathFramework::reach(const TaskInstance& currentWriterTaskInstance,
 
     return false;
 }
+
+bool MathFramework::pathReach(const std::vector<TaskInstance>& timedPath) {
+    return true;
+}

@@ -8,6 +8,8 @@
 
 #include <Task.h>
 
+#include <vector>
+
 namespace MathFramework {
 
 /**
@@ -74,24 +76,42 @@ bool forw(const TaskInstance& writerTaskInstance,
           const TaskInstance& readerTaskInstance);
 
 /**
- * @brief Checks if a writer task instance can reach a reader task instance, detecting potential overwrites.
- * 
+ * @brief Checks if a writer task instance can reach a reader task instance,
+ * detecting potential overwrites.
+ *
  * From this forward reachability, we can also detect overwrites.
  * The output of an instance tw(i) is overwritten by
  * instance tw(i + 1) when both instances can forward reach
  * the same reading task instance tr(j). In other words, tw(i)
  * can reach tr(j) if and only if the following function returns
  * true
- * 
+ *
  * @param currentWriterTaskInstance The current writer task instance, `tw(i)`.
  * @param readerTaskInstance The reader task instance, `tr(j)`.
  * @param nextWriterTaskInstance The next writer task instance, `tw(i + 1)`.
- * @return true if the current writer task instance can reach the reader task instance.
- * @return false if it cannot reach the reader task instance, indicating an overwrite.
+ * @return true if the current writer task instance can reach the reader task
+ * instance.
+ * @return false if it cannot reach the reader task instance, indicating an
+ * overwrite.
  */
 bool reach(const TaskInstance& currentWriterTaskInstance,
            const TaskInstance& readerTaskInstance,
            const TaskInstance& nextWriterTaskInstance);
+
+/**
+ * @brief Determines reachability for an entire timed path of task instances.
+ *
+ * From this reachability between two task instances, we
+ * can now define the reachability function for a whole timed
+ * path. A timed path is reachable, if and only if every two
+ * consecutive task instances within that path are reachable.
+ *
+ * @param timedPath A vector of task instances representing the timed path.
+ * @return true if the entire timed path is reachable.
+ * @return false if any two consecutive task instances in the path are not
+ * reachable.
+ */
+bool pathReach(const std::vector<TaskInstance>& timedPath);
 
 }  // namespace MathFramework
 
