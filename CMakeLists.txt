@@ -15,6 +15,11 @@ add_library(
 )
 
 add_library(
+    analysis
+    ${CODE_SOURCE_DIR}/Analysis.cpp
+)
+
+add_library(
     mathFramework
     ${CODE_SOURCE_DIR}/MathFramework.cpp
 )
@@ -55,6 +60,7 @@ target_link_libraries(
     mathFramework
     timedPath
     task
+    analysis
 )
 
 include(GoogleTest)

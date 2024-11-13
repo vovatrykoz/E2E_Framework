@@ -56,7 +56,7 @@ public:
      *
      * Returns a string containing the name of the TimedPath
      *
-     * @return A const reference to the vector of task instances.
+     * @return Name of the TimedPath
      */
     const std::string getName() const;
 
