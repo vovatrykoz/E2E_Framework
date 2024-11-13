@@ -11,7 +11,7 @@ public:
     void popTaskInstance();
     int endToEndDelay() const;
     std::vector<TaskInstance> toVector() const;
-
+    const std::vector<TaskInstance>& asVector() const;
 private:
     std::vector<TaskInstance> tasks;
 };
@@ -21,6 +21,10 @@ inline void TimedPath::appendTaskInstance(const TaskInstance& taskInstance) {
 }
 
 inline std::vector<TaskInstance> TimedPath::toVector() const {
+    return this->tasks;
+}
+
+inline const std::vector<TaskInstance>& TimedPath::asVector() const {
     return this->tasks;
 }
 
