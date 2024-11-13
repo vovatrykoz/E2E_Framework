@@ -8,7 +8,7 @@ std::set<TimedPath> analysis::removeUnreachablePaths(
 
     for(const auto& path : pathSet) {
         if(mathframework::pathReach(path.asVector())) {
-            output.emplace(path);
+            output.insert(path);
         }
     }
 
