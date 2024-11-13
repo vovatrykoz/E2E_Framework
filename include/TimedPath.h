@@ -12,11 +12,11 @@ public:
     int endToEndDelay() const;
     std::vector<TaskInstance> toVector() const;
 private:
-    std::vector<TaskInstance> mTasks;
+    std::vector<TaskInstance> tasks;
 };
 
 inline std::vector<TaskInstance> TimedPath::toVector() const {
-    return mTasks;
+    return this->tasks;
 }
 
 #endif
