@@ -38,7 +38,8 @@ bool MathFramework::forw(const TaskInstance& writerTaskInstance,
     bool readerHasToWait =
         wait(writerTaskInstance.baseTask, readerTaskInstance.baseTask);
 
-    if (instancesDoNotTimeTravel && (instancesAreNonCritical || readerHasToWait)) {
+    if (instancesDoNotTimeTravel &&
+        (instancesAreNonCritical || readerHasToWait)) {
         return true;
     }
 
