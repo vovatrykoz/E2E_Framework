@@ -1,17 +1,20 @@
 #include "MathFramework.h"
 
-bool att(const TaskInstance& writerTask, const TaskInstance& readerTask) { 
-    if(readerTask.activationTime < writerTask.activationTime) {
+bool att(const TaskInstance& writerTaskInstance,
+         const TaskInstance& readerTaskInstance) {
+    if (readerTaskInstance.activationTime < writerTaskInstance.activationTime) {
         return true;
     }
 
     return false;
 }
 
-bool crit(const TaskInstance& writerTask, const TaskInstance& readerTask) {
-    int writerTaskTerminationTime = writerTask.activationTime + writerTask.wcet;
+bool crit(const TaskInstance& writerTaskInstance,
+          const TaskInstance& readerTaskInstance) {
+    int writerTaskTerminationTime =
+        writerTaskInstance.activationTime + writerTaskInstance.wcet;
 
-    if(readerTask.activationTime < writerTaskTerminationTime) {
+    if (readerTaskInstance.activationTime < writerTaskTerminationTime) {
         return true;
     }
 
