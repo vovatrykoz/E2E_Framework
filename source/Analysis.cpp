@@ -16,5 +16,15 @@ std::set<TimedPath> analysis::removeUnreachablePaths(
 }
 
 int analysis::calculateMaximumLatency(const std::set<TimedPath>& pathSet) {
-    return 0;
+    int max = 0;
+
+    for(const auto& path : pathSet) {
+        int pathEndToEnd = path.endToEndDelay();
+
+        if(pathEndToEnd > max) {
+            max = pathEndToEnd;
+        }
+    }
+
+    return max;
 }
