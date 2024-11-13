@@ -46,6 +46,7 @@ enable_testing()
 add_executable(
     testRunner
     ${TESTS_SOURCE_DIR}/MathFrameworkTests.cpp
+    ${TESTS_SOURCE_DIR}/TimedPathTests.cpp
 )
 
 target_link_libraries(
