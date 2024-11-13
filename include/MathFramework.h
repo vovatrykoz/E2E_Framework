@@ -1,9 +1,11 @@
+// Contains functions from section 3.4 Mathematical Framework
+// Some of the description text is copy-pasted from A Compositional Framework for End-to-End Path Delay Calculation
+// of Automotive Systems under Different Path Semantics to make finding relevant functions easier
+
 #ifndef _MATH_FRAMEWORK_H_
 #define _MATH_FRAMEWORK_H_
 
 #include <Task.h>
-
-// Contains functions from section 3.4 Mathematical Framework
 
 /**
  * @brief Checks if "activation time travel" occurs between two tasks.
