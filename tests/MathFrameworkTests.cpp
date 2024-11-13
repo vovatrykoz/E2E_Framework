@@ -74,3 +74,30 @@ TEST(MathFramework, WaitFunctionCanDetectWhenReaderDoesNotHaveToWait) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(MathFramework, ForwCanDetectForwardReachability) {
+    Task writerTask(10, 5, 1);
+    Task readerTask(5, 5, 1);
+
+    TaskInstance writerTaskInstance(writerTask, 10);
+    TaskInstance readerTaskInstance(readerTask, 5);
+
+    bool expected = true;
+    bool actual = forw(writerTaskInstance, readerTaskInstance);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(MathFramework,
+     ForwCanDetectWhenThereIsNoForwardReachabilityDueToTimeTravel) {
+    Task writerTask(10, 5, 1);
+    Task readerTask(5, 5, 1);
+
+    TaskInstance writerTaskInstance(writerTask, 10);
+    TaskInstance readerTaskInstance(readerTask, 5);
+
+    bool expected = false;
+    bool actual = forw(writerTaskInstance, readerTaskInstance);
+
+    EXPECT_EQ(expected, actual);
+}

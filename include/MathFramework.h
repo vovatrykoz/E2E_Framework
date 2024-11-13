@@ -43,18 +43,36 @@ bool crit(const TaskInstance& writerTaskInstance,
 
 /**
  * @brief Determines if the reader task must wait due to the writer's priority.
- * 
+ *
  * The waiting function wait determines if (in case of
  * overlapped but not time-traveling execution) the writer finishes
  * first, because the reader has to wait due to its priority
- * 
+ *
  * @param writerTask The task representing the writer.
  * @param readerTask The task representing the reader.
- * @return true if the reader must wait for the writer to finish due to priority.
+ * @return true if the reader must wait for the writer to finish due to
+ * priority.
  * @return false if the reader does not need to wait for the writer.
  */
 bool wait(const Task& writerTask, const Task& readerTask);
 
-}
+/**
+ * @brief Determines the forward reachability between two task instances.
+ *
+ * Now, we can combine these to define a boolean function
+ * forw determining the forward reachability of the two
+ * instances. The instances must not time travel (Eqn. 3)
+ * and additionally be either not critical (Eqn. 4) or wait
+ * (Eqn. 5)
+ *
+ * @param writerTask The task representing the writer.
+ * @param readerTask The task representing the reader.
+ * @return true if forward reachability conditions are met.
+ * @return false if forward reachability conditions are not met.
+ */
+bool forw(const TaskInstance& writerTaskInstance,
+          const TaskInstance& readerTaskInstance);
+
+}  // namespace MathFramework
 
 #endif
