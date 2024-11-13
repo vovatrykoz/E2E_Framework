@@ -49,5 +49,15 @@ bool MathFramework::forw(const TaskInstance& writerTaskInstance,
 bool MathFramework::reach(const TaskInstance& currentWriterTaskInstance,
                           const TaskInstance& readerTaskInstance,
                           const TaskInstance& nextWriterTaskInstance) {
-    return true;
+    bool readerInstanceIsReachable =
+        forw(currentWriterTaskInstance, readerTaskInstance);
+    bool nextWriterInstanceCannotReachReaderInstance =
+        !forw(nextWriterTaskInstance, readerTaskInstance);
+
+    if (readerInstanceIsReachable &&
+        nextWriterInstanceCannotReachReaderInstance) {
+        return true;
+    }
+
+    return false;
 }

@@ -167,7 +167,7 @@ TEST(MathFramework, ReachCanDetectNoOverwrites) {
     Task readerTask(10, 5, 1);
 
     TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 12);
+    TaskInstance readerTaskInstance(readerTask, 16);
     TaskInstance nextWriterTaskInstance(
         writerTask, writerTaskInstance.activationTime + writerTask.period);
 
