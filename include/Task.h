@@ -8,4 +8,11 @@ struct Task {
     Task(int period, int wcet) : period(period), wcet(wcet) {}
 };
 
+struct TaskInstance {
+    int activationTime;
+    int wcet;
+
+    TaskInstance(int activationTime, int wcet) : activationTime(activationTime), wcet(wcet) {}
+};
+
 #endif

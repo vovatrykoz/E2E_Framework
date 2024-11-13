@@ -9,6 +9,11 @@ set(TESTS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
 
 include_directories(${INCLUDE_DIR})
 
+add_library(
+    mathFramework
+    ${CODE_SOURCE_DIR}/MathFramework.cpp
+)
+
 add_executable(
     runner
     ${CODE_SOURCE_DIR}/main.cpp
@@ -29,12 +34,13 @@ enable_testing()
 
 add_executable(
     testRunner
-    ${TESTS_SOURCE_DIR}/TemporaryTest.cpp
+    ${TESTS_SOURCE_DIR}/MathFrameworkTests.cpp
 )
 
 target_link_libraries(
     testRunner
     GTest::gtest_main
+    mathFramework
 )
 
 include(GoogleTest)
