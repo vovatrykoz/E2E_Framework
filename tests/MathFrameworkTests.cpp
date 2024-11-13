@@ -20,3 +20,23 @@ TEST(MathFramework, CanDetectWhenThereIsNoTimeTravel) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(MathFramework, CritFunctionCanDetectExecutionOverlap) {
+    const TaskInstance writerTask(10, 5);
+    const TaskInstance readerTask(12, 5);
+
+    bool expected = true;
+    bool actual = crit(writerTask, readerTask);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(MathFramework, CritFunctionCanDetectWhenThereIsNoExecutionOverlap) {
+    const TaskInstance writerTask(10, 5);
+    const TaskInstance readerTask(16, 5);
+
+    bool expected = false;
+    bool actual = crit(writerTask, readerTask);
+
+    EXPECT_EQ(expected, actual);
+}
