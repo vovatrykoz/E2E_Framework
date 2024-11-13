@@ -1,6 +1,6 @@
 #include "MathFramework.h"
 
-bool MathFramework::att(const TaskInstance& writerTaskInstance,
+bool mathframework::att(const TaskInstance& writerTaskInstance,
                         const TaskInstance& readerTaskInstance) {
     if (readerTaskInstance.activationTime < writerTaskInstance.activationTime) {
         return true;
@@ -9,7 +9,7 @@ bool MathFramework::att(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool MathFramework::crit(const TaskInstance& writerTaskInstance,
+bool mathframework::crit(const TaskInstance& writerTaskInstance,
                          const TaskInstance& readerTaskInstance) {
     int writerTaskTerminationTime =
         writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcet;
@@ -21,7 +21,7 @@ bool MathFramework::crit(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool MathFramework::wait(const Task& writerTask, const Task& readerTask) {
+bool mathframework::wait(const Task& writerTask, const Task& readerTask) {
     if (readerTask.priority < writerTask.priority) {
         return true;
     }
@@ -29,7 +29,7 @@ bool MathFramework::wait(const Task& writerTask, const Task& readerTask) {
     return false;
 }
 
-bool MathFramework::forw(const TaskInstance& writerTaskInstance,
+bool mathframework::forw(const TaskInstance& writerTaskInstance,
                          const TaskInstance& readerTaskInstance) {
     bool instancesDoNotTimeTravel =
         !att(writerTaskInstance, readerTaskInstance);
@@ -46,7 +46,7 @@ bool MathFramework::forw(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool MathFramework::reach(const TaskInstance& currentWriterTaskInstance,
+bool mathframework::reach(const TaskInstance& currentWriterTaskInstance,
                           const TaskInstance& readerTaskInstance,
                           const TaskInstance& nextWriterTaskInstance) {
     bool readerInstanceIsReachable =
@@ -62,7 +62,7 @@ bool MathFramework::reach(const TaskInstance& currentWriterTaskInstance,
     return false;
 }
 
-bool MathFramework::pathReach(const std::vector<TaskInstance>& timedPath) {
+bool mathframework::pathReach(const std::vector<TaskInstance>& timedPath) {
     if (timedPath.empty()) {
         return false;
     }

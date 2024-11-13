@@ -1,7 +1,7 @@
 #include <MathFramework.h>
 #include <gtest/gtest.h>
 
-using namespace MathFramework;
+using namespace mathframework;
 
 TEST(MathFramework, CanDetectTimeTravel) {
     Task writerTask(10, 5, 1);

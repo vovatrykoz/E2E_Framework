@@ -5,7 +5,7 @@
 
 #include <set>
 
-namespace Analysis {
+namespace analysis {
 
     std::set<TimedPath> removeUnreachablePaths(const std::set<TimedPath>& pathSet);
 

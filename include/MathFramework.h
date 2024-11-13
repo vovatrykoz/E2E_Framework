@@ -10,7 +10,7 @@
 
 #include <vector>
 
-namespace MathFramework {
+namespace mathframework {
 
 /**
  * @brief Checks if "activation time travel" occurs between two tasks.
@@ -113,6 +113,6 @@ bool reach(const TaskInstance& currentWriterTaskInstance,
  */
 bool pathReach(const std::vector<TaskInstance>& timedPath);
 
-}  // namespace MathFramework
+}  // namespace mathframework
 
 #endif

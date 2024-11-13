@@ -1,9 +1,9 @@
 #include <Analysis.h>
 #include <gtest/gtest.h>
 
-using namespace Analysis;
+using namespace analysis;
 
-TEST(Analysis, CanRemoveUnreachablePaths) {
+TEST(analysis, CanRemoveUnreachablePaths) {
     Task t1(40, 4, 1);
     Task t2(10, 3, 1);
     Task t3(30, 2, 1);
