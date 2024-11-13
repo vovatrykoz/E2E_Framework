@@ -9,7 +9,7 @@ TEST(TimedPath, CanAppendTaskToPath) {
     tp.appendTaskInstance(taskInstance);
 
     std::vector<TaskInstance> expected = {taskInstance};
-    std::vector<TaskInstance> actual = tp.toVector();
+    std::vector<TaskInstance> actual = tp.asVector();
 
     EXPECT_EQ(expected, actual);
 }
@@ -23,7 +23,7 @@ TEST(TimedPath, CanPopTaskFromPath) {
     tp.popTaskInstance();
 
     std::vector<TaskInstance> expected;
-    std::vector<TaskInstance> actual = tp.toVector();
+    std::vector<TaskInstance> actual = tp.asVector();
 
     EXPECT_EQ(expected, actual);
 }

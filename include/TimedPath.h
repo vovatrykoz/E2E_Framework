@@ -37,15 +37,6 @@ public:
     int endToEndDelay() const;
 
     /**
-     * @brief Returns a copy of the task instances in the timed path.
-     * 
-     * Creates and returns a vector containing all TaskInstance objects in the path.
-     * 
-     * @return A vector containing a copy of the task instances.
-     */
-    std::vector<TaskInstance> toVector() const;
-
-    /**
      * @brief Provides a const reference to the task instances in the timed path.
      * 
      * Returns a reference to the underlying vector of TaskInstance objects, 
@@ -61,10 +52,6 @@ private:
 
 inline void TimedPath::appendTaskInstance(const TaskInstance& taskInstance) {
     this->tasks.push_back(taskInstance);
-}
-
-inline std::vector<TaskInstance> TimedPath::toVector() const {
-    return this->tasks;
 }
 
 inline const std::vector<TaskInstance>& TimedPath::asVector() const {
