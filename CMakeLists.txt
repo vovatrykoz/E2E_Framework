@@ -3,8 +3,11 @@ project(E2E_analysis_framework LANGUAGES C CXX)
 
 cmake_policy(SET CMP0135 NEW)
 
+set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(CODE_SOURCE_DIR ${PROJECT_SOURCE_DIR}/source)
 set(TESTS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
+
+include_directories(${INCLUDE_DIR})
 
 add_executable(
     runner
