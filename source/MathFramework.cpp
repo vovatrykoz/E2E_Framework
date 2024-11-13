@@ -62,7 +62,7 @@ bool MathFramework::reach(const TaskInstance& currentWriterTaskInstance,
     return false;
 }
 
-bool MathFramework::pathReach(const std::vector<TaskInstancePair>& timedPath) {
+bool MathFramework::pathReach(const std::vector<TaskInstance>& timedPath) {
     if (timedPath.empty()) {
         return false;
     }
@@ -72,9 +72,9 @@ bool MathFramework::pathReach(const std::vector<TaskInstancePair>& timedPath) {
     }
 
     for (int i = 0; i < timedPath.size() - 2; i++) {
-        if (!reach(timedPath[i].instance,
-                   timedPath[i + 1].instance,
-                   timedPath[i].nextInstance)) {
+        if (!reach(timedPath[i],
+                   timedPath[i + 1],
+                   timedPath[i].nextInstance())) {
             return false;
         }
     }

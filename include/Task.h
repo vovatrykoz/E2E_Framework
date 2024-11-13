@@ -16,15 +16,8 @@ struct TaskInstance {
 
     TaskInstance(const Task& baseTask, int activationTime)
         : baseTask(baseTask), activationTime(activationTime) {}
-};
 
-struct TaskInstancePair {
-    TaskInstance instance;
-    TaskInstance nextInstance;
-
-    TaskInstancePair(const TaskInstance& currentInstance,
-                     const TaskInstance& nextInstance)
-        : instance(currentInstance), nextInstance(nextInstance) {}
+    TaskInstance nextInstance() const;
 };
 
 #endif

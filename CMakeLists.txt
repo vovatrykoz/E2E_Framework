@@ -10,6 +10,11 @@ set(TESTS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
 include_directories(${INCLUDE_DIR})
 
 add_library(
+    task
+    ${CODE_SOURCE_DIR}/Task.cpp
+)
+
+add_library(
     mathFramework
     ${CODE_SOURCE_DIR}/MathFramework.cpp
 )
@@ -25,6 +30,7 @@ add_executable(
 )
 
 target_compile_features(runner PUBLIC cxx_std_17)
+target_link_libraries(runner task)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -47,6 +53,7 @@ target_link_libraries(
     GTest::gtest_main
     mathFramework
     timedPath
+    task
 )
 
 include(GoogleTest)

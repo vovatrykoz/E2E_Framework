@@ -111,7 +111,7 @@ bool reach(const TaskInstance& currentWriterTaskInstance,
  * @return false if any two consecutive task instances in the path are not
  * reachable.
  */
-bool pathReach(const std::vector<TaskInstancePair>& timedPath);
+bool pathReach(const std::vector<TaskInstance>& timedPath);
 
 }  // namespace MathFramework
 
