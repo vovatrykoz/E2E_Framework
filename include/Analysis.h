@@ -5,12 +5,12 @@
 
 #include <set>
 
-namespace analysis {
+namespace Analysis {
 
     std::set<TimedPath> removeUnreachablePaths(const std::set<TimedPath>& pathSet);
 
     int calculateMaximumLatency(const std::set<TimedPath>& pathSet);
-    
+
 }  // namespace analysis
 
 #endif

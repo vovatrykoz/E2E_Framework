@@ -1,10 +1,20 @@
 #include <Analysis.h>
 
-std::set<TimedPath> analysis::removeUnreachablePaths(
+#include <MathFramework.h>
+
+std::set<TimedPath> Analysis::removeUnreachablePaths(
     const std::set<TimedPath>& pathSet) {
-    return std::set<TimedPath>();
+    std::set<TimedPath> output;
+
+    for(const auto& path : pathSet) {
+        if(MathFramework::pathReach(path.asVector())) {
+            output.emplace(path);
+        }
+    }
+
+    return output;
 }
 
-int analysis::calculateMaximumLatency(const std::set<TimedPath>& pathSet) {
+int Analysis::calculateMaximumLatency(const std::set<TimedPath>& pathSet) {
     return 0;
 }

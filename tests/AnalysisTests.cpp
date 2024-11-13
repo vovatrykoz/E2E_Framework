@@ -1,0 +1,60 @@
+#include <Analysis.h>
+#include <gtest/gtest.h>
+
+using namespace Analysis;
+
+TEST(Analysis, CanRemoveUnreachablePaths) {
+    Task t1(40, 4, 1);
+    Task t2(10, 3, 1);
+    Task t3(30, 2, 1);
+    Task t4(20, 1, 1);
+
+    std::vector<TaskInstance> unreachablePath_1 = {
+        TaskInstance(t1, 0),
+        TaskInstance(t2, 11),
+        TaskInstance(t3, 5),
+        TaskInstance(t4, 22)
+    };
+
+    std::vector<TaskInstance> unreachablePath_2 = {
+        TaskInstance(t1, 0),
+        TaskInstance(t2, 100),
+        TaskInstance(t3, 15),
+        TaskInstance(t4, 22)
+    };
+
+    std::vector<TaskInstance> reachablePath_1 = {
+        TaskInstance(t1, 0),
+        TaskInstance(t2, 11),
+        TaskInstance(t3, 15),
+        TaskInstance(t4, 32)
+    };
+
+    std::vector<TaskInstance> reachablePath_2 = {
+        TaskInstance(t1, 0),
+        TaskInstance(t2, 41),
+        TaskInstance(t3, 45),
+        TaskInstance(t4, 52)
+    };
+
+    TimedPath timedPath_A("A", unreachablePath_1);
+    TimedPath timedPath_B("B", unreachablePath_2);
+    TimedPath timedPath_C("C", reachablePath_1);
+    TimedPath timedPath_D("D", reachablePath_2);
+
+    std::set<TimedPath> timedPaths = {
+        timedPath_A,
+        timedPath_B,
+        timedPath_C,
+        timedPath_D
+    };
+
+    std::set<TimedPath> expected = {
+        timedPath_C,
+        timedPath_D
+    };
+
+    std::set<TimedPath> actual = removeUnreachablePaths(timedPaths);
+
+    EXPECT_EQ(expected, actual);
+}

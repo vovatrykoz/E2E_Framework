@@ -17,6 +17,8 @@ class TimedPath {
 public:
     TimedPath();
     TimedPath(const std::string& name);
+    TimedPath(const std::vector<TaskInstance>& tasks);
+    TimedPath(const std::string& name, const std::vector<TaskInstance>& tasks);
 
     /**
      * @brief Appends a task instance to the end of the timed path.
@@ -60,14 +62,43 @@ public:
      */
     const std::string getName() const;
 
+    /**
+     * @brief Compare two TimedPath objects by name
+     *
+     * Compares two TimedPath objects by name. Mainly needed so that we can
+     * store TimedPath objects in ordered sets
+     *
+     * @return true if TimedPath on the lhs should come before the TimedPath on
+     * the rhs
+     */
+    bool operator<(const TimedPath& other) const;
+
+    /**
+     * @brief Compare two TimedPath objects by name
+     *
+     * Compares two TimedPath objects by name. Mainly needed so that we can
+     * store TimedPath objects in ordered sets
+     *
+     * @return true if the two TimedPaths have the same name, false otherwise
+     */
+    bool operator==(const TimedPath& other) const;
+
 private:
-    std::vector<TaskInstance> tasks; // Stores the sequence of task instances in the path.
+    std::vector<TaskInstance>
+        tasks;         // Stores the sequence of task instances in the path.
     std::string name;  // name of the path
 };
 
 inline TimedPath::TimedPath() {}
 
 inline TimedPath::TimedPath(const std::string& name) : name(name) {}
+
+inline TimedPath::TimedPath(const std::vector<TaskInstance>& tasks)
+    : tasks(tasks) {}
+
+inline TimedPath::TimedPath(const std::string& name,
+                            const std::vector<TaskInstance>& tasks)
+    : name(name), tasks(tasks) {}
 
 inline void TimedPath::appendTaskInstance(const TaskInstance& taskInstance) {
     this->tasks.push_back(taskInstance);
@@ -78,5 +109,13 @@ inline const std::vector<TaskInstance>& TimedPath::asVector() const {
 }
 
 inline const std::string TimedPath::getName() const { return this->name; }
+
+inline bool TimedPath::operator<(const TimedPath& other) const {
+    return this->name < other.name;
+}
+
+inline bool TimedPath::operator==(const TimedPath& other) const {
+    return this->name == other.name;
+}
 
 #endif
