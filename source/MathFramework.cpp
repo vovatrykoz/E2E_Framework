@@ -45,3 +45,9 @@ bool MathFramework::forw(const TaskInstance& writerTaskInstance,
 
     return false;
 }
+
+bool MathFramework::reach(const TaskInstance& currentWriterTaskInstance,
+                          const TaskInstance& readerTaskInstance,
+                          const TaskInstance& nextWriterTaskInstance) {
+    return true;
+}

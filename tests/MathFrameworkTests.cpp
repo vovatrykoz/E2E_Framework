@@ -145,3 +145,35 @@ TEST(MathFramework, ForwCanDetectWhenThereIsNoForwardReachabilityDueToNoWait) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(MathFramework, ReachCanDetectOverwrites) {
+    Task writerTask(10, 5, 1);
+    Task readerTask(20, 5, 1);
+
+    TaskInstance writerTaskInstance(writerTask, 10);
+    TaskInstance readerTaskInstance(readerTask, 12);
+    TaskInstance nextWriterTaskInstance(
+        writerTask, writerTaskInstance.activationTime + writerTask.period);
+
+    bool expected = false;
+    bool actual =
+        reach(writerTaskInstance, readerTaskInstance, nextWriterTaskInstance);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(MathFramework, ReachCanDetectNoOverwrites) {
+    Task writerTask(10, 5, 1);
+    Task readerTask(10, 5, 1);
+
+    TaskInstance writerTaskInstance(writerTask, 10);
+    TaskInstance readerTaskInstance(readerTask, 12);
+    TaskInstance nextWriterTaskInstance(
+        writerTask, writerTaskInstance.activationTime + writerTask.period);
+
+    bool expected = true;
+    bool actual =
+        reach(writerTaskInstance, readerTaskInstance, nextWriterTaskInstance);
+
+    EXPECT_EQ(expected, actual);
+}

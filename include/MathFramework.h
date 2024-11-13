@@ -73,6 +73,26 @@ bool wait(const Task& writerTask, const Task& readerTask);
 bool forw(const TaskInstance& writerTaskInstance,
           const TaskInstance& readerTaskInstance);
 
+/**
+ * @brief Checks if a writer task instance can reach a reader task instance, detecting potential overwrites.
+ * 
+ * From this forward reachability, we can also detect overwrites.
+ * The output of an instance tw(i) is overwritten by
+ * instance tw(i + 1) when both instances can forward reach
+ * the same reading task instance tr(j). In other words, tw(i)
+ * can reach tr(j) if and only if the following function returns
+ * true
+ * 
+ * @param currentWriterTaskInstance The current writer task instance, `tw(i)`.
+ * @param readerTaskInstance The reader task instance, `tr(j)`.
+ * @param nextWriterTaskInstance The next writer task instance, `tw(i + 1)`.
+ * @return true if the current writer task instance can reach the reader task instance.
+ * @return false if it cannot reach the reader task instance, indicating an overwrite.
+ */
+bool reach(const TaskInstance& currentWriterTaskInstance,
+           const TaskInstance& readerTaskInstance,
+           const TaskInstance& nextWriterTaskInstance);
+
 }  // namespace MathFramework
 
 #endif
