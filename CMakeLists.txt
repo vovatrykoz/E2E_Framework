@@ -14,6 +14,11 @@ add_library(
     ${CODE_SOURCE_DIR}/MathFramework.cpp
 )
 
+add_library(
+    timedPath
+    ${CODE_SOURCE_DIR}/TimedPath.cpp
+)
+
 add_executable(
     runner
     ${CODE_SOURCE_DIR}/main.cpp
@@ -41,6 +46,7 @@ target_link_libraries(
     testRunner
     GTest::gtest_main
     mathFramework
+    timedPath
 )
 
 include(GoogleTest)
