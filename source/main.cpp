@@ -1,4 +1,5 @@
 #include <Analysis.h>
+#include <ConsoleLogger.h>
 
 #include <iostream>
 #include <limits>
@@ -10,6 +11,8 @@ TimedPath readTimedPath(const std::string& name);
 std::set<TimedPath> readPathsSet();
 
 int main(void) {
+    ConsoleLogger logger;
+
     std::set<TimedPath> pathSet = readPathsSet();
     std::set<TimedPath> validPathSet = analysis::removeUnreachablePaths(pathSet);
     int maximumLatency = analysis::calculateMaximumLatency(validPathSet);
@@ -21,27 +24,7 @@ int main(void) {
         }
     }
 
-    std::cout << std::endl << "Results" << std::endl;
-    std::cout << "Number of analyzed paths: " << pathSet.size() << std::endl;
-
-    std::cout << "Number of unreachable paths: " << invalidPathSet.size() << std::endl;
-    std::cout << "Unreachable paths: " << std::endl;
-    for(const auto& invalidPath : invalidPathSet) {
-        std::cout << invalidPath.getName() << std::endl;
-    }
-
-    std::cout << std::endl;
-
-    std::cout << "Number of reachable paths: " << validPathSet.size() << std::endl;
-    std::cout << "Reachable paths: " << std::endl;
-    for(const auto& validPath : validPathSet) {
-        std::cout << validPath.getName() << std::endl;
-    }
-
-    std::cout << std::endl;
-
-    std::cout << "Maximum latency over all reachable paths: " << maximumLatency << std::endl;
-    std::cout << std::endl;
+    logger.logResults(pathSet, validPathSet, invalidPathSet, maximumLatency);
 
     return 0;
 }

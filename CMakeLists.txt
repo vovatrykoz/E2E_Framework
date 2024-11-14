@@ -10,6 +10,11 @@ set(TESTS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
 include_directories(${INCLUDE_DIR})
 
 add_library(
+    consoleLogger
+    ${CODE_SOURCE_DIR}/ConsoleLogger.cpp
+)
+
+add_library(
     task
     ${CODE_SOURCE_DIR}/Task.cpp
 )
@@ -35,8 +40,9 @@ add_executable(
 )
 
 target_compile_features(runner PUBLIC cxx_std_17)
+target_link_libraries(consoleLogger timedPath)
 target_link_libraries(mathFramework task)
-target_link_libraries(runner analysis task mathFramework timedPath)
+target_link_libraries(runner analysis task mathFramework timedPath consoleLogger)
 
 include(FetchContent)
 FetchContent_Declare(
