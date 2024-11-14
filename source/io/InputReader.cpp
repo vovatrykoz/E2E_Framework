@@ -1,5 +1,6 @@
 #include "io/InputReader.h"
 #include <limits>
+#include <iostream>
 
 std::set<TimedPath> InputReader::readPathsSet() const {
     std::set<TimedPath> result;

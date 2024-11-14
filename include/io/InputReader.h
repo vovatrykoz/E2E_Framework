@@ -1,15 +1,14 @@
 #ifndef _INPUT_READER_H_
 #define _INPUT_READER_H_
 
-#include <TimedPath.h>
+#include <io/IReader.h>
 
 #include <set>
 #include <string>
-#include <iostream>
 
-class InputReader {
+class InputReader : public IReader {
 public:
-    std::set<TimedPath> readPathsSet() const;
+    virtual std::set<TimedPath> readPathsSet() const override;
 
 private:
     int readInt(const std::string& message) const;

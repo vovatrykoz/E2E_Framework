@@ -3,6 +3,9 @@
 #include <fstream>
 #include <sstream>
 
+TextLogger::TextLogger(const std::string& pathToOutputFile)
+    : pathToOutputFile(pathToOutputFile) {}
+
 void TextLogger::logResults(
     const std::set<TimedPath>& allPathsSet,
     const std::set<TimedPath>& validPathSet,

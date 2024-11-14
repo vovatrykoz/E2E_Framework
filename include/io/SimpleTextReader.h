@@ -1,15 +1,13 @@
 #ifndef _SIMPLE_TEXT_READER_H_
 #define _SIMPLE_TEXT_READER_H_
 
-#include <TimedPath.h>
-#include <string>
-#include <set>
+#include <io/IReader.h>
 
-class SimpleTextReader {
+class SimpleTextReader : public IReader {
 public:
     SimpleTextReader(const std::string& filePath);
 
-    std::set<TimedPath> readPathsSet() const;
+    virtual std::set<TimedPath> readPathsSet() const override;
 private:
     TaskInstance parseTaskInstance(const std::string& taskInstanceStr) const;
 
