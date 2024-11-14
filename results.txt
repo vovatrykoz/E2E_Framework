@@ -1,0 +1,15 @@
+
+Results
+Number of analyzed paths: 3
+Number of unreachable paths: 1
+Unreachable paths: 
+B
+
+Number of reachable paths: 2
+Reachable paths: 
+A
+C
+
+Path with maximum latency over all reachable paths: C
+Maximum latency over all reachable paths: 53
+

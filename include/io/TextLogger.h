@@ -8,10 +8,18 @@
 
 class TextLogger {
 public:
+    TextLogger(const std::string& pathToOutputFile);
+
     void logResults(const std::set<TimedPath>& allPathsSet,
                     const std::set<TimedPath>& validPathSet,
                     const std::set<TimedPath>& invalidPathSet,
                     const std::optional<TimedPath>& maximumLatencyPath) const;
+
+private:
+    const std::string pathToOutputFile;
 };
+
+inline TextLogger::TextLogger(const std::string& pathToOutputFile)
+    : pathToOutputFile(pathToOutputFile) {}
 
 #endif

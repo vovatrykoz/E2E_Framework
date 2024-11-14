@@ -17,6 +17,11 @@ add_library(
 )
 
 add_library(
+    textLogger
+    ${CODE_SOURCE_DIR}/io/TextLogger.cpp
+)
+
+add_library(
     inputReader
     ${CODE_SOURCE_DIR}/io/InputReader.cpp
 )
@@ -55,8 +60,9 @@ target_compile_features(runner PUBLIC cxx_std_17)
 target_link_libraries(inputReader timedPath)
 target_link_libraries(consoleLogger timedPath)
 target_link_libraries(simpleTextReader timedPath)
+target_link_libraries(textLogger timedPath)
 target_link_libraries(mathFramework task)
-target_link_libraries(runner analysis task mathFramework timedPath consoleLogger inputReader simpleTextReader)
+target_link_libraries(runner analysis task mathFramework timedPath consoleLogger inputReader simpleTextReader textLogger)
 
 include(FetchContent)
 FetchContent_Declare(
