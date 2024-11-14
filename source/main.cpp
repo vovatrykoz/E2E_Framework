@@ -1,6 +1,6 @@
 #include <Analysis.h>
-#include <ConsoleLogger.h>
-#include <InputReader.h>
+#include <io/ConsoleLogger.h>
+#include <io/InputReader.h>
 
 #include <iostream>
 #include <limits>

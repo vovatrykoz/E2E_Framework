@@ -13,12 +13,12 @@ include_directories(${INCLUDE_DIR})
 
 add_library(
     consoleLogger
-    ${CODE_SOURCE_DIR}/ConsoleLogger.cpp
+    ${CODE_SOURCE_DIR}/io/ConsoleLogger.cpp
 )
 
 add_library(
     inputReader
-    ${CODE_SOURCE_DIR}/InputReader.cpp
+    ${CODE_SOURCE_DIR}/io/InputReader.cpp
 )
 
 add_library(
