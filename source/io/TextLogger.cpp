@@ -39,20 +39,21 @@ void TextLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
+    output << "Last-to-Last semantics:" << std::endl;
+
     if (maximumLatencyPath.has_value()) {
-        output << "Path with maximum latency over all reachable paths using "
-                  "Last-to-Last semantics: "
+        output << "Path with maximum latency over all reachable paths: "
                << maximumLatencyPath.value().name() << std::endl;
 
-        output << "Maximum latency over all reachable paths using Last-to-Last "
-                  "semantics: "
+        output << "Maximum latency over all reachable paths"
                << maximumLatencyPath.value().endToEndDelay() << std::endl;
     } else {
-        output << "Maximum latency over all reachable paths using Last-to-Last "
-                  "semantics: 0 (are "
+        output << "Maximum latency over all reachable paths: 0 (are "
                   "there any valid paths?)"
                << std::endl;
     }
+
+    output << std::endl;
 
     this->writeOutputToFile(output.str());
 }
@@ -61,22 +62,23 @@ void TextLogger::logResults_LF(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
+    output << "Last-to-First semantics:" << std::endl;
+
     if (maximumLatencyPath.has_value()) {
-        output << "Path with maximum latency over all reachable paths using "
-                  "Last-to-First semantics: "
+        output << "Path with maximum latency over all reachable paths: "
                << maximumLatencyPath.value().name() << std::endl;
 
         output
-            << "Maximum latency over all reachable paths using Last-to-First "
-               "semantics: "
+            << "Maximum latency over all reachable paths: "
             << maximumLatencyPath.value().endToEndDelay() << std::endl;
     } else {
         output
-            << "Maximum latency over all reachable paths using Last-to-First "
-               "semantics: 0 (are "
+            << "Maximum latency over all reachable paths: 0 (are "
                "there any valid paths?)"
             << std::endl;
     }
+
+    output << std::endl;
 
     this->writeOutputToFile(output.str());
 }
