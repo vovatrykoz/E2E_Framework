@@ -22,6 +22,11 @@ add_library(
 )
 
 add_library(
+    simpleTextReader
+    ${CODE_SOURCE_DIR}/io/SimpleTextReader.cpp
+)
+
+add_library(
     task
     ${CODE_SOURCE_DIR}/Task.cpp
 )
@@ -49,8 +54,9 @@ add_executable(
 target_compile_features(runner PUBLIC cxx_std_17)
 target_link_libraries(inputReader timedPath)
 target_link_libraries(consoleLogger timedPath)
+target_link_libraries(simpleTextReader timedPath)
 target_link_libraries(mathFramework task)
-target_link_libraries(runner analysis task mathFramework timedPath consoleLogger inputReader)
+target_link_libraries(runner analysis task mathFramework timedPath consoleLogger inputReader simpleTextReader)
 
 include(FetchContent)
 FetchContent_Declare(
