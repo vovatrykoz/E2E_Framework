@@ -67,7 +67,10 @@ target_link_libraries(inputReader timedPath)
 target_link_libraries(consoleLogger timedPath)
 target_link_libraries(simpleTextReader timedPath)
 target_link_libraries(textLogger timedPath)
+target_link_libraries(setup inputReader consoleLogger simpleTextReader textLogger)
+
 target_link_libraries(mathFramework task)
+target_link_libraries(analysis mathFramework task)
 
 target_link_libraries(
     runner 

@@ -40,9 +40,11 @@ std::unique_ptr<ILogger> setup::getLoggerFromType(SupportedLogger loggerType) {
     std::string outputPath;
     switch (loggerType) {
         case SupportedLogger::Console:
+            std::cout << "Logger type: console" << std::endl;
             return std::make_unique<ConsoleLogger>();
 
         case SupportedLogger::Text:
+            std::cout << "Logger type: text" << std::endl;
             std::cout << "Enter output path: ";
             std::cin >> outputPath;
             return std::make_unique<TextLogger>(outputPath);
@@ -58,9 +60,11 @@ std::unique_ptr<IReader> setup::getReaderFromType(SupportedReader readerType) {
     std::string inputPath;
     switch (readerType) {
         case SupportedReader::Console:
+            std::cout << "Reader type: console" << std::endl;
             return std::make_unique<InputReader>();
 
         case SupportedReader::Text:
+            std::cout << "Reader type: text" << std::endl;
             std::cout << "Enter path to input file: ";
             std::cin >> inputPath;
             return std::make_unique<SimpleTextReader>(inputPath);

@@ -14,23 +14,23 @@ int main(int argc, char* argv[]) {
 
     // setup
     switch (argc) {
-        case 0:
+        case 1:
             // default to console if the user has not provided any input
             inputReader =
                 setup::getReaderFromType(setup::SupportedReader::Console);
             logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
             break;
 
-        case 1:
+        case 2:
             // if only one parameter is provided, we assume that to be a reader
             // deafault to console logger
-            inputReader = setup::reader(argv[0]);
+            inputReader = setup::reader(argv[1]);
             logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
             break;
 
-        case 2:
-            inputReader = setup::reader(argv[0]);
-            logger = setup::logger(argv[1]);
+        case 3:
+            inputReader = setup::reader(argv[1]);
+            logger = setup::logger(argv[2]);
             break;
 
         default:
