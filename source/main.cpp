@@ -5,8 +5,15 @@
 #include <io/TextLogger.h>
 
 #include <iostream>
-#include <limits>
 #include <optional>
+
+enum class SupportedLogger { Console, Text };
+enum class SupportedReader { Console, Text };
+
+std::optional<SupportedLogger> getSupportedLogerFromString(
+    const std::string& loggerStr);
+std::optional<SupportedReader> getSupportedReaderFromString(
+    const std::string& readerStr);
 
 int main(void) {
     SimpleTextReader textInputReader("../paths.txt");
@@ -46,4 +53,38 @@ int main(void) {
     }
 
     return 0;
+}
+
+std::optional<SupportedLogger> getSupportedLogerFromString(
+    const std::string& loggerStr) {
+    for (auto& c : loggerStr) {
+        std::tolower(c);
+    }
+
+    if (loggerStr == "console") {
+        return SupportedLogger::Console;
+    }
+
+    if (loggerStr == "text") {
+        return SupportedLogger::Text;
+    }
+
+    return std::nullopt;
+}
+
+std::optional<SupportedReader> getSupportedReaderFromString(
+    const std::string& readerStr) {
+    for (auto& c : readerStr) {
+        std::tolower(c);
+    }
+
+    if (readerStr == "console") {
+        return SupportedReader::Console;
+    }
+
+    if (readerStr == "text") {
+        return SupportedReader::Text;
+    }
+
+    return std::nullopt;
 }
