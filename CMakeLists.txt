@@ -37,6 +37,12 @@ add_library(
 )
 
 add_library(
+    setup
+    ${CODE_SOURCE_DIR}/Setup.cpp
+)
+
+
+add_library(
     analysis
     ${CODE_SOURCE_DIR}/Analysis.cpp
 )
@@ -62,7 +68,12 @@ target_link_libraries(consoleLogger timedPath)
 target_link_libraries(simpleTextReader timedPath)
 target_link_libraries(textLogger timedPath)
 target_link_libraries(mathFramework task)
-target_link_libraries(runner analysis task mathFramework timedPath consoleLogger inputReader simpleTextReader textLogger)
+
+target_link_libraries(
+    runner 
+    analysis
+    setup
+)
 
 include(FetchContent)
 FetchContent_Declare(

@@ -13,6 +13,8 @@ public:
         const std::set<TimedPath>& validPathSet,
         const std::set<TimedPath>& invalidPathSet,
         const std::optional<TimedPath>& maximumLatencyPath) const = 0;
+
+    virtual ~ILogger() = default;
 };
 
 #endif

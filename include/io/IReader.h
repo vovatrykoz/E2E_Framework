@@ -9,6 +9,7 @@
 class IReader {
 public:
     virtual std::set<TimedPath> readPathsSet() const = 0;
+    virtual ~IReader() = default;
 };
 
 #endif

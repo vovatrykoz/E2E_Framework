@@ -1,37 +1,77 @@
 #include <Analysis.h>
-#include <io/ConsoleLogger.h>
-#include <io/InputReader.h>
-#include <io/SimpleTextReader.h>
-#include <io/TextLogger.h>
+#include <Setup.h>
 
 #include <iostream>
 #include <memory>
 #include <optional>
 
-enum class SupportedLogger { Console, Text };
-enum class SupportedReader { Console, Text };
+int main(int argc, char* argv[]) {
+    // prepare the reader and the logger
+    std::unique_ptr<IReader> inputReader;
+    std::unique_ptr<ILogger> logger;
 
-std::optional<SupportedLogger> getSupportedLogerFromString(
-    const std::string& loggerStr);
-std::optional<SupportedReader> getSupportedReaderFromString(
-    const std::string& readerStr);
+    switch (argc) {
+        case 0:
+            // default to console if the user has not provided any input
+            inputReader =
+                setup::getReaderFromType(setup::SupportedReader::Console);
+            logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
+            break;
 
-std::unique_ptr<ILogger> getLoggerFromType(SupportedLogger loggerType);
-std::unique_ptr<IReader> getReaderFromType(SupportedReader readerType);
+        case 1:
+            // if only one parameter is provided, we assume that to be a reader
+            std::optional<setup::SupportedReader> readerType =
+                setup::getSupportedReaderFromString(argv[0]);
 
-int main(void) {
-    SimpleTextReader textInputReader("../paths.txt");
-    TextLogger textLogger("../results.txt");
-    InputReader inputReader;
-    ConsoleLogger logger;
+            if (!readerType.has_value()) {
+                std::cerr << "Provided reader is not supported" << std::endl;
+                return -1;
+            }
 
-    // read user input
+            inputReader = setup::getReaderFromType(readerType.value());
+            break;
+
+        case 2:
+            std::optional<setup::SupportedReader> readerType =
+                setup::getSupportedReaderFromString(argv[0]);
+
+            if (!readerType.has_value()) {
+                std::cerr << "Provided reader is not supported" << std::endl;
+                return -1;
+            }
+            inputReader = setup::getReaderFromType(readerType.value());
+
+            std::optional<setup::SupportedLogger> loggerType =
+                setup::getSupportedLoggerFromString(argv[1]);
+
+            if (!loggerType.has_value()) {
+                std::cerr << "Provided reader is not supported" << std::endl;
+                return -1;
+            }
+
+            logger = setup::getLoggerFromType(loggerType.value());
+            break;
+
+        default:
+            std::cerr << "Too many parameters" << std::endl;
+            std::cerr << "Usage: runner <reader_type> <logger_type>" << std::endl;
+            std::cerr << "Currently supported loggers: Console, Text" << std::endl;
+            std::cerr << "Currently supported readers: Console, Text" << std::endl;
+            return -1;
+    }
+
+    if (logger == nullptr || inputReader == nullptr) {
+        std::cerr << "Something went wrong during the setup, please try again" << std::endl;
+    }
+
     std::set<TimedPath> pathSet;
 
+    // read user input
     try {
-        pathSet = textInputReader.readPathsSet();
+        pathSet = inputReader->readPathsSet();
     } catch (std::runtime_error err) {
         std::cerr << "Failed to load timed path! " << err.what() << std::endl;
+        return -1;
     }
 
     // perform the analysis
@@ -50,81 +90,12 @@ int main(void) {
 
     // log results
     try {
-        textLogger.logResults(pathSet, validPathSet, invalidPathSet,
-                              maximumLatencyPath);
+        logger->logResults(pathSet, validPathSet, invalidPathSet,
+                           maximumLatencyPath);
     } catch (std::runtime_error err) {
         std::cerr << "Failed to log results! " << err.what() << std::endl;
+        return -1;
     }
 
     return 0;
-}
-
-std::optional<SupportedLogger> getSupportedLogerFromString(
-    const std::string& loggerStr) {
-    for (auto& c : loggerStr) {
-        std::tolower(c);
-    }
-
-    if (loggerStr == "console") {
-        return SupportedLogger::Console;
-    }
-
-    if (loggerStr == "text") {
-        return SupportedLogger::Text;
-    }
-
-    return std::nullopt;
-}
-
-std::optional<SupportedReader> getSupportedReaderFromString(
-    const std::string& readerStr) {
-    for (auto& c : readerStr) {
-        std::tolower(c);
-    }
-
-    if (readerStr == "console") {
-        return SupportedReader::Console;
-    }
-
-    if (readerStr == "text") {
-        return SupportedReader::Text;
-    }
-
-    return std::nullopt;
-}
-
-std::unique_ptr<ILogger> getLoggerFromType(SupportedLogger loggerType) {
-    std::string outputPath;
-    switch (loggerType) {
-        case SupportedLogger::Console:
-            return std::make_unique<ConsoleLogger>();
-
-        case SupportedLogger::Text:
-            std::cout << "Enter output path: ";
-            std::cin >> outputPath;
-            return std::make_unique<TextLogger>(outputPath);
-
-        default:
-            return nullptr;
-    }
-
-    return nullptr;
-}
-
-std::unique_ptr<IReader> getReaderFromType(SupportedReader readerType) {
-    std::string inputPath;
-    switch (readerType) {
-        case SupportedReader::Console:
-            return std::make_unique<InputReader>();
-
-        case SupportedReader::Text:
-            std::cout << "Enter path to input file: ";
-            std::cin >> inputPath;
-            return std::make_unique<SimpleTextReader>(inputPath);
-
-        default:
-            return nullptr;
-    }
-
-    return nullptr;
 }
