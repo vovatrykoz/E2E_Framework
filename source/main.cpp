@@ -5,6 +5,7 @@
 #include <io/TextLogger.h>
 
 #include <iostream>
+#include <memory>
 #include <optional>
 
 enum class SupportedLogger { Console, Text };
@@ -14,6 +15,9 @@ std::optional<SupportedLogger> getSupportedLogerFromString(
     const std::string& loggerStr);
 std::optional<SupportedReader> getSupportedReaderFromString(
     const std::string& readerStr);
+
+std::unique_ptr<ILogger> getLoggerFromType(SupportedLogger loggerType);
+std::unique_ptr<IReader> getReaderFromType(SupportedReader readerType);
 
 int main(void) {
     SimpleTextReader textInputReader("../paths.txt");
@@ -87,4 +91,40 @@ std::optional<SupportedReader> getSupportedReaderFromString(
     }
 
     return std::nullopt;
+}
+
+std::unique_ptr<ILogger> getLoggerFromType(SupportedLogger loggerType) {
+    std::string outputPath;
+    switch (loggerType) {
+        case SupportedLogger::Console:
+            return std::make_unique<ConsoleLogger>();
+
+        case SupportedLogger::Text:
+            std::cout << "Enter output path: ";
+            std::cin >> outputPath;
+            return std::make_unique<TextLogger>(outputPath);
+
+        default:
+            return nullptr;
+    }
+
+    return nullptr;
+}
+
+std::unique_ptr<IReader> getReaderFromType(SupportedReader readerType) {
+    std::string inputPath;
+    switch (readerType) {
+        case SupportedReader::Console:
+            return std::make_unique<InputReader>();
+
+        case SupportedReader::Text:
+            std::cout << "Enter path to input file: ";
+            std::cin >> inputPath;
+            return std::make_unique<SimpleTextReader>(inputPath);
+
+        default:
+            return nullptr;
+    }
+
+    return nullptr;
 }
