@@ -10,7 +10,7 @@ void TextLogger::logResults(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
-    output << std::endl << "Results" << std::endl;
+    output << "Results" << std::endl << std::endl;
     output << "Number of analyzed paths: " << allPathsSet.size() << std::endl;
 
     output << "Number of unreachable paths: " << invalidPathSet.size()
@@ -41,8 +41,6 @@ void TextLogger::logResults(
                   "there any valid paths?)"
                << std::endl;
     }
-
-    output << std::endl;
 
     std::ofstream outFile(this->pathToOutputFile);
 
