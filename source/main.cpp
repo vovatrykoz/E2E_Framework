@@ -1,14 +1,18 @@
 #include <Analysis.h>
 #include <io/ConsoleLogger.h>
 #include <io/InputReader.h>
+#include <io/JsonInputReader.h>
 
 #include <iostream>
 #include <limits>
 #include <optional>
 
 int main(void) {
+    JsonInputReader jsonInputReader("../paths.json");
     InputReader inputReader;
     ConsoleLogger logger;
+
+    jsonInputReader.readPathsSet();
 
     // read user input
     std::set<TimedPath> pathSet = inputReader.readPathsSet();

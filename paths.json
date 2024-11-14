@@ -1,0 +1,89 @@
+[
+    {
+        "name": "A",
+        "tasks": [
+            {
+                "period": 40,
+                "wcet": 4,
+                "priority": 1,
+                "activationTime": 4
+            },
+            {
+                "period": 10,
+                "wcet": 3,
+                "priority": 1,
+                "activationTime": 11
+            },
+            {
+                "period": 30,
+                "wcet": 2,
+                "priority": 1,
+                "activationTime": 15
+            },
+            {
+                "period": 20,
+                "wcet": 1,
+                "priority": 1,
+                "activationTime": 32
+            }
+        ]
+    },
+    {
+        "name": "B",
+        "tasks": [
+            {
+                "period": 40,
+                "wcet": 4,
+                "priority": 1,
+                "activationTime": 40
+            },
+            {
+                "period": 10,
+                "wcet": 3,
+                "priority": 1,
+                "activationTime": 51
+            },
+            {
+                "period": 30,
+                "wcet": 2,
+                "priority": 1,
+                "activationTime": 75
+            },
+            {
+                "period": 20,
+                "wcet": 1,
+                "priority": 1,
+                "activationTime": 92
+            }
+        ]
+    },
+    {
+        "name": "C",
+        "tasks": [
+            {
+                "period": 40,
+                "wcet": 4,
+                "priority": 1,
+                "activationTime": 40
+            },
+            {
+                "period": 10,
+                "wcet": 3,
+                "priority": 1,
+                "activationTime": 71
+            },
+            {
+                "period": 30,
+                "wcet": 2,
+                "priority": 1,
+                "activationTime": 75
+            },
+            {
+                "period": 20,
+                "wcet": 1,
+                "priority": 1,
+                "activationTime": 92
+            }
+        ]
+    }
+]
