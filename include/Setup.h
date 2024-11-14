@@ -22,6 +22,9 @@ std::optional<SupportedReader> getSupportedReaderFromString(
 std::unique_ptr<ILogger> getLoggerFromType(SupportedLogger loggerType);
 std::unique_ptr<IReader> getReaderFromType(SupportedReader readerType);
 
+std::unique_ptr<ILogger> logger(const std::string& loggerStr);
+std::unique_ptr<IReader> reader(const std::string& readerStr);
+
 }  // namespace setup
 
 #endif

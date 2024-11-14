@@ -5,11 +5,14 @@
 #include <memory>
 #include <optional>
 
+void printUsageInfo();
+
 int main(int argc, char* argv[]) {
     // prepare the reader and the logger
-    std::unique_ptr<IReader> inputReader;
-    std::unique_ptr<ILogger> logger;
+    std::unique_ptr<IReader> inputReader = nullptr;
+    std::unique_ptr<ILogger> logger = nullptr;
 
+    // setup
     switch (argc) {
         case 0:
             // default to console if the user has not provided any input
@@ -20,48 +23,25 @@ int main(int argc, char* argv[]) {
 
         case 1:
             // if only one parameter is provided, we assume that to be a reader
-            std::optional<setup::SupportedReader> readerType =
-                setup::getSupportedReaderFromString(argv[0]);
-
-            if (!readerType.has_value()) {
-                std::cerr << "Provided reader is not supported" << std::endl;
-                return -1;
-            }
-
-            inputReader = setup::getReaderFromType(readerType.value());
+            // deafault to console logger
+            inputReader = setup::reader(argv[0]);
+            logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
             break;
 
         case 2:
-            std::optional<setup::SupportedReader> readerType =
-                setup::getSupportedReaderFromString(argv[0]);
-
-            if (!readerType.has_value()) {
-                std::cerr << "Provided reader is not supported" << std::endl;
-                return -1;
-            }
-            inputReader = setup::getReaderFromType(readerType.value());
-
-            std::optional<setup::SupportedLogger> loggerType =
-                setup::getSupportedLoggerFromString(argv[1]);
-
-            if (!loggerType.has_value()) {
-                std::cerr << "Provided reader is not supported" << std::endl;
-                return -1;
-            }
-
-            logger = setup::getLoggerFromType(loggerType.value());
+            inputReader = setup::reader(argv[0]);
+            logger = setup::logger(argv[1]);
             break;
 
         default:
             std::cerr << "Too many parameters" << std::endl;
-            std::cerr << "Usage: runner <reader_type> <logger_type>" << std::endl;
-            std::cerr << "Currently supported loggers: Console, Text" << std::endl;
-            std::cerr << "Currently supported readers: Console, Text" << std::endl;
-            return -1;
+            break;
     }
 
     if (logger == nullptr || inputReader == nullptr) {
-        std::cerr << "Something went wrong during the setup, please try again" << std::endl;
+        std::cerr << "Setup incomplete, please try again" << std::endl;
+        printUsageInfo();
+        return -1;
     }
 
     std::set<TimedPath> pathSet;
@@ -98,4 +78,10 @@ int main(int argc, char* argv[]) {
     }
 
     return 0;
+}
+
+void printUsageInfo() {
+    std::cerr << "Usage: runner <reader_type> <logger_type>" << std::endl;
+    std::cerr << "Currently supported loggers: Console, Text" << std::endl;
+    std::cerr << "Currently supported readers: Console, Text" << std::endl;
 }

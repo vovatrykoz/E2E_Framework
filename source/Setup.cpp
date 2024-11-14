@@ -71,3 +71,27 @@ std::unique_ptr<IReader> setup::getReaderFromType(SupportedReader readerType) {
 
     return nullptr;
 }
+
+std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
+    std::optional<setup::SupportedLogger> loggerType =
+        setup::getSupportedLoggerFromString(loggerStr);
+
+    if (!loggerType.has_value()) {
+        std::cerr << "Provided reader is not supported" << std::endl;
+        return nullptr;
+    }
+
+    return setup::getLoggerFromType(loggerType.value());
+}
+
+std::unique_ptr<IReader> setup::reader(const std::string& readerStr) {
+    std::optional<setup::SupportedReader> readerType =
+        setup::getSupportedReaderFromString(readerStr);
+
+    if (!readerType.has_value()) {
+        std::cerr << "Provided reader is not supported" << std::endl;
+        return nullptr;
+    }
+
+    return setup::getReaderFromType(readerType.value());
+}
