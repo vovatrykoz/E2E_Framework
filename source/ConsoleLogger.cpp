@@ -6,7 +6,7 @@ void ConsoleLogger::logResults(
     const std::set<TimedPath>& allPathsSet,
     const std::set<TimedPath>& validPathSet,
     const std::set<TimedPath>& invalidPathSet,
-    const std::optional<TimedPath>& maximumLatencyPath) {
+    const std::optional<TimedPath>& maximumLatencyPath) const {
     std::cout << std::endl << "Results" << std::endl;
     std::cout << "Number of analyzed paths: " << allPathsSet.size()
               << std::endl;
