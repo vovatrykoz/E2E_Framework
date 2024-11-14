@@ -14,17 +14,19 @@ int main(void) {
     ConsoleLogger logger;
 
     std::set<TimedPath> pathSet = readPathsSet();
-    std::set<TimedPath> validPathSet = analysis::removeUnreachablePaths(pathSet);
-    int maximumLatency = analysis::calculateMaximumLatency(validPathSet);
+    std::set<TimedPath> validPathSet =
+        analysis::removeUnreachablePaths(pathSet);
+    std::optional<TimedPath> maximumLatencyPath =
+        analysis::getPathWithMaximumLatency(validPathSet);
 
     std::set<TimedPath> invalidPathSet;
-    for(const auto& path : pathSet) {
-        if(validPathSet.find(path) == validPathSet.end()) {
+    for (const auto& path : pathSet) {
+        if (validPathSet.find(path) == validPathSet.end()) {
             invalidPathSet.insert(path);
         }
     }
 
-    logger.logResults(pathSet, validPathSet, invalidPathSet, maximumLatency);
+    logger.logResults(pathSet, validPathSet, invalidPathSet, maximumLatencyPath);
 
     return 0;
 }

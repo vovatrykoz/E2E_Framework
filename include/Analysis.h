@@ -2,6 +2,7 @@
 #define _ANALYSIS_H_
 
 #include <TimedPath.h>
+#include <optional>
 
 #include <set>
 
@@ -9,7 +10,7 @@ namespace analysis {
 
     std::set<TimedPath> removeUnreachablePaths(const std::set<TimedPath>& pathSet);
 
-    int calculateMaximumLatency(const std::set<TimedPath>& pathSet);
+    std::optional<TimedPath> getPathWithMaximumLatency(const std::set<TimedPath>& pathSet);
 
 }  // namespace analysis
 

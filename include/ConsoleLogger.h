@@ -3,6 +3,7 @@
 
 #include <TimedPath.h>
 
+#include <optional>
 #include <set>
 
 class ConsoleLogger {
@@ -10,7 +11,7 @@ public:
     void logResults(const std::set<TimedPath>& allPathsSet,
                     const std::set<TimedPath>& validPathSet,
                     const std::set<TimedPath>& invalidPathSet,
-                    int maximumLatency);
+                    const std::optional<TimedPath>& maximumLatencyPath);
 };
 
 #endif
