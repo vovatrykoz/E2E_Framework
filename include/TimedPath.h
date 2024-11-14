@@ -60,7 +60,7 @@ public:
      *
      * @return Name of the TimedPath
      */
-    const std::string getName() const;
+    const std::string name() const;
 
     /**
      * @brief Compare two TimedPath objects by name
@@ -85,20 +85,20 @@ public:
 
 private:
     std::vector<TaskInstance>
-        tasks;         // Stores the sequence of task instances in the path.
-    std::string name;  // name of the path
+        tasks;  // Stores the sequence of task instances in the path.
+    std::string instanceName;  // name of the path
 };
 
 inline TimedPath::TimedPath() {}
 
-inline TimedPath::TimedPath(const std::string& name) : name(name) {}
+inline TimedPath::TimedPath(const std::string& name) : instanceName(name) {}
 
 inline TimedPath::TimedPath(const std::vector<TaskInstance>& tasks)
     : tasks(tasks) {}
 
 inline TimedPath::TimedPath(const std::string& name,
                             const std::vector<TaskInstance>& tasks)
-    : name(name), tasks(tasks) {}
+    : instanceName(name), tasks(tasks) {}
 
 inline void TimedPath::appendTaskInstance(const TaskInstance& taskInstance) {
     this->tasks.push_back(taskInstance);
@@ -108,14 +108,16 @@ inline const std::vector<TaskInstance>& TimedPath::asVector() const {
     return this->tasks;
 }
 
-inline const std::string TimedPath::getName() const { return this->name; }
+inline const std::string TimedPath::name() const {
+    return this->instanceName;
+}
 
 inline bool TimedPath::operator<(const TimedPath& other) const {
-    return this->name < other.name;
+    return this->instanceName < other.instanceName;
 }
 
 inline bool TimedPath::operator==(const TimedPath& other) const {
-    return this->name == other.name;
+    return this->instanceName == other.instanceName;
 }
 
 #endif

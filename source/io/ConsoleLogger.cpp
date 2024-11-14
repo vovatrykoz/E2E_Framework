@@ -15,7 +15,7 @@ void ConsoleLogger::logResults(
               << std::endl;
     std::cout << "Unreachable paths: " << std::endl;
     for (const auto& invalidPath : invalidPathSet) {
-        std::cout << invalidPath.getName() << std::endl;
+        std::cout << invalidPath.name() << std::endl;
     }
 
     std::cout << std::endl;
@@ -24,14 +24,14 @@ void ConsoleLogger::logResults(
               << std::endl;
     std::cout << "Reachable paths: " << std::endl;
     for (const auto& validPath : validPathSet) {
-        std::cout << validPath.getName() << std::endl;
+        std::cout << validPath.name() << std::endl;
     }
 
     std::cout << std::endl;
 
     if (maximumLatencyPath.has_value()) {
         std::cout << "Path with maximum latency over all reachable paths: "
-                  << maximumLatencyPath.value().getName() << std::endl;
+                  << maximumLatencyPath.value().name() << std::endl;
 
         std::cout << "Maximum latency over all reachable paths: "
                   << maximumLatencyPath.value().endToEndDelay() << std::endl;
