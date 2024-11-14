@@ -60,7 +60,11 @@ public:
      *
      * @return Name of the TimedPath
      */
-    const std::string name() const;
+    std::string name() const;
+
+    int firstTaskStartTime() const;
+
+    int lastTaskStartTime() const;
 
     /**
      * @brief Compare two TimedPath objects by name
@@ -108,7 +112,7 @@ inline const std::vector<TaskInstance>& TimedPath::asVector() const {
     return this->tasks;
 }
 
-inline const std::string TimedPath::name() const {
+inline std::string TimedPath::name() const {
     return this->instanceName;
 }
 

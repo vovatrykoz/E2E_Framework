@@ -100,3 +100,56 @@ TEST(analysis, NoEndToEndTimeIfThereAreNoPaths) {
 
     ASSERT_FALSE(actualValueContainer.has_value());
 }
+
+TEST(analysis, CanAnalyzeUsingLastToFirstSemantics) {
+    Task t1(40, 4, 1);
+    Task t2(10, 3, 1);
+    Task t3(30, 2, 1);
+    Task t4(20, 1, 1);
+
+    std::vector<TaskInstance> unreachablePath_2 = {
+        TaskInstance(t1, 0), TaskInstance(t2, 100), TaskInstance(t3, 15),
+        TaskInstance(t4, 22)};
+
+    std::vector<TaskInstance> unreachablePath_3 = {
+        TaskInstance(t1, 40), TaskInstance(t2, 51), TaskInstance(t3, 75),
+        TaskInstance(t4, 92)};
+
+    std::vector<TaskInstance> reachablePath_1 = {
+        TaskInstance(t1, 0), TaskInstance(t2, 11), TaskInstance(t3, 15),
+        TaskInstance(t4, 32)};
+
+    std::vector<TaskInstance> reachablePath_2 = {
+        TaskInstance(t1, 0), TaskInstance(t2, 41), TaskInstance(t3, 45),
+        TaskInstance(t4, 52)};
+
+    std::vector<TaskInstance> reachablePath_3 = {
+        TaskInstance(t1, 0), TaskInstance(t2, 41), TaskInstance(t3, 45),
+        TaskInstance(t4, 72)};
+
+    TimedPath timedPath_A("A", reachablePath_1);
+    TimedPath timedPath_B("B", reachablePath_2);
+    TimedPath timedPath_C("C", reachablePath_3);
+    TimedPath timedPath_E("E", unreachablePath_2);
+    TimedPath timedPath_F("F", unreachablePath_3);
+
+    std::set<TimedPath> timedPaths = {timedPath_A, timedPath_B, timedPath_C,
+                                      timedPath_E, timedPath_F};
+
+    int expectedLatency = timedPath_A.endToEndDelay();
+    TimedPath expectedPath = timedPath_A;
+
+    std::set<TimedPath> reachablePaths = removeUnreachablePaths(timedPaths);
+    std::set<TimedPath> reachablePaths_LF = removeDublicatesWithSameStart(reachablePaths);
+
+    std::optional<TimedPath> actualValueContainer =
+        getPathWithMaximumLatency(reachablePaths_LF);
+
+    ASSERT_TRUE(actualValueContainer.has_value());
+
+    TimedPath actualPath = actualValueContainer.value();
+    int actualLatency = actualPath.endToEndDelay();
+
+    EXPECT_EQ(actualLatency, expectedLatency);
+    EXPECT_EQ(expectedPath, actualPath);
+}

@@ -24,3 +24,20 @@ int TimedPath::endToEndDelay() const {
     return lastTaskInstance.activationTime + lastTaskInstance.baseTask.wcet -
            firstTaskInstance.activationTime;
 }
+
+int TimedPath::firstTaskStartTime() const {
+    if (this->tasks.empty()) {
+        return 0;
+    }
+
+    return this->tasks[0].activationTime;
+}
+
+int TimedPath::lastTaskStartTime() const {
+    if (this->tasks.empty()) {
+        return 0;
+    }
+
+    size_t lastElementIndex = this->tasks.size() - 1;
+    return this->tasks[lastElementIndex].activationTime;
+}
