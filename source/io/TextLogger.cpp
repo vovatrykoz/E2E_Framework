@@ -6,11 +6,10 @@
 TextLogger::TextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
-void TextLogger::logResults(
+void TextLogger::logValidInvalidPaths(
     const std::set<TimedPath>& allPathsSet,
     const std::set<TimedPath>& validPathSet,
-    const std::set<TimedPath>& invalidPathSet,
-    const std::optional<TimedPath>& maximumLatencyPath) const {
+    const std::set<TimedPath>& invalidPathSet) const {
     std::stringstream output;
 
     output << "Results" << std::endl << std::endl;
@@ -31,26 +30,64 @@ void TextLogger::logResults(
         output << validPath.name() << std::endl;
     }
 
-    output << std::endl;
+    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
+
+    this->writeOutputToFile(output.str());
+}
+
+void TextLogger::logResults_LL(
+    const std::optional<TimedPath>& maximumLatencyPath) const {
+    std::stringstream output;
 
     if (maximumLatencyPath.has_value()) {
-        output << "Path with maximum latency over all reachable paths: "
+        output << "Path with maximum latency over all reachable paths using "
+                  "Last-to-Last semantics: "
                << maximumLatencyPath.value().name() << std::endl;
 
-        output << "Maximum latency over all reachable paths: "
+        output << "Maximum latency over all reachable paths using Last-to-Last "
+                  "semantics: "
                << maximumLatencyPath.value().endToEndDelay() << std::endl;
     } else {
-        output << "Maximum latency over all reachable paths: 0 (are "
+        output << "Maximum latency over all reachable paths using Last-to-Last "
+                  "semantics: 0 (are "
                   "there any valid paths?)"
                << std::endl;
     }
 
-    std::ofstream outFile(this->pathToOutputFile);
+    this->writeOutputToFile(output.str());
+}
+
+void TextLogger::logResults_LF(
+    const std::optional<TimedPath>& maximumLatencyPath) const {
+    std::stringstream output;
+
+    if (maximumLatencyPath.has_value()) {
+        output << "Path with maximum latency over all reachable paths using "
+                  "Last-to-First semantics: "
+               << maximumLatencyPath.value().name() << std::endl;
+
+        output
+            << "Maximum latency over all reachable paths using Last-to-First "
+               "semantics: "
+            << maximumLatencyPath.value().endToEndDelay() << std::endl;
+    } else {
+        output
+            << "Maximum latency over all reachable paths using Last-to-First "
+               "semantics: 0 (are "
+               "there any valid paths?)"
+            << std::endl;
+    }
+
+    this->writeOutputToFile(output.str());
+}
+
+void TextLogger::writeOutputToFile(const std::string& output) const {
+    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
 
     if (!outFile.is_open()) {
         throw std::runtime_error("Error: could not log data");
     }
 
-    outFile << output.str();
+    outFile << output;
     outFile.close();
 }

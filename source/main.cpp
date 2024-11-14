@@ -55,23 +55,34 @@ int main(int argc, char* argv[]) {
     }
 
     // perform the analysis
-    std::set<TimedPath> validPathSet =
+    std::set<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
-    std::optional<TimedPath> maximumLatencyPath =
-        analysis::getPathWithMaximumLatency(validPathSet);
+
+    // perform end-to-end analysis using Last-to-Last semantics
+    std::optional<TimedPath> maximumLatencyPath_LL =
+        analysis::getPathWithMaximumLatency(validPathSet_LL);
+
+    // get a set for Last-To-First semantics analysis
+    std::set<TimedPath> validPathSet_LF =
+        analysis::removeDublicatesWithSameStart(validPathSet_LL);
+
+    // perform end-to-end analysis using Last-To-First semantics
+    std::optional<TimedPath> maximumLatencyPath_LF =
+        analysis::getPathWithMaximumLatency(validPathSet_LF);
 
     // idenrify which paths turned out to be invalid
     std::set<TimedPath> invalidPathSet;
     for (const auto& path : pathSet) {
-        if (validPathSet.find(path) == validPathSet.end()) {
+        if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
             invalidPathSet.insert(path);
         }
     }
 
     // log results
     try {
-        logger->logResults(pathSet, validPathSet, invalidPathSet,
-                           maximumLatencyPath);
+        logger->logValidInvalidPaths(pathSet, validPathSet_LL, invalidPathSet);
+        logger->logResults_LL(maximumLatencyPath_LL);
+        logger->logResults_LF(maximumLatencyPath_LF);
     } catch (std::runtime_error err) {
         std::cerr << "Failed to log results! " << err.what() << std::endl;
         return -1;

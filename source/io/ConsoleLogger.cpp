@@ -2,12 +2,11 @@
 
 #include <iostream>
 
-void ConsoleLogger::logResults(
+void ConsoleLogger::logValidInvalidPaths(
     const std::set<TimedPath>& allPathsSet,
     const std::set<TimedPath>& validPathSet,
-    const std::set<TimedPath>& invalidPathSet,
-    const std::optional<TimedPath>& maximumLatencyPath) const {
-    std::cout << std::endl << "Results" << std::endl;
+    const std::set<TimedPath>& invalidPathSet) const {
+    std::cout << std::endl << "Results" << std::endl << std::endl;
     std::cout << "Number of analyzed paths: " << allPathsSet.size()
               << std::endl;
 
@@ -28,15 +27,40 @@ void ConsoleLogger::logResults(
     }
 
     std::cout << std::endl;
-
+}
+void ConsoleLogger::logResults_LL(
+    const std::optional<TimedPath>& maximumLatencyPath) const {
     if (maximumLatencyPath.has_value()) {
-        std::cout << "Path with maximum latency over all reachable paths: "
+        std::cout << "Path with maximum latency over all reachable paths using "
+                     "Last-to-Last semantics: "
                   << maximumLatencyPath.value().name() << std::endl;
 
-        std::cout << "Maximum latency over all reachable paths: "
+        std::cout << "Maximum latency over all reachable paths using "
+                     "Last-to-Last semantics: "
                   << maximumLatencyPath.value().endToEndDelay() << std::endl;
     } else {
-        std::cout << "Maximum latency over all reachable paths: 0 (are "
+        std::cout << "Maximum latency over all reachable paths using "
+                     "Last-to-Last semantics: 0 (are "
+                     "there any valid paths?)"
+                  << std::endl;
+    }
+
+    std::cout << std::endl;
+}
+
+void ConsoleLogger::logResults_LF(
+    const std::optional<TimedPath>& maximumLatencyPath) const {
+    if (maximumLatencyPath.has_value()) {
+        std::cout << "Path with maximum latency over all reachable paths using "
+                     "Last-to-First semantics: "
+                  << maximumLatencyPath.value().name() << std::endl;
+
+        std::cout << "Maximum latency over all reachable paths using "
+                     "Last-to-First semantics: "
+                  << maximumLatencyPath.value().endToEndDelay() << std::endl;
+    } else {
+        std::cout << "Maximum latency over all reachable paths using "
+                     "Last-to-First semantics: 0 (are "
                      "there any valid paths?)"
                   << std::endl;
     }
