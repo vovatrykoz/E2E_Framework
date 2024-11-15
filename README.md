@@ -9,14 +9,14 @@ The code is split into the include folder containing all the headers and the sou
 ### io/
 The include/io/ and source/io/ subfolders contain implementation and definitions for code that is responsible for taking in user input and logging the analysis results. Right now, two ways for reading and writing are supported: console-based and text-based. 
 Text based option supports a file that is formated as follows:
-
+```
 START <task_name>
 <t1_period>,<t1_wcet>,<t1_priority>,<t1_activation_time>
 ...
 <tn_period>,<tn_wcet>,<tn_priority>,<tn_activation_time>
 END <task_name>
-
-See example files
+```
+See example files as well
 
 ### Analysis.h and Analysis.cpp
 
@@ -44,3 +44,18 @@ Entry point of the program. Reads user input, performs the analysis, and logs th
 ## tests/
 
 Contains test for the implementation
+
+# Executable usage
+
+Default build process produced an executable called ```runner``` <br>
+```Usage: ./runner <reader_type> <logger_type>```
+
+Currently supported logger types:
+- ```console```
+- ```text```
+
+Currently supported reader types:
+- ```console```
+- ```text```
+
+If no arguments are provided, the program will default to ```console```
