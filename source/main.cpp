@@ -17,7 +17,7 @@ int main(int argc, char* argv[]) {
         case 1:
             // default to console if the user has not provided any input
             inputReader =
-                setup::getReaderFromType(setup::SupportedReader::Console);
+                setup::getReaderFromType(setup::SupportedReader::Text);
             logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
             break;
 

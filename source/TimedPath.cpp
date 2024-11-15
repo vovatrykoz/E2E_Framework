@@ -52,9 +52,10 @@ bool TimedPath::succeeds(const TimedPath& other) const {
         return false;
     }
 
-    int otherPathEndTime = other.firstTaskActivationTime() + other.endToEndDelay();
+    int otherPathInstanceResetTime =
+        other.firstTaskActivationTime() + otherPathPeriod;
 
-    return this->firstTaskActivationTime() == otherPathEndTime;
+    return this->firstTaskActivationTime() == otherPathInstanceResetTime;
 }
 
 int TimedPath::calculatePathPeriod() const {

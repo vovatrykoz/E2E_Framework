@@ -211,6 +211,7 @@ TEST(Analysis, CanAnalyzeUsingFirstToFirstSemantics) {
     TaskInstance t2_secondInstance(t2,
                                    t2_firstInstance.activationTime + t2.period);
 
+    TaskInstance t3_firstInstance(t3, 9);
     TaskInstance t3_fourthInstance(t3, 39);
     TaskInstance t3_fifthInstance(t3,
                                   t3_fourthInstance.activationTime + t3.period);
@@ -221,22 +222,26 @@ TEST(Analysis, CanAnalyzeUsingFirstToFirstSemantics) {
                                            t3_fourthInstance};
 
     std::vector<TaskInstance> secondPath = {t1_firstInstance, t2_firstInstance,
-                                            t3_fifthInstance};
+                                            t3_firstInstance};
 
     std::vector<TaskInstance> thirdPath = {t1_thirdInstance, t2_secondInstance,
-                                           t3_eighthInstance};
+                                           t3_fifthInstance};
+
+    std::vector<TaskInstance> fourthPath = {t1_thirdInstance, t2_secondInstance,
+                                            t3_eighthInstance};
 
     TimedPath firstTimedPath("First path", firstPath);
     TimedPath secondTimedPath("Second path", secondPath);
     TimedPath thirdTimedPath("Third path", thirdPath);
+    TimedPath fourthTimedPath("Fourth path", fourthPath);
 
     // = delta_LF(secondTimedPath) + a(t1_thirdInstance) - a(t1_firstInstance) =
     // 10 + 40 - 0 = 50
-    int expectedFirstToLastDelay = 80;
+    int expectedFirstToFirstDelay = 50;
     TimedPath expectedPath = secondTimedPath;
 
     std::set<TimedPath> paths = {firstTimedPath, secondTimedPath,
-                                 thirdTimedPath};
+                                 thirdTimedPath, fourthTimedPath};
 
     // make sure both paths are reachable
     std::set<TimedPath> reachablePaths_LL = removeUnreachablePaths(paths);
@@ -245,8 +250,8 @@ TEST(Analysis, CanAnalyzeUsingFirstToFirstSemantics) {
     std::set<TimedPath> reachablePaths_LF =
         removePathsProducingDublicateValues(reachablePaths_LL);
 
-    int actualFirstToLastDelay =
+    int actualFirstToFirstDelay =
         analysis::getOverarchingDelay(reachablePaths_LF);
 
-    EXPECT_EQ(expectedFirstToLastDelay, actualFirstToLastDelay);
+    EXPECT_EQ(expectedFirstToFirstDelay, actualFirstToFirstDelay);
 }
