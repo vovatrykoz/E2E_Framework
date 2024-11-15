@@ -18,6 +18,39 @@ END <task_name>
 ```
 See example files as well
 
+For example, input contained in example2.txt will produce the following results: <be>
+
+```
+Results
+
+Number of analyzed paths: 5
+Number of unreachable paths: 1
+
+Unreachable paths:
+E
+
+Number of reachable paths: 4
+Reachable paths:
+A
+B
+C
+D
+
+Last-to-Last semantics:
+  Path with maximum latency over all reachable paths: A
+  Maximum latency over all reachable paths: 40
+
+Last-to-First semantics:
+  Path with maximum latency over all reachable paths: B
+  Maximum latency over all reachable paths: 10
+
+First-to-Last semantics:
+  Maximum path delay: 80
+
+First-to-First semantics:
+  Maximum path delay: 50
+```
+
 ### Analysis.h and Analysis.cpp
 
 Contains definitions and functions that can be used to perform an end-to-end analysis on a set of timed paths. They allow performing the analysis according to different semantics and they essentially implement equations 10-17 in the paper
