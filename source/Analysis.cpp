@@ -28,12 +28,12 @@ std::set<TimedPath> analysis::removeDublicatesWithSameStart(
             }
 
             bool pathInstancesHaveSameStart =
-                (currentPath.firstTaskStartTime() ==
-                 otherPath.firstTaskStartTime());
+                (currentPath.firstTaskActivationTime() ==
+                 otherPath.firstTaskActivationTime());
 
             bool currentInstanceFinishesLaterThanOther =
-                (otherPath.lastTaskStartTime() <
-                 currentPath.lastTaskStartTime());
+                (otherPath.lastTaskActivationTime() <
+                 currentPath.lastTaskActivationTime());
 
             if (pathInstancesHaveSameStart &&
                 currentInstanceFinishesLaterThanOther) {
@@ -43,7 +43,7 @@ std::set<TimedPath> analysis::removeDublicatesWithSameStart(
             counter++;
         }
 
-        if(counter == totalTaskCount) {
+        if (counter == totalTaskCount) {
             output.insert(currentPath);
         }
     }
@@ -71,4 +71,44 @@ std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     }
 
     return (*maxLatencyIt);
+}
+
+int analysis::getFirstToLastPathDelay(const std::set<TimedPath>& pathSet) {
+    int max = 0;
+
+    for (const auto& currentPath : pathSet) {
+        std::optional<TimedPath> predecessor =
+            findPredecessor(currentPath, pathSet);
+
+        int predecessorActivationTime = 0;
+        if (predecessor.has_value()) {
+            predecessorActivationTime =
+                predecessor.value().firstTaskActivationTime();
+        }
+
+        int firstToLastDelay = currentPath.endToEndDelay() +
+                               currentPath.firstTaskActivationTime() -
+                               predecessorActivationTime;
+
+        if (firstToLastDelay > max) {
+            max = firstToLastDelay;
+        }
+    }
+
+    return max;
+}
+
+std::optional<TimedPath> analysis::findPredecessor(
+    const TimedPath& path, const std::set<TimedPath>& pathSet) {
+    for (const auto& otherPath : pathSet) {
+        if (path == otherPath) {
+            continue;
+        }
+
+        if (path.succeeds(otherPath)) {
+            return otherPath;
+        }
+    }
+
+    return std::nullopt;
 }

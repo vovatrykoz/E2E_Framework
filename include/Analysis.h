@@ -16,6 +16,12 @@ std::set<TimedPath> removeDublicatesWithSameStart(
 std::optional<TimedPath> getPathWithMaximumLatency(
     const std::set<TimedPath>& pathSet);
 
+int getFirstToLastPathDelay(
+    const std::set<TimedPath>& pathSet);
+
+std::optional<TimedPath> findPredecessor(
+    const TimedPath& path, const std::set<TimedPath>& pathSet);
+
 }  // namespace analysis
 
 #endif

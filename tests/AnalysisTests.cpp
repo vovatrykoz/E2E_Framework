@@ -3,7 +3,7 @@
 
 using namespace analysis;
 
-TEST(analysis, CanRemoveUnreachablePaths) {
+TEST(Analysis, CanRemoveUnreachablePaths) {
     Task t1(40, 4, 1);
     Task t2(10, 3, 1);
     Task t3(30, 2, 1);
@@ -49,7 +49,7 @@ TEST(analysis, CanRemoveUnreachablePaths) {
     EXPECT_EQ(expected, actual);
 }
 
-TEST(analysis, CanCalculateLongestEndToEndTime) {
+TEST(Analysis, CanCalculateLongestEndToEndTime) {
     Task t1(40, 4, 1);
     Task t2(10, 3, 1);
     Task t3(30, 2, 1);
@@ -93,7 +93,7 @@ TEST(analysis, CanCalculateLongestEndToEndTime) {
     EXPECT_EQ(expectedPath, actualPath);
 }
 
-TEST(analysis, NoEndToEndTimeIfThereAreNoPaths) {
+TEST(Analysis, NoEndToEndTimeIfThereAreNoPaths) {
     std::set<TimedPath> timedPaths;
     std::optional<TimedPath> actualValueContainer =
         getPathWithMaximumLatency(timedPaths);
@@ -101,7 +101,7 @@ TEST(analysis, NoEndToEndTimeIfThereAreNoPaths) {
     ASSERT_FALSE(actualValueContainer.has_value());
 }
 
-TEST(analysis, CanAnalyzeUsingLastToFirstSemantics) {
+TEST(Analysis, CanAnalyzeUsingLastToFirstSemantics) {
     Task t1(40, 4, 1);
     Task t2(10, 3, 1);
     Task t3(30, 2, 1);
@@ -140,7 +140,8 @@ TEST(analysis, CanAnalyzeUsingLastToFirstSemantics) {
     TimedPath expectedPath = timedPath_A;
 
     std::set<TimedPath> reachablePaths = removeUnreachablePaths(timedPaths);
-    std::set<TimedPath> reachablePaths_LF = removeDublicatesWithSameStart(reachablePaths);
+    std::set<TimedPath> reachablePaths_LF =
+        removeDublicatesWithSameStart(reachablePaths);
 
     std::optional<TimedPath> actualValueContainer =
         getPathWithMaximumLatency(reachablePaths_LF);
@@ -152,4 +153,47 @@ TEST(analysis, CanAnalyzeUsingLastToFirstSemantics) {
 
     EXPECT_EQ(actualLatency, expectedLatency);
     EXPECT_EQ(expectedPath, actualPath);
+}
+
+// the following tests are based on Figure 7. Example with Task Schedule and
+// Several End-to-End Semantics from the paper by Feiertag et al.
+TEST(Analysis, CanAnalyzeUsingFirstToLastSemantics) {
+    Task t1(20, 5, 1);
+    Task t2(40, 1, 1);
+    Task t3(10, 1, 1);
+
+    TaskInstance t1_firstInstance(t1, 0);
+    TaskInstance t1_thirdInstance(
+        t1, t1_firstInstance.activationTime + t1.period * 2);
+
+    TaskInstance t2_firstInstance(t2, 5);
+    TaskInstance t2_secondInstance(t2,
+                                   t2_firstInstance.activationTime + t2.period);
+
+    TaskInstance t3_fourthInstance(t3, 39);
+    TaskInstance t3_eighthInstance(
+        t3, t3_fourthInstance.activationTime + t3.period * 4);
+
+    std::vector<TaskInstance> firstPath = {t1_firstInstance, t2_firstInstance,
+                                           t3_fourthInstance};
+
+    std::vector<TaskInstance> secondPath = {t1_thirdInstance, t2_secondInstance,
+                                            t3_eighthInstance};
+
+    TimedPath firstTimedPath("First path", firstPath);
+    TimedPath secondTimedPath("Second path", secondPath);
+
+    // = delta_LL(secondTimedPath) + a(t1_thirdInstance) - a(t1_firstInstance) =
+    // 40 + 40 - 0 = 80
+    int expectedFirstToLastDelay = 80;
+    TimedPath expectedPath = secondTimedPath;
+
+    std::set<TimedPath> paths = {firstTimedPath, secondTimedPath};
+
+    // make sure both paths are reachable
+    std::set<TimedPath> reachablePaths = removeUnreachablePaths(paths);
+
+    int actualFirstToLastDelay = analysis::getFirstToLastPathDelay(reachablePaths);
+
+    EXPECT_EQ(expectedFirstToLastDelay, actualFirstToLastDelay);
 }

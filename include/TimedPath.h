@@ -62,9 +62,13 @@ public:
      */
     std::string name() const;
 
-    int firstTaskStartTime() const;
+    int firstTaskActivationTime() const;
 
-    int lastTaskStartTime() const;
+    int lastTaskActivationTime() const;
+
+    bool succeeds(const TimedPath& other) const;
+
+    int calculatePathPeriod() const;
 
     /**
      * @brief Compare two TimedPath objects by name
