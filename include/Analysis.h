@@ -10,14 +10,17 @@ namespace analysis {
 
 std::set<TimedPath> removeUnreachablePaths(const std::set<TimedPath>& pathSet);
 
-std::set<TimedPath> removeDublicatesWithSameStart(
+std::set<TimedPath> removePathsProducingDublicateValues(
     const std::set<TimedPath>& pathSet);
 
 std::optional<TimedPath> getPathWithMaximumLatency(
     const std::set<TimedPath>& pathSet);
 
-int getFirstToLastPathDelay(
+int getOverarchingDelay(
     const std::set<TimedPath>& pathSet);
+
+int getFirstToFirstPathDelay(
+    const std::set<TimedPath>& firstPathSet);
 
 std::optional<TimedPath> findPredecessor(
     const TimedPath& path, const std::set<TimedPath>& pathSet);

@@ -141,7 +141,7 @@ TEST(Analysis, CanAnalyzeUsingLastToFirstSemantics) {
 
     std::set<TimedPath> reachablePaths = removeUnreachablePaths(timedPaths);
     std::set<TimedPath> reachablePaths_LF =
-        removeDublicatesWithSameStart(reachablePaths);
+        removePathsProducingDublicateValues(reachablePaths);
 
     std::optional<TimedPath> actualValueContainer =
         getPathWithMaximumLatency(reachablePaths_LF);
@@ -193,7 +193,60 @@ TEST(Analysis, CanAnalyzeUsingFirstToLastSemantics) {
     // make sure both paths are reachable
     std::set<TimedPath> reachablePaths = removeUnreachablePaths(paths);
 
-    int actualFirstToLastDelay = analysis::getFirstToLastPathDelay(reachablePaths);
+    int actualFirstToLastDelay = analysis::getOverarchingDelay(reachablePaths);
+
+    EXPECT_EQ(expectedFirstToLastDelay, actualFirstToLastDelay);
+}
+
+TEST(Analysis, CanAnalyzeUsingFirstToFirstSemantics) {
+    Task t1(20, 5, 1);
+    Task t2(40, 1, 1);
+    Task t3(10, 1, 1);
+
+    TaskInstance t1_firstInstance(t1, 0);
+    TaskInstance t1_thirdInstance(
+        t1, t1_firstInstance.activationTime + t1.period * 2);
+
+    TaskInstance t2_firstInstance(t2, 5);
+    TaskInstance t2_secondInstance(t2,
+                                   t2_firstInstance.activationTime + t2.period);
+
+    TaskInstance t3_fourthInstance(t3, 39);
+    TaskInstance t3_fifthInstance(t3,
+                                  t3_fourthInstance.activationTime + t3.period);
+    TaskInstance t3_eighthInstance(
+        t3, t3_fourthInstance.activationTime + t3.period * 4);
+
+    std::vector<TaskInstance> firstPath = {t1_firstInstance, t2_firstInstance,
+                                           t3_fourthInstance};
+
+    std::vector<TaskInstance> secondPath = {t1_firstInstance, t2_firstInstance,
+                                            t3_fifthInstance};
+
+    std::vector<TaskInstance> thirdPath = {t1_thirdInstance, t2_secondInstance,
+                                           t3_eighthInstance};
+
+    TimedPath firstTimedPath("First path", firstPath);
+    TimedPath secondTimedPath("Second path", secondPath);
+    TimedPath thirdTimedPath("Third path", thirdPath);
+
+    // = delta_LF(secondTimedPath) + a(t1_thirdInstance) - a(t1_firstInstance) =
+    // 10 + 40 - 0 = 50
+    int expectedFirstToLastDelay = 80;
+    TimedPath expectedPath = secondTimedPath;
+
+    std::set<TimedPath> paths = {firstTimedPath, secondTimedPath,
+                                 thirdTimedPath};
+
+    // make sure both paths are reachable
+    std::set<TimedPath> reachablePaths_LL = removeUnreachablePaths(paths);
+
+    // this should remove the third path
+    std::set<TimedPath> reachablePaths_LF =
+        removePathsProducingDublicateValues(reachablePaths_LL);
+
+    int actualFirstToLastDelay =
+        analysis::getOverarchingDelay(reachablePaths_LF);
 
     EXPECT_EQ(expectedFirstToLastDelay, actualFirstToLastDelay);
 }

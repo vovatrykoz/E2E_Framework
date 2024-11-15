@@ -14,7 +14,7 @@ std::set<TimedPath> analysis::removeUnreachablePaths(
     return output;
 }
 
-std::set<TimedPath> analysis::removeDublicatesWithSameStart(
+std::set<TimedPath> analysis::removePathsProducingDublicateValues(
     const std::set<TimedPath>& pathSet) {
     std::set<TimedPath> output;
 
@@ -73,7 +73,7 @@ std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     return (*maxLatencyIt);
 }
 
-int analysis::getFirstToLastPathDelay(const std::set<TimedPath>& pathSet) {
+int analysis::getOverarchingDelay(const std::set<TimedPath>& pathSet) {
     int max = 0;
 
     for (const auto& currentPath : pathSet) {
