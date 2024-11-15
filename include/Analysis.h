@@ -19,9 +19,6 @@ std::optional<TimedPath> getPathWithMaximumLatency(
 int getOverarchingDelay(
     const std::set<TimedPath>& pathSet);
 
-int getFirstToFirstPathDelay(
-    const std::set<TimedPath>& firstPathSet);
-
 std::optional<TimedPath> findPredecessor(
     const TimedPath& path, const std::set<TimedPath>& pathSet);
 
