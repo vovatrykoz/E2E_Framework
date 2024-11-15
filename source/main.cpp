@@ -70,6 +70,12 @@ int main(int argc, char* argv[]) {
     std::optional<TimedPath> maximumLatencyPath_LF =
         analysis::getPathWithMaximumLatency(validPathSet_LF);
 
+    // perform end-to-end analysis using First-To-Last semantics
+    int maxFirstToLastDelay = analysis::getOverarchingDelay(validPathSet_LL);
+
+    // perform end-to-end analysis using First-To-First semantics
+    int maxFirstToFirstDelay = analysis::getOverarchingDelay(validPathSet_LF);
+
     // idenrify which paths turned out to be invalid
     std::set<TimedPath> invalidPathSet;
     for (const auto& path : pathSet) {
@@ -83,6 +89,8 @@ int main(int argc, char* argv[]) {
         logger->logValidInvalidPaths(pathSet, validPathSet_LL, invalidPathSet);
         logger->logResults_LL(maximumLatencyPath_LL);
         logger->logResults_LF(maximumLatencyPath_LF);
+        logger->logResults_FL(maxFirstToLastDelay);
+        logger->logResults_FF(maxFirstToFirstDelay);
     } catch (std::runtime_error err) {
         std::cerr << "Failed to log results! " << err.what() << std::endl;
         return -1;

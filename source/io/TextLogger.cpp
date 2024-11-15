@@ -26,7 +26,8 @@ void TextLogger::logValidInvalidPaths(
 
     output << std::endl;
 
-    output << "- Number of reachable paths: " << validPathSet.size() << std::endl;
+    output << "- Number of reachable paths: " << validPathSet.size()
+           << std::endl;
     output << "Reachable paths: " << std::endl;
     for (const auto& validPath : validPathSet) {
         output << validPath.name() << std::endl;
@@ -72,16 +73,38 @@ void TextLogger::logResults_LF(
         output << "    Path with maximum latency over all reachable paths: "
                << maximumLatencyPath.value().name() << std::endl;
 
-        output
-            << "    Maximum latency over all reachable paths: "
-            << maximumLatencyPath.value().endToEndDelay() << std::endl;
+        output << "    Maximum latency over all reachable paths: "
+               << maximumLatencyPath.value().endToEndDelay() << std::endl;
     } else {
-        output
-            << "    Maximum latency over all reachable paths: 0 (are "
-               "there any valid paths?)"
-            << std::endl;
+        output << "    Maximum latency over all reachable paths: 0 (are "
+                  "there any valid paths?)"
+               << std::endl;
     }
 
+    output << std::endl;
+
+    this->writeOutputToFile(output.str());
+}
+
+void TextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
+    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
+    std::stringstream output;
+
+    output << "- First-to-Last semantics:" << std::endl;
+
+    output << "    Maximum path delay: " << maxFirstToLastPathDelay << std::endl;
+    output << std::endl;
+
+    this->writeOutputToFile(output.str());
+}
+
+void TextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
+    std::stringstream output;
+
+    output << "- First-to-First semantics:" << std::endl;
+
+    output << "    Maximum path delay: " << maxFirstToFirstPathDelay << std::endl;
     output << std::endl;
 
     this->writeOutputToFile(output.str());

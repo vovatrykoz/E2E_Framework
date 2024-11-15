@@ -18,10 +18,14 @@ public:
     virtual void logResults_LF(
         const std::optional<TimedPath>& maximumLatencyPath) const override;
 
+    virtual void logResults_FL(int maxFirstToLastPathDelay) const override;
+
+    virtual void logResults_FF(int maxFirstToFirstPathDelay) const override;
+
 private:
     const std::string pathToOutputFile;
 
-    void writeOutputToFile(const std::string& output) const ;
+    void writeOutputToFile(const std::string& output) const;
 };
 
 #endif

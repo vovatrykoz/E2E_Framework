@@ -80,15 +80,13 @@ int analysis::getOverarchingDelay(const std::set<TimedPath>& pathSet) {
         std::optional<TimedPath> predecessor =
             findPredecessor(currentPath, pathSet);
 
-        int predecessorActivationTime = 0;
+        int addend = 0;
         if (predecessor.has_value()) {
-            predecessorActivationTime =
-                predecessor.value().firstTaskActivationTime();
+            addend = currentPath.firstTaskActivationTime() -
+                     predecessor.value().firstTaskActivationTime();
         }
 
-        int firstToLastDelay = currentPath.endToEndDelay() +
-                               currentPath.firstTaskActivationTime() -
-                               predecessorActivationTime;
+        int firstToLastDelay = currentPath.endToEndDelay() + addend;
 
         if (firstToLastDelay > max) {
             max = firstToLastDelay;

@@ -19,6 +19,10 @@ public:
     virtual void logResults_LF(
         const std::optional<TimedPath>& maximumLatencyPath) const = 0;
 
+    virtual void logResults_FL(int maxFirstToLastPathDelay) const = 0;
+
+    virtual void logResults_FF(int maxFirstToFirstPathDelay) const = 0;
+
     virtual ~ILogger() = default;
 };
 

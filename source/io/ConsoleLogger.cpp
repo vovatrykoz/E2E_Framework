@@ -11,7 +11,8 @@ void ConsoleLogger::logValidInvalidPaths(
               << std::endl;
 
     std::cout << "Number of unreachable paths: " << invalidPathSet.size()
-              << std::endl << std::endl;
+              << std::endl
+              << std::endl;
     std::cout << "Unreachable paths: " << std::endl;
     for (const auto& invalidPath : invalidPathSet) {
         std::cout << invalidPath.name() << std::endl;
@@ -28,6 +29,7 @@ void ConsoleLogger::logValidInvalidPaths(
 
     std::cout << std::endl;
 }
+
 void ConsoleLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::cout << "Last-to-Last semantics:" << std::endl;
@@ -63,5 +65,21 @@ void ConsoleLogger::logResults_LF(
                   << std::endl;
     }
 
+    std::cout << std::endl;
+}
+
+void ConsoleLogger::logResults_FL(int maxFirstToLastPathDelay) const {
+    std::cout << "First-to-Last semantics:" << std::endl;
+
+    std::cout << "  Maximum path delay: " << maxFirstToLastPathDelay
+              << std::endl;
+    std::cout << std::endl;
+}
+
+void ConsoleLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+    std::cout << "First-to-First semantics:" << std::endl;
+
+    std::cout << "  Maximum path delay: " << maxFirstToFirstPathDelay
+              << std::endl;
     std::cout << std::endl;
 }
