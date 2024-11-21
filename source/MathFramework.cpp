@@ -67,11 +67,12 @@ bool mathframework::pathReach(const std::vector<TaskInstance>& timedPath) {
         return false;
     }
 
-    if (timedPath.size() == 1) {
+    int pathSize = timedPath.size();
+    if (pathSize == 1) {
         return true;
     }
 
-    for (int i = 0; i < timedPath.size() - 2; i++) {
+    for (int i = 0; i < pathSize - 1; i++) {
         if (!reach(timedPath[i],
                    timedPath[i + 1],
                    timedPath[i].nextInstance())) {
