@@ -91,6 +91,8 @@ public:
      */
     bool operator==(const TimedPath& other) const;
 
+    bool operator!=(const TimedPath& other) const;
+
 private:
     std::vector<TaskInstance>
         tasks;  // Stores the sequence of task instances in the path.
@@ -126,6 +128,10 @@ inline bool TimedPath::operator<(const TimedPath& other) const {
 
 inline bool TimedPath::operator==(const TimedPath& other) const {
     return this->instanceName == other.instanceName;
+}
+
+inline bool TimedPath::operator!=(const TimedPath& other) const {
+    return !(*this == other);
 }
 
 #endif

@@ -93,15 +93,14 @@ int analysis::getOverarchingDelay(const std::set<TimedPath>& pathSet) {
 
 std::optional<TimedPath> analysis::findPredecessor(
     const TimedPath& path, const std::set<TimedPath>& pathSet) {
-    for (const auto& otherPath : pathSet) {
-        if (path == otherPath) {
-            continue;
-        }
+    auto predecessorIt = std::find_if(
+        pathSet.begin(), pathSet.end(), [path](const TimedPath& otherPath) {
+            return path != otherPath && path.succeeds(otherPath);
+        });
 
-        if (path.succeeds(otherPath)) {
-            return otherPath;
-        }
+    if (predecessorIt == pathSet.end()) {
+        return std::nullopt;
     }
 
-    return std::nullopt;
+    return (*predecessorIt);
 }
