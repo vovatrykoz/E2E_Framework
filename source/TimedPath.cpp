@@ -63,14 +63,9 @@ int TimedPath::calculatePathPeriod() const {
         return 0;
     }
 
-    if (this->tasks.size() == 1) {
-        return this->tasks[0].baseTask.period;
-    }
-
-    int acc = 1;
-    for (const auto& taskInstance : this->tasks) {
-        acc = std::lcm(taskInstance.baseTask.period, acc);
-    }
-
-    return acc;
+    return std::accumulate(this->tasks.begin(), this->tasks.end(), 1,
+                           [](int acc, const TaskInstance& taskInstance) {
+                               return std::lcm(taskInstance.baseTask.period,
+                                               acc);
+                           });
 }
