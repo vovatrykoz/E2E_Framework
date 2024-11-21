@@ -1,6 +1,8 @@
 #include <Analysis.h>
 #include <MathFramework.h>
 
+#include <algorithm>
+
 std::set<TimedPath> analysis::removeUnreachablePaths(
     const std::set<TimedPath>& pathSet) {
     std::set<TimedPath> output;
@@ -53,20 +55,14 @@ std::set<TimedPath> analysis::removePathsProducingDublicateValues(
 
 std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     const std::set<TimedPath>& pathSet) {
-    if (pathSet.empty()) {
+    auto maxLatencyIt =
+        std::max_element(pathSet.begin(), pathSet.end(),
+                         [](const TimedPath& a, const TimedPath& b) {
+                             return a.endToEndDelay() < b.endToEndDelay();
+                         });
+
+    if (maxLatencyIt == pathSet.end()) {
         return std::nullopt;
-    }
-
-    auto maxLatencyIt = pathSet.begin();
-    int maxLatency = maxLatencyIt->endToEndDelay();
-
-    for (auto it = std::next(pathSet.begin()); it != pathSet.end(); it++) {
-        int currentPathEndToEndDelay = it->endToEndDelay();
-
-        if (currentPathEndToEndDelay > maxLatency) {
-            maxLatency = currentPathEndToEndDelay;
-            maxLatencyIt = it;
-        }
     }
 
     return (*maxLatencyIt);
