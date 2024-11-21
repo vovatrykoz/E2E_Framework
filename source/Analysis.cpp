@@ -58,13 +58,13 @@ std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     }
 
     auto maxLatencyIt = pathSet.begin();
-    int max = 0;
+    int maxLatency = maxLatencyIt->endToEndDelay();
 
-    for (auto it = pathSet.begin(); it != pathSet.end(); it++) {
+    for (auto it = std::next(pathSet.begin()); it != pathSet.end(); it++) {
         int currentPathEndToEndDelay = it->endToEndDelay();
 
-        if (currentPathEndToEndDelay > max) {
-            max = currentPathEndToEndDelay;
+        if (currentPathEndToEndDelay > maxLatency) {
+            maxLatency = currentPathEndToEndDelay;
             maxLatencyIt = it;
         }
     }
@@ -73,7 +73,7 @@ std::optional<TimedPath> analysis::getPathWithMaximumLatency(
 }
 
 int analysis::getOverarchingDelay(const std::set<TimedPath>& pathSet) {
-    int max = 0;
+    int maxDelay = 0;
 
     for (const auto& currentPath : pathSet) {
         std::optional<TimedPath> predecessor =
@@ -87,12 +87,12 @@ int analysis::getOverarchingDelay(const std::set<TimedPath>& pathSet) {
 
         int firstToLastDelay = currentPath.endToEndDelay() + addend;
 
-        if (firstToLastDelay > max) {
-            max = firstToLastDelay;
+        if (firstToLastDelay > maxDelay) {
+            maxDelay = firstToLastDelay;
         }
     }
 
-    return max;
+    return maxDelay;
 }
 
 std::optional<TimedPath> analysis::findPredecessor(

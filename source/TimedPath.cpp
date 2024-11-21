@@ -15,7 +15,7 @@ int TimedPath::endToEndDelay() const {
         return 0;
     }
 
-    int size = this->tasks.size();
+    std::size_t size = this->tasks.size();
     if (size == 1) {
         return this->tasks[0].baseTask.wcrt;
     }
@@ -40,7 +40,7 @@ int TimedPath::lastTaskActivationTime() const {
         return 0;
     }
 
-    size_t lastElementIndex = this->tasks.size() - 1;
+    std::size_t lastElementIndex = this->tasks.size() - 1;
     return this->tasks[lastElementIndex].activationTime;
 }
 
