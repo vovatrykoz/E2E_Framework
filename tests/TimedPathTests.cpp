@@ -44,7 +44,7 @@ TEST(TimedPath, ReturnsWcetWhenCalculatingEndToEndDelayForTaskPathWithOneTask) {
     TimedPath tp;
     tp.appendTaskInstance(t1Instance);
 
-    int expected = t1.wcet;
+    int expected = t1.wcrt;
     int actual = tp.endToEndDelay();
 
     EXPECT_EQ(expected, actual);

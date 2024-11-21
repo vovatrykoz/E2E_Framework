@@ -61,11 +61,11 @@ TaskInstance SimpleTextReader::parseTaskInstance(
 
     try {
         int period = std::stoi(taskInstanceParams[0]);
-        int wcet = std::stoi(taskInstanceParams[1]);
+        int wcrt = std::stoi(taskInstanceParams[1]);
         int priority = std::stoi(taskInstanceParams[2]);
         int activaionTime = std::stoi(taskInstanceParams[3]);
 
-        return TaskInstance(Task(period, wcet, priority), activaionTime);
+        return TaskInstance(Task(period, wcrt, priority), activaionTime);
     } catch (...) {
         throw std::runtime_error("Error: could not parse some of the lines");
     }

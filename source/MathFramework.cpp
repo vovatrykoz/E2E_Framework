@@ -12,7 +12,7 @@ bool mathframework::att(const TaskInstance& writerTaskInstance,
 bool mathframework::crit(const TaskInstance& writerTaskInstance,
                          const TaskInstance& readerTaskInstance) {
     int writerTaskTerminationTime =
-        writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcet;
+        writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcrt;
 
     if (readerTaskInstance.activationTime < writerTaskTerminationTime) {
         return true;

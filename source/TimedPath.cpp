@@ -17,13 +17,13 @@ int TimedPath::endToEndDelay() const {
 
     int size = this->tasks.size();
     if (size == 1) {
-        return this->tasks[0].baseTask.wcet;
+        return this->tasks[0].baseTask.wcrt;
     }
 
     const TaskInstance& lastTaskInstance = this->tasks[size - 1];
     const TaskInstance& firstTaskInstance = this->tasks[0];
 
-    return lastTaskInstance.activationTime + lastTaskInstance.baseTask.wcet -
+    return lastTaskInstance.activationTime + lastTaskInstance.baseTask.wcrt -
            firstTaskInstance.activationTime;
 }
 

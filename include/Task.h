@@ -3,11 +3,11 @@
 
 struct Task {
     int period;
-    int wcet;
+    int wcrt;
     int priority;
 
-    Task(int period, int wcet, int priority)
-        : period(period), wcet(wcet), priority(priority) {}
+    Task(int period, int wcrt, int priority)
+        : period(period), wcrt(wcrt), priority(priority) {}
 
     bool operator==(const Task& other) const;
     bool operator!=(const Task& other) const;
@@ -27,7 +27,7 @@ struct TaskInstance {
 };
 
 inline bool Task::operator==(const Task& other) const {
-    return this->period == other.period && this->wcet == other.wcet &&
+    return this->period == other.period && this->wcrt == other.wcrt &&
            this->priority == other.priority;
 }
 

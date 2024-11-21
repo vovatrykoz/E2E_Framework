@@ -43,11 +43,11 @@ int InputReader::readInt(const std::string& message) const {
 
 TaskInstance InputReader::readTaskInstance() const {
     int period = readInt("Enter task period: ");
-    int wcet = readInt("Enter worst case execution time for the task: ");
+    int wcrt = readInt("Enter worst case response time for the task: ");
     int priority = readInt("Enter task priority: ");
     int activationTime = readInt("Enter task activation time or offset: ");
 
-    return TaskInstance(Task(period, wcet, priority), activationTime);
+    return TaskInstance(Task(period, wcrt, priority), activationTime);
 }
 
 TimedPath InputReader::readTimedPath(const std::string& name) const {
