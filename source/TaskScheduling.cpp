@@ -19,7 +19,7 @@ int scheduling::calculateLcmForEndToEndPath(
 }
 
 std::vector<std::vector<TaskInstance>>
-scheduling::generateTaskInstancesFromTasks(
+scheduling::generateTaskInstancesFromPath(
     const std::vector<Task>& endToEndPath) {
     if (endToEndPath.empty()) {
         return std::vector<std::vector<TaskInstance>>();
@@ -43,7 +43,7 @@ scheduling::generateTaskInstancesFromTasks(
     return result;
 }
 
-std::set<TimedPath> scheduling::generateTimedPaths(
+std::set<TimedPath> scheduling::generateTimedPathsFromInstances(
     const std::vector<std::vector<TaskInstance>>& timedPaths) {
     std::set<TimedPath> result;
     if (timedPaths.empty()) {
@@ -60,19 +60,19 @@ std::set<TimedPath> scheduling::generateTimedPaths(
     return result;
 }
 
-std::vector<std::vector<TaskInstance>> scheduling::buildTimedPaths(
+std::vector<std::vector<TaskInstance>> scheduling::buildTaskExecutionPaths(
     const std::vector<std::vector<TaskInstance>>& taskInstanceChains) {
     std::vector<std::vector<TaskInstance>> timedPaths;
 
     for (const auto& taskInstanceChain : taskInstanceChains) {
         timedPaths =
-            scheduling::pathCartesianProduct(timedPaths, taskInstanceChain);
+            scheduling::cartesianProductOfTimedPaths(timedPaths, taskInstanceChain);
     }
 
     return timedPaths;
 }
 
-std::vector<std::vector<TaskInstance>> scheduling::pathCartesianProduct(
+std::vector<std::vector<TaskInstance>> scheduling::cartesianProductOfTimedPaths(
     const std::vector<std::vector<TaskInstance>>& timedPaths,
     const std::vector<TaskInstance>& taskInstanceChain) {
     std::vector<std::vector<TaskInstance>> product;

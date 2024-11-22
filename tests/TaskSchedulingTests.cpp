@@ -35,7 +35,7 @@ TEST(TaskScheduling, CorrectLcmForSeveralTasks) {
 
 TEST(TaskScheduling, EmptyTaskChainReturnsEmptyTaskInstanceChain) {
     std::vector<std::vector<TaskInstance>> actual =
-        scheduling::generateTaskInstancesFromTasks({});
+        scheduling::generateTaskInstancesFromPath({});
 
     EXPECT_TRUE(actual.empty());
 }
@@ -46,7 +46,7 @@ TEST(TaskScheduling,
 
     std::vector<std::vector<TaskInstance>> expected = {{TaskInstance(t1, 0)}};
     std::vector<std::vector<TaskInstance>> actual =
-        scheduling::generateTaskInstancesFromTasks({t1});
+        scheduling::generateTaskInstancesFromPath({t1});
 
     EXPECT_EQ(expected, actual);
 }
@@ -67,7 +67,7 @@ TEST(TaskScheduling, CorrectInstanceChainsForSeveralTasks) {
          TaskInstance(t3, 36)}};
 
     std::vector<std::vector<TaskInstance>> actual =
-        scheduling::generateTaskInstancesFromTasks(tasks);
+        scheduling::generateTaskInstancesFromPath(tasks);
 
     EXPECT_EQ(expected, actual);
 }
@@ -88,13 +88,13 @@ TEST(TaskScheduling, CorrectInstanceChainsForSeveralTasksWithOffsets) {
          TaskInstance(t3, 41)}};
 
     std::vector<std::vector<TaskInstance>> actual =
-        scheduling::generateTaskInstancesFromTasks(tasks);
+        scheduling::generateTaskInstancesFromPath(tasks);
 
     EXPECT_EQ(expected, actual);
 }
 
 TEST(TaskScheduling, EmptyTaskChainReturnsEmptySet) {
-    std::set<TimedPath> actual = scheduling::generateTimedPaths({});
+    std::set<TimedPath> actual = scheduling::generateTimedPathsFromInstances({});
 
     EXPECT_TRUE(actual.empty());
 }
@@ -110,7 +110,7 @@ TEST(TaskScheduling, TaskChainWithOneInstanceChain) {
     std::set<TimedPath> expected = {onlyPossiblePath};
 
     std::set<TimedPath> actual =
-        scheduling::generateTimedPaths(taskInstanceChain);
+        scheduling::generateTimedPathsFromInstances(taskInstanceChain);
 
     EXPECT_EQ(expected, actual);
 }
@@ -128,9 +128,9 @@ TEST(TaskScheduling, TaskChainWithOneTaskReturnsSetWithPathContainingOneTask) {
     std::set<TimedPath> expected = {tp1, tp2, tp3};
 
     std::vector<std::vector<TaskInstance>> possiblePaths =
-        scheduling::buildTimedPaths(taskInstanceChain);
+        scheduling::buildTaskExecutionPaths(taskInstanceChain);
 
-    std::set<TimedPath> actual = scheduling::generateTimedPaths(possiblePaths);
+    std::set<TimedPath> actual = scheduling::generateTimedPathsFromInstances(possiblePaths);
 
     EXPECT_EQ(expected, actual);
 }
@@ -165,10 +165,10 @@ TEST(TaskScheduling, CanBuildTaskChain) {
         {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 36)}};
 
     std::vector<std::vector<TaskInstance>> taskInstances =
-        scheduling::generateTaskInstancesFromTasks(tasks);
+        scheduling::generateTaskInstancesFromPath(tasks);
 
     std::vector<std::vector<TaskInstance>> actual =
-        scheduling::buildTimedPaths(taskInstances);
+        scheduling::buildTaskExecutionPaths(taskInstances);
 
     EXPECT_EQ(expected, actual);
 }
@@ -211,13 +211,13 @@ TEST(TaskScheduling, CanCreateTimedPathSet) {
     }
 
     std::vector<std::vector<TaskInstance>> taskInstances =
-        scheduling::generateTaskInstancesFromTasks(tasks);
+        scheduling::generateTaskInstancesFromPath(tasks);
 
     std::vector<std::vector<TaskInstance>> actualPossiblePaths =
-        scheduling::buildTimedPaths(taskInstances);
+        scheduling::buildTaskExecutionPaths(taskInstances);
 
     std::set<TimedPath> actual =
-        scheduling::generateTimedPaths(actualPossiblePaths);
+        scheduling::generateTimedPathsFromInstances(actualPossiblePaths);
 
     EXPECT_EQ(expected, actual);
 }
@@ -233,13 +233,13 @@ TEST(TaskScheduling, CanCreateTimedPathSetForMoreComplexTasks) {
     std::size_t expected = 864;
 
     std::vector<std::vector<TaskInstance>> taskInstances =
-        scheduling::generateTaskInstancesFromTasks(tasks);
+        scheduling::generateTaskInstancesFromPath(tasks);
 
     std::vector<std::vector<TaskInstance>> actualPossiblePaths =
-        scheduling::buildTimedPaths(taskInstances);
+        scheduling::buildTaskExecutionPaths(taskInstances);
 
     std::set<TimedPath> actual =
-        scheduling::generateTimedPaths(actualPossiblePaths);
+        scheduling::generateTimedPathsFromInstances(actualPossiblePaths);
 
     EXPECT_EQ(expected, actual.size());
 }

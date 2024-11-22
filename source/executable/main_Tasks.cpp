@@ -65,13 +65,13 @@ int main(int argc, char* argv[]) {
     }
 
     std::vector<std::vector<TaskInstance>> taskInstances =
-        scheduling::generateTaskInstancesFromTasks(taskChain);
+        scheduling::generateTaskInstancesFromPath(taskChain);
 
     std::vector<std::vector<TaskInstance>> allPossiblePaths =
-        scheduling::buildTimedPaths(taskInstances);
+        scheduling::buildTaskExecutionPaths(taskInstances);
 
     std::set<TimedPath> pathSet =
-        scheduling::generateTimedPaths(allPossiblePaths);
+        scheduling::generateTimedPathsFromInstances(allPossiblePaths);
 
     // perform the analysis
     std::set<TimedPath> validPathSet_LL =

@@ -57,12 +57,46 @@ public:
      */
     const std::vector<TaskInstance>& asVector() const;
 
+    /**
+     * @brief Returns the activation time of the first task in the timed path.
+     *
+     * This function calculates the activation time of the first task in the path
+     * by returning the activation time of the first task instance.
+     *
+     * @return The activation time of the first task in the timed path.
+     */
     int firstTaskActivationTime() const;
 
+    /**
+     * @brief Returns the activation time of the last task in the timed path.
+     *
+     * This function calculates the activation time of the last task in the path
+     * by returning the activation time of the last task instance.
+     *
+     * @return The activation time of the last task in the timed path.
+     */
     int lastTaskActivationTime() const;
 
+    /**
+     * @brief Checks if the current timed path succeeds the given timed path.
+     *
+     * This function checks if the current timed path starts after the other timed
+     * path finishes, making the current path a successor in terms of activation time.
+     *
+     * @param other The other TimedPath to compare with.
+     * @return true if the current path succeeds the other path, false otherwise.
+     */
     bool succeeds(const TimedPath& other) const;
 
+    /**
+     * @brief Calculates the period of the timed path.
+     *
+     * This function computes the period of the timed path, which is the time it
+     * takes for the path to repeat its execution. It’s calculated as the difference
+     * between the activation times of the first and last tasks in the path.
+     *
+     * @return The period of the timed path.
+     */
     int calculatePathPeriod() const;
 
     /**
@@ -86,6 +120,15 @@ public:
      */
     bool operator==(const TimedPath& other) const;
 
+    /**
+     * @brief Compare two TimedPath objects for inequality.
+     *
+     * This function checks if two TimedPath objects are not equal by comparing
+     * their names.
+     *
+     * @param other The TimedPath object to compare with.
+     * @return true if the TimedPath objects have different names, false otherwise.
+     */
     bool operator!=(const TimedPath& other) const;
 
 private:
