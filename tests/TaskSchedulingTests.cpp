@@ -130,3 +130,41 @@ TEST(TaskScheduling, TaskChainWithOneTaskReturnsSetWithPathContainingOneTask) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(TaskScheduling, CanBuildTaskChain) {
+    Task t1(20, 4, 1);
+    Task t2(40, 3, 1);
+    Task t3(4, 2, 1);
+
+    std::vector<Task> tasks = {t1, t2, t3};
+
+    std::vector<std::vector<TaskInstance>> expected = {
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 0)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 4)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 8)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 12)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 16)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 20)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 24)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 28)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 32)},
+        {TaskInstance(t1, 0), TaskInstance(t2, 0), TaskInstance(t3, 36)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 0)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 4)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 8)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 12)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 16)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 20)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 24)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 28)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 32)},
+        {TaskInstance(t1, 20), TaskInstance(t2, 0), TaskInstance(t3, 36)}};
+
+    std::vector<std::vector<TaskInstance>> taskInstances =
+        scheduling::generateTaskInstancesFromTasks(tasks);
+
+    std::vector<std::vector<TaskInstance>> actual =
+        scheduling::buildTimedPaths(taskInstances);
+
+    EXPECT_EQ(expected, actual);
+}

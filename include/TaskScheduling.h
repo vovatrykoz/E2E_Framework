@@ -17,6 +17,12 @@ std::vector<std::vector<TaskInstance>> generateTaskInstancesFromTasks(
 std::set<TimedPath> generateTimedPaths(
     const std::vector<std::vector<TaskInstance>>& taskInstanceChains);
 
+std::vector<std::vector<TaskInstance>> buildTimedPaths(
+    const std::vector<std::vector<TaskInstance>>& taskInstanceChains);
+
+std::vector<std::vector<TaskInstance>> pathCartesianProduct(const std::vector<std::vector<TaskInstance>>& timedPaths,
+                          const std::vector<TaskInstance>& taskInstanceChain);
+
 }  // namespace scheduling
 
 #endif
