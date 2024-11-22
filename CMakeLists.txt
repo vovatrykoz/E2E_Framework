@@ -11,54 +11,29 @@ set(TESTS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
 
 include_directories(${INCLUDE_DIR})
 
+
 add_library(
-    consoleLogger
+    e2e_io
+
     ${CODE_SOURCE_DIR}/io/ConsoleLogger.cpp
-)
-
-add_library(
-    textLogger
     ${CODE_SOURCE_DIR}/io/TextLogger.cpp
-)
-
-add_library(
-    taskInstanceInputReader
     ${CODE_SOURCE_DIR}/io/TaskInstanceInputReader.cpp
-)
-
-add_library(
-    taskInstanceSimpleTextReader
     ${CODE_SOURCE_DIR}/io/TaskInstanceSimpleTextReader.cpp
 )
 
 add_library(
-    task
+    e2e_core
+
     ${CODE_SOURCE_DIR}/Task.cpp
-)
-
-add_library(
-    setup
-    ${CODE_SOURCE_DIR}/Setup.cpp
-)
-
-add_library(
-    scheduling
     ${CODE_SOURCE_DIR}/TaskScheduling.cpp
-)
-
-add_library(
-    analysis
     ${CODE_SOURCE_DIR}/Analysis.cpp
-)
-
-add_library(
-    mathFramework
     ${CODE_SOURCE_DIR}/MathFramework.cpp
+    ${CODE_SOURCE_DIR}/TimedPath.cpp
 )
 
 add_library(
-    timedPath
-    ${CODE_SOURCE_DIR}/TimedPath.cpp
+    e2e_setup
+    ${CODE_SOURCE_DIR}/Setup.cpp
 )
 
 add_executable(
@@ -67,25 +42,16 @@ add_executable(
 )
 
 target_compile_features(individualPathAnalyzer PUBLIC cxx_std_17)
-target_link_libraries(taskInstanceInputReader timedPath)
-target_link_libraries(consoleLogger timedPath)
-target_link_libraries(taskInstanceSimpleTextReader timedPath)
-target_link_libraries(textLogger timedPath)
+target_link_libraries(e2e_io e2e_core)
 target_link_libraries(
-    setup 
-    taskInstanceInputReader 
-    consoleLogger 
-    taskInstanceSimpleTextReader 
-    textLogger
+    e2e_setup 
+    e2e_io
 )
-
-target_link_libraries(mathFramework task)
-target_link_libraries(analysis mathFramework task)
 
 target_link_libraries(
     individualPathAnalyzer 
-    analysis
-    setup
+    e2e_core
+    e2e_setup
 )
 
 include(FetchContent)
@@ -110,11 +76,7 @@ add_executable(
 target_link_libraries(
     testRunner
     GTest::gtest_main
-    mathFramework
-    timedPath
-    task
-    analysis
-    scheduling
+    e2e_core
 )
 
 include(GoogleTest)
