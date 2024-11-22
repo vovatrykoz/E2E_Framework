@@ -119,7 +119,7 @@ int main(int argc, char* argv[]) {
 }
 
 void printUsageInfo() {
-    std::cerr << "Usage: runner <reader_type> <logger_type>" << std::endl;
+    std::cerr << "Usage: taskAnalyzer <reader_type> <logger_type>" << std::endl;
     std::cerr << "Currently supported loggers: Console, Text" << std::endl;
     std::cerr << "Currently supported readers: Console, Text" << std::endl;
 }
