@@ -1,4 +1,4 @@
-#include <io/SimpleTextTaskReader.h>
+#include <io/reader/SimpleTextTaskReader.h>
 
 #include <fstream>
 #include <sstream>

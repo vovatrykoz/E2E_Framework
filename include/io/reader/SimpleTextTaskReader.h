@@ -1,7 +1,7 @@
 #ifndef _SIMPLE_TEXT_TASK_READER_H_
 #define _SIMPLE_TEXT_TASK_READER_H_
 
-#include <io/ITaskReader.h>
+#include <io/reader/ITaskReader.h>
 
 namespace e2e {
 namespace io {

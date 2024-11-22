@@ -1,5 +1,14 @@
 #include "Setup.h"
 
+#include <io/logger/ConsoleLogger.h>
+#include <io/reader/ConsoleTaskReader.h>
+#include <io/reader/SimpleTextTaskReader.h>
+#include <io/reader/TaskInstanceInputReader.h>
+#include <io/reader/TaskInstanceSimpleTextReader.h>
+#include <io/logger/TextLogger.h>
+#include <io/logger/TaskTextLogger.h>
+#include <io/logger/TaskConsoleLogger.h>
+
 #include <iostream>
 
 using namespace e2e;

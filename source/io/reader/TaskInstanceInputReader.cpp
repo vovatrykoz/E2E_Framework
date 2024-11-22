@@ -1,4 +1,4 @@
-#include "io/TaskInstanceInputReader.h"
+#include "io/reader/TaskInstanceInputReader.h"
 #include <limits>
 #include <iostream>
 

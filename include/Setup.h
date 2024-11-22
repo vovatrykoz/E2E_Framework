@@ -1,17 +1,12 @@
 #ifndef _SETUP_H_
 #define _SETUP_H_
 
-#include <io/ConsoleLogger.h>
-#include <io/ConsoleTaskReader.h>
-#include <io/SimpleTextTaskReader.h>
-#include <io/TaskInstanceInputReader.h>
-#include <io/TaskInstanceSimpleTextReader.h>
-#include <io/TextLogger.h>
-#include <io/TaskTextLogger.h>
-#include <io/TaskConsoleLogger.h>
-
 #include <memory>
 #include <optional>
+
+#include <io/logger/ILogger.h>
+#include <io/reader/ITaskReader.h>
+#include <io/reader/ITaskInstanceReader.h>
 
 namespace e2e {
 namespace setup {

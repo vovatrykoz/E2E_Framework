@@ -15,14 +15,14 @@ include_directories(${INCLUDE_DIR})
 add_library(
     e2e_io
 
-    ${CODE_SOURCE_DIR}/io/ConsoleLogger.cpp
-    ${CODE_SOURCE_DIR}/io/ConsoleTaskReader.cpp
-    ${CODE_SOURCE_DIR}/io/SimpleTextTaskReader.cpp
-    ${CODE_SOURCE_DIR}/io/TaskConsoleLogger.cpp
-    ${CODE_SOURCE_DIR}/io/TextLogger.cpp
-    ${CODE_SOURCE_DIR}/io/TaskTextLogger.cpp
-    ${CODE_SOURCE_DIR}/io/TaskInstanceInputReader.cpp
-    ${CODE_SOURCE_DIR}/io/TaskInstanceSimpleTextReader.cpp
+    ${CODE_SOURCE_DIR}/io/logger/ConsoleLogger.cpp
+    ${CODE_SOURCE_DIR}/io/logger/TaskConsoleLogger.cpp
+    ${CODE_SOURCE_DIR}/io/logger/TextLogger.cpp
+    ${CODE_SOURCE_DIR}/io/logger/TaskTextLogger.cpp
+    ${CODE_SOURCE_DIR}/io/reader/ConsoleTaskReader.cpp
+    ${CODE_SOURCE_DIR}/io/reader/SimpleTextTaskReader.cpp
+    ${CODE_SOURCE_DIR}/io/reader/TaskInstanceInputReader.cpp
+    ${CODE_SOURCE_DIR}/io/reader/TaskInstanceSimpleTextReader.cpp
 )
 
 add_library(

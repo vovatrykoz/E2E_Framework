@@ -1,4 +1,4 @@
-#include "io/TaskInstanceSimpleTextReader.h"
+#include "io/reader/TaskInstanceSimpleTextReader.h"
 
 #include <fstream>
 #include <sstream>

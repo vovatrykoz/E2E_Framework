@@ -1,7 +1,7 @@
 #ifndef _TASK_INSTANCE_INPUT_READER_H_
 #define _TASK_INSTANCE_INPUT_READER_H_
 
-#include <io/ITaskInstanceReader.h>
+#include <io/reader/ITaskInstanceReader.h>
 
 #include <set>
 #include <string>

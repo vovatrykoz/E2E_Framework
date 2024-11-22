@@ -1,7 +1,7 @@
 #ifndef _CONSOLE_TASK_READER_H_
 #define _CONSOLE_TASK_READER_H_
 
-#include <io/ITaskReader.h>
+#include <io/reader/ITaskReader.h>
 
 namespace e2e {
 namespace io {
