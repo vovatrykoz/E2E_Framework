@@ -8,6 +8,9 @@ The code is split into the include folder containing all the headers and the sou
 
 ### io/
 The include/io/ and source/io/ subfolders contain implementation and definitions for code that is responsible for taking in user input and logging the analysis results. Right now, two ways for reading and writing are supported: console-based and text-based. 
+
+#### individualPathAnalyzer
+
 Text based option supports a file that is formated as follows:
 ```
 START <timed_path_name>
