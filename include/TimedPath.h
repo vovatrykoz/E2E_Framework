@@ -17,9 +17,51 @@ namespace e2e {
  */
 class TimedPath {
 public:
+    /**
+     * @brief Default constructor for TimedPath.
+     *
+     * This constructor initializes an empty TimedPath. The `name` will be an
+     * empty string, and the `tasks` vector will be empty. This constructor can
+     * be used when a TimedPath is created without immediate task data or name.
+     */
     TimedPath();
+
+    /**
+     * @brief Constructor for TimedPath with a name.
+     *
+     * This constructor initializes a TimedPath with a given name. The `tasks`
+     * vector will be empty initially. This constructor is useful when you want
+     * to create a TimedPath with a specific name but no tasks yet.
+     *
+     * @param name The name to assign to the TimedPath.
+     */
     TimedPath(const std::string& name);
+
+    /**
+     * @brief Constructor for TimedPath with a list of task instances.
+     *
+     * This constructor initializes a TimedPath with a given sequence of task
+     * instances. The `name` will be an empty string. This constructor is used
+     * when the TimedPath is created with a set of tasks, but no name is needed.
+     *
+     * @param tasks A vector of TaskInstance objects that will define the
+     * sequence of tasks in the TimedPath.
+     */
     TimedPath(const std::vector<TaskInstance>& tasks);
+
+    /**
+     * @brief Constructor for TimedPath with a name and a list of task
+     * instances.
+     *
+     * This constructor initializes a TimedPath with both a specific name and a
+     * sequence of task instances. This is the most complete constructor, used
+     * when both the name and the tasks for the TimedPath are known at the time
+     * of creation.
+     *
+     * @param name  The name to assign to the TimedPath.
+     * @param tasks A vector of TaskInstance objects that will define the
+     * sequence of tasks in the TimedPath.
+     */
     TimedPath(const std::string& name, const std::vector<TaskInstance>& tasks);
 
     std::string name;  // Name of the timed path
@@ -60,8 +102,8 @@ public:
     /**
      * @brief Returns the activation time of the first task in the timed path.
      *
-     * This function calculates the activation time of the first task in the path
-     * by returning the activation time of the first task instance.
+     * This function calculates the activation time of the first task in the
+     * path by returning the activation time of the first task instance.
      *
      * @return The activation time of the first task in the timed path.
      */
@@ -80,11 +122,13 @@ public:
     /**
      * @brief Checks if the current timed path succeeds the given timed path.
      *
-     * This function checks if the current timed path starts after the other timed
-     * path finishes, making the current path a successor in terms of activation time.
+     * This function checks if the current timed path starts after the other
+     * timed path finishes, making the current path a successor in terms of
+     * activation time.
      *
      * @param other The other TimedPath to compare with.
-     * @return true if the current path succeeds the other path, false otherwise.
+     * @return true if the current path succeeds the other path, false
+     * otherwise.
      */
     bool succeeds(const TimedPath& other) const;
 
@@ -92,8 +136,9 @@ public:
      * @brief Calculates the period of the timed path.
      *
      * This function computes the period of the timed path, which is the time it
-     * takes for the path to repeat its execution. It’s calculated as the difference
-     * between the activation times of the first and last tasks in the path.
+     * takes for the path to repeat its execution. It’s calculated as the
+     * difference between the activation times of the first and last tasks in
+     * the path.
      *
      * @return The period of the timed path.
      */
@@ -127,7 +172,8 @@ public:
      * their names.
      *
      * @param other The TimedPath object to compare with.
-     * @return true if the TimedPath objects have different names, false otherwise.
+     * @return true if the TimedPath objects have different names, false
+     * otherwise.
      */
     bool operator!=(const TimedPath& other) const;
 

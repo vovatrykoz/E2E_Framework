@@ -7,18 +7,22 @@ namespace e2e {
  * @struct Task
  * @brief Represents a task with its execution parameters.
  *
- * A `Task` is a core unit of scheduling. It contains information about the task's
- * period, worst-case response time (WCRT), priority, and an optional offset.
+ * A `Task` is a core unit of scheduling. It contains information about the
+ * task's period, worst-case response time (WCRT), priority, and an optional
+ * offset.
  *
- * Tasks are used to describe periodic tasks in a real-time system, where each task
- * has a period (time between executions), a WCRT (maximum time it takes to complete),
- * a priority (used for scheduling), and an offset (delays the first execution).
+ * Tasks are used to describe periodic tasks in a real-time system, where each
+ * task has a period (time between executions), a WCRT (maximum time it takes to
+ * complete), a priority (used for scheduling), and an offset (delays the first
+ * execution).
  */
 struct Task {
-    int period;     // The period of the task (in time units).
-    int wcrt;       // The worst-case response time (in time units).
-    int priority;   // The priority of the task (higher value means higher priority).
-    int offset = 0; // The offset (initial delay before task execution), default is 0.
+    int period;    // The period of the task (in time units).
+    int wcrt;      // The worst-case response time (in time units).
+    int priority;  // The priority of the task (higher value means higher
+                   // priority).
+    int offset =
+        0;  // The offset (initial delay before task execution), default is 0.
 
     /**
      * @brief Constructs a Task with a specified period, WCRT, and priority.
@@ -30,7 +34,8 @@ struct Task {
         : period(period), wcrt(wcrt), priority(priority) {}
 
     /**
-     * @brief Constructs a Task with a specified period, WCRT, priority, and offset.
+     * @brief Constructs a Task with a specified period, WCRT, priority, and
+     * offset.
      * @param period The period of the task.
      * @param wcrt The worst-case response time of the task.
      * @param priority The priority of the task.
@@ -58,12 +63,13 @@ struct Task {
  * @struct TaskInstance
  * @brief Represents an instance of a task in time.
  *
- * A `TaskInstance` extends a `Task` by adding an activation time that specifies when
- * the task should be executed. Each `TaskInstance` represents a specific execution
- * of a task, occurring at a specific point in time.
+ * A `TaskInstance` extends a `Task` by adding an activation time that specifies
+ * when the task should be executed. Each `TaskInstance` represents a specific
+ * execution of a task, occurring at a specific point in time.
  */
 struct TaskInstance {
-    Task baseTask;       // The base task, which contains the task's period, WCRT, priority, and offset.
+    Task baseTask;  // The base task, which contains the task's period, WCRT,
+                    // priority, and offset.
     int activationTime;  // The time at which this task instance is activated.
 
     /**
@@ -76,10 +82,10 @@ struct TaskInstance {
 
     /**
      * @brief Gets the next instance of the task.
-     * 
+     *
      * The next task instance is calculated based on the period of the base task
      * and the current instance's activation time.
-     * 
+     *
      * @return The next `TaskInstance` based on the current one.
      */
     TaskInstance nextInstance() const;

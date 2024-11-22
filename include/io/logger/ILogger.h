@@ -23,7 +23,8 @@ public:
      * @brief Logs the valid and invalid paths.
      *
      * This function logs the entire set of paths, along with separate logs for
-     * valid and invalid paths. It helps in analyzing the correctness of the paths.
+     * valid and invalid paths. It helps in analyzing the correctness of the
+     * paths.
      *
      * @param allPathsSet A set containing all the timed paths.
      * @param validPathSet A set containing valid timed paths.
@@ -85,7 +86,6 @@ public:
      */
     virtual ~ILogger() = default;
 };
-
 
 }  // namespace io
 }  // namespace e2e
