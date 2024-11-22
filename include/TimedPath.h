@@ -64,7 +64,18 @@ public:
      */
     TimedPath(const std::string& name, const std::vector<TaskInstance>& tasks);
 
-    std::string name;  // Name of the timed path
+    /**
+     * @brief The name of the timed path.
+     *
+     * This string property stores the name associated with the timed path.
+     * It is used to identify and differentiate between various timed paths.
+     * The name can be set when constructing the TimedPath object or modified
+     * later.
+     *
+     * @note The name is optional, and if not explicitly set, it will default to
+     * an empty string.
+     */
+    std::string name;
 
     /**
      * @brief Appends a task instance to the end of the timed path.
