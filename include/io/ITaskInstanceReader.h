@@ -1,5 +1,5 @@
-#ifndef _I_READER_H_
-#define _I_READER_H_
+#ifndef _I_TASK_INSTANCE_READER_H_
+#define _I_TASK_INSTANCE_READER_H_
 
 #include <TimedPath.h>
 

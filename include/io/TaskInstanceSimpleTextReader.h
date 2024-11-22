@@ -1,7 +1,7 @@
-#ifndef _SIMPLE_TEXT_READER_H_
-#define _SIMPLE_TEXT_READER_H_
+#ifndef _TASK_INSTANCE_SIMPLE_TEXT_READER_H_
+#define _TASK_INSTANCE_SIMPLE_TEXT_READER_H_
 
-#include <io/IReader.h>
+#include <io/ITaskInstanceReader.h>
 
 namespace e2e {
 namespace io {

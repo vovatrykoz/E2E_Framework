@@ -1,7 +1,7 @@
-#ifndef _INPUT_READER_H_
-#define _INPUT_READER_H_
+#ifndef _TASK_INSTANCE_INPUT_READER_H_
+#define _TASK_INSTANCE_INPUT_READER_H_
 
-#include <io/IReader.h>
+#include <io/ITaskInstanceReader.h>
 
 #include <set>
 #include <string>
@@ -21,4 +21,5 @@ private:
 
 }  // namespace io
 }  // namespace e2e
+
 #endif
