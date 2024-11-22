@@ -49,6 +49,10 @@ setup::getSupportedTaskReaderFromString(const std::string& readerStr) {
         return SupportedTaskReader::Console;
     }
 
+    if (readerStr == "text") {
+        return SupportedTaskReader::Text;
+    }
+
     return std::nullopt;
 }
 
@@ -100,6 +104,12 @@ std::unique_ptr<ITaskReader> e2e::setup::getTaskReaderFromType(
         case SupportedTaskReader::Console:
             std::cout << "Reader type: console" << std::endl;
             return std::make_unique<ConsoleTaskReader>();
+
+        case SupportedTaskReader::Text:
+            std::cout << "Reader type: text" << std::endl;
+            std::cout << "Enter path to input file: ";
+            std::cin >> inputPath;
+            return std::make_unique<SimpleTextTaskReader>(inputPath);
 
         default:
             return nullptr;

@@ -3,8 +3,10 @@
 
 #include <io/ConsoleLogger.h>
 #include <io/ConsoleTaskReader.h>
-#include <io/TaskInstanceInputReader.h>
+#include <io/ConsoleTaskReader.h>
+#include <io/SimpleTextTaskReader.h>
 #include <io/TaskInstanceSimpleTextReader.h>
+#include <io/TaskInstanceInputReader.h>
 #include <io/TextLogger.h>
 
 #include <memory>
@@ -17,7 +19,7 @@ using namespace e2e::io;
 
 enum class SupportedLogger { Console, Text };
 enum class SupportedTaskInstanceReader { Console, Text };
-enum class SupportedTaskReader { Console };
+enum class SupportedTaskReader { Console, Text };
 
 // Get supported types from string-----------------------------------
 

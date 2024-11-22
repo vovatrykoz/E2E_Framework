@@ -17,6 +17,7 @@ add_library(
 
     ${CODE_SOURCE_DIR}/io/ConsoleLogger.cpp
     ${CODE_SOURCE_DIR}/io/ConsoleTaskReader.cpp
+    ${CODE_SOURCE_DIR}/io/SimpleTextTaskReader.cpp
     ${CODE_SOURCE_DIR}/io/TextLogger.cpp
     ${CODE_SOURCE_DIR}/io/TaskInstanceInputReader.cpp
     ${CODE_SOURCE_DIR}/io/TaskInstanceSimpleTextReader.cpp

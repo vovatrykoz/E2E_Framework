@@ -1,10 +1,13 @@
-#include "SimpleTextTaskReader.h"
+#include <io/SimpleTextTaskReader.h>
 
 #include <fstream>
 #include <sstream>
 
 using namespace e2e;
 using namespace e2e::io;
+
+e2e::io::SimpleTextTaskReader::SimpleTextTaskReader(const std::string& filePath)
+    : filePath(filePath) {}
 
 std::vector<NamedTask> SimpleTextTaskReader::readTaskChain() const {
     std::ifstream file(this->filePath);
@@ -44,8 +47,7 @@ std::vector<NamedTask> SimpleTextTaskReader::readTaskChain() const {
     return output;
 }
 
-Task SimpleTextTaskReader::parseTask(
-    const std::string& taskStr) const {
+Task SimpleTextTaskReader::parseTask(const std::string& taskStr) const {
     std::vector<std::string> taskParams;
     std::stringstream ss(taskStr);
 
@@ -70,3 +72,6 @@ Task SimpleTextTaskReader::parseTask(
         throw std::runtime_error("Error: could not parse some of the lines");
     }
 }
+
+const std::string SimpleTextTaskReader::startStr = "START";
+const std::string SimpleTextTaskReader::endStr = "END";
