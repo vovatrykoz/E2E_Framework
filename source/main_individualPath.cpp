@@ -12,7 +12,7 @@ void printUsageInfo();
 
 int main(int argc, char* argv[]) {
     // prepare the reader and the logger
-    std::unique_ptr<IReader> inputReader = nullptr;
+    std::unique_ptr<ITaskInstanceReader> inputReader = nullptr;
     std::unique_ptr<ILogger> logger = nullptr;
 
     // setup

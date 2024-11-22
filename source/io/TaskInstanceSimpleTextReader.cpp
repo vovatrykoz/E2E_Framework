@@ -1,4 +1,4 @@
-#include "io/SimpleTextReader.h"
+#include "io/TaskInstanceSimpleTextReader.h"
 
 #include <fstream>
 #include <sstream>
@@ -6,10 +6,10 @@
 using namespace e2e;
 using namespace e2e::io;
 
-SimpleTextReader::SimpleTextReader(const std::string& filePath)
+TaskInstanceSimpleTextReader::TaskInstanceSimpleTextReader(const std::string& filePath)
     : filePath(filePath) {}
 
-std::set<TimedPath> SimpleTextReader::readPathsSet() const {
+std::set<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
     std::ifstream file(this->filePath);
 
     if (!file) {
@@ -47,7 +47,7 @@ std::set<TimedPath> SimpleTextReader::readPathsSet() const {
     return output;
 }
 
-TaskInstance SimpleTextReader::parseTaskInstance(
+TaskInstance TaskInstanceSimpleTextReader::parseTaskInstance(
     const std::string& taskInstanceStr) const {
     std::vector<std::string> taskInstanceParams;
     std::stringstream ss(taskInstanceStr);
@@ -74,5 +74,5 @@ TaskInstance SimpleTextReader::parseTaskInstance(
     }
 }
 
-const std::string SimpleTextReader::startStr = "START";
-const std::string SimpleTextReader::endStr = "END";
+const std::string TaskInstanceSimpleTextReader::startStr = "START";
+const std::string TaskInstanceSimpleTextReader::endStr = "END";

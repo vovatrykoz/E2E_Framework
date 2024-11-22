@@ -22,13 +22,13 @@ add_library(
 )
 
 add_library(
-    inputReader
-    ${CODE_SOURCE_DIR}/io/InputReader.cpp
+    taskInstanceInputReader
+    ${CODE_SOURCE_DIR}/io/TaskInstanceInputReader.cpp
 )
 
 add_library(
-    simpleTextReader
-    ${CODE_SOURCE_DIR}/io/SimpleTextReader.cpp
+    taskInstanceSimpleTextReader
+    ${CODE_SOURCE_DIR}/io/TaskInstanceSimpleTextReader.cpp
 )
 
 add_library(
@@ -67,11 +67,17 @@ add_executable(
 )
 
 target_compile_features(individualPathAnalyzer PUBLIC cxx_std_17)
-target_link_libraries(inputReader timedPath)
+target_link_libraries(taskInstanceInputReader timedPath)
 target_link_libraries(consoleLogger timedPath)
-target_link_libraries(simpleTextReader timedPath)
+target_link_libraries(taskInstanceSimpleTextReader timedPath)
 target_link_libraries(textLogger timedPath)
-target_link_libraries(setup inputReader consoleLogger simpleTextReader textLogger)
+target_link_libraries(
+    setup 
+    taskInstanceInputReader 
+    consoleLogger 
+    taskInstanceSimpleTextReader 
+    textLogger
+)
 
 target_link_libraries(mathFramework task)
 target_link_libraries(analysis mathFramework task)

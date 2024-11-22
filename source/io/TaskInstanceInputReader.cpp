@@ -1,11 +1,11 @@
-#include "io/InputReader.h"
+#include "io/TaskInstanceInputReader.h"
 #include <limits>
 #include <iostream>
 
 using namespace e2e;
 using namespace e2e::io;
 
-std::set<TimedPath> InputReader::readPathsSet() const {
+std::set<TimedPath> TaskInstanceInputReader::readPathsSet() const {
     std::set<TimedPath> result;
     std::string name;
     int numOfChains = readInt("How many task chains do you want to analyse: ");
@@ -22,7 +22,7 @@ std::set<TimedPath> InputReader::readPathsSet() const {
     return result;
 }
 
-int InputReader::readInt(const std::string& message) const {
+int TaskInstanceInputReader::readInt(const std::string& message) const {
     int output;
     bool validInput = false;
 
@@ -44,7 +44,7 @@ int InputReader::readInt(const std::string& message) const {
     return output;
 }
 
-TaskInstance InputReader::readTaskInstance() const {
+TaskInstance TaskInstanceInputReader::readTaskInstance() const {
     int period = readInt("Enter task period: ");
     int wcrt = readInt("Enter worst case response time for the task: ");
     int priority = readInt("Enter task priority: ");
@@ -53,7 +53,7 @@ TaskInstance InputReader::readTaskInstance() const {
     return TaskInstance(Task(period, wcrt, priority), activationTime);
 }
 
-TimedPath InputReader::readTimedPath(const std::string& name) const {
+TimedPath TaskInstanceInputReader::readTimedPath(const std::string& name) const {
     TimedPath timedPath(name);
 
     int numOfTasks = readInt("How many tasks should be in the chain: ");

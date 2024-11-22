@@ -6,9 +6,9 @@
 namespace e2e {
 namespace io {
 
-class SimpleTextReader : public IReader {
+class TaskInstanceSimpleTextReader : public ITaskInstanceReader {
 public:
-    SimpleTextReader(const std::string& filePath);
+    TaskInstanceSimpleTextReader(const std::string& filePath);
 
     virtual std::set<TimedPath> readPathsSet() const override;
 

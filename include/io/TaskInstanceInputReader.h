@@ -9,7 +9,7 @@
 namespace e2e {
 namespace io {
 
-class InputReader : public IReader {
+class TaskInstanceInputReader : public ITaskInstanceReader {
 public:
     virtual std::set<TimedPath> readPathsSet() const override;
 

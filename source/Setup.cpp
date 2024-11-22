@@ -59,18 +59,18 @@ std::unique_ptr<ILogger> setup::getLoggerFromType(SupportedLogger loggerType) {
     return nullptr;
 }
 
-std::unique_ptr<IReader> setup::getReaderFromType(SupportedReader readerType) {
+std::unique_ptr<ITaskInstanceReader> setup::getReaderFromType(SupportedReader readerType) {
     std::string inputPath;
     switch (readerType) {
         case SupportedReader::Console:
             std::cout << "Reader type: console" << std::endl;
-            return std::make_unique<InputReader>();
+            return std::make_unique<TaskInstanceInputReader>();
 
         case SupportedReader::Text:
             std::cout << "Reader type: text" << std::endl;
             std::cout << "Enter path to input file: ";
             std::cin >> inputPath;
-            return std::make_unique<SimpleTextReader>(inputPath);
+            return std::make_unique<TaskInstanceSimpleTextReader>(inputPath);
 
         default:
             return nullptr;
@@ -91,7 +91,7 @@ std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
     return setup::getLoggerFromType(loggerType.value());
 }
 
-std::unique_ptr<IReader> setup::reader(const std::string& readerStr) {
+std::unique_ptr<ITaskInstanceReader> setup::reader(const std::string& readerStr) {
     std::optional<setup::SupportedReader> readerType =
         setup::getSupportedReaderFromString(readerStr);
 

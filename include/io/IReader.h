@@ -9,10 +9,10 @@
 namespace e2e {
 namespace io {
 
-class IReader {
+class ITaskInstanceReader {
 public:
     virtual std::set<TimedPath> readPathsSet() const = 0;
-    virtual ~IReader() = default;
+    virtual ~ITaskInstanceReader() = default;
 };
 
 }  // namespace io
