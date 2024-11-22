@@ -5,9 +5,13 @@ struct Task {
     int period;
     int wcrt;
     int priority;
+    int offset = 0;
 
     Task(int period, int wcrt, int priority)
         : period(period), wcrt(wcrt), priority(priority) {}
+
+    Task(int period, int wcrt, int priority, int offset)
+        : period(period), wcrt(wcrt), priority(priority), offset(offset) {}
 
     bool operator==(const Task& other) const;
     bool operator!=(const Task& other) const;
