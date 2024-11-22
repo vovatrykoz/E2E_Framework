@@ -17,7 +17,7 @@ void ConsoleLogger::logValidInvalidPaths(
               << std::endl;
     std::cout << "Unreachable paths: " << std::endl;
     for (const auto& invalidPath : invalidPathSet) {
-        std::cout << invalidPath.name() << std::endl;
+        std::cout << invalidPath.name << std::endl;
     }
 
     std::cout << std::endl;
@@ -26,7 +26,7 @@ void ConsoleLogger::logValidInvalidPaths(
               << std::endl;
     std::cout << "Reachable paths: " << std::endl;
     for (const auto& validPath : validPathSet) {
-        std::cout << validPath.name() << std::endl;
+        std::cout << validPath.name << std::endl;
     }
 
     std::cout << std::endl;
@@ -38,10 +38,10 @@ void ConsoleLogger::logResults_LL(
 
     if (maximumLatencyPath.has_value()) {
         std::cout << "  Path with maximum latency over all reachable paths: "
-                  << maximumLatencyPath.value().name() << std::endl;
+                  << maximumLatencyPath->name << std::endl;
 
         std::cout << "  Maximum latency over all reachable paths: "
-                  << maximumLatencyPath.value().endToEndDelay() << std::endl;
+                  << maximumLatencyPath->endToEndDelay() << std::endl;
     } else {
         std::cout << "  Maximum latency over all reachable paths: 0 (are "
                      "there any valid paths?)"
@@ -57,10 +57,10 @@ void ConsoleLogger::logResults_LF(
 
     if (maximumLatencyPath.has_value()) {
         std::cout << "  Path with maximum latency over all reachable paths: "
-                  << maximumLatencyPath.value().name() << std::endl;
+                  << maximumLatencyPath->name << std::endl;
 
         std::cout << "  Maximum latency over all reachable paths: "
-                  << maximumLatencyPath.value().endToEndDelay() << std::endl;
+                  << maximumLatencyPath->endToEndDelay() << std::endl;
     } else {
         std::cout << "  Maximum latency over all reachable paths: 0 (are "
                      "there any valid paths?)"

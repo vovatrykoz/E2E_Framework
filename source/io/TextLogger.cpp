@@ -23,7 +23,7 @@ void TextLogger::logValidInvalidPaths(
            << std::endl;
     output << "Unreachable paths: " << std::endl;
     for (const auto& invalidPath : invalidPathSet) {
-        output << invalidPath.name() << std::endl;
+        output << invalidPath.name << std::endl;
     }
 
     output << std::endl;
@@ -32,7 +32,7 @@ void TextLogger::logValidInvalidPaths(
            << std::endl;
     output << "Reachable paths: " << std::endl;
     for (const auto& validPath : validPathSet) {
-        output << validPath.name() << std::endl;
+        output << validPath.name << std::endl;
     }
 
     output << std::endl;
@@ -50,10 +50,10 @@ void TextLogger::logResults_LL(
 
     if (maximumLatencyPath.has_value()) {
         output << "    Path with maximum latency over all reachable paths: "
-               << maximumLatencyPath.value().name() << std::endl;
+               << maximumLatencyPath->name << std::endl;
 
         output << "    Maximum latency over all reachable paths"
-               << maximumLatencyPath.value().endToEndDelay() << std::endl;
+               << maximumLatencyPath->endToEndDelay() << std::endl;
     } else {
         output << "    Maximum latency over all reachable paths: 0 (are "
                   "there any valid paths?)"
@@ -73,10 +73,10 @@ void TextLogger::logResults_LF(
 
     if (maximumLatencyPath.has_value()) {
         output << "    Path with maximum latency over all reachable paths: "
-               << maximumLatencyPath.value().name() << std::endl;
+               << maximumLatencyPath->name << std::endl;
 
         output << "    Maximum latency over all reachable paths: "
-               << maximumLatencyPath.value().endToEndDelay() << std::endl;
+               << maximumLatencyPath->endToEndDelay() << std::endl;
     } else {
         output << "    Maximum latency over all reachable paths: 0 (are "
                   "there any valid paths?)"
