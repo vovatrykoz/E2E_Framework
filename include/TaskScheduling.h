@@ -9,6 +9,9 @@ namespace scheduling {
 
 int calculateLcmForEndToEndPath(const std::vector<Task>& endToEndPath);
 
+std::vector<std::vector<TaskInstance>> generateTaskInstancesFromTasks(
+    const std::vector<Task>& endToEndPath);
+
 }  // namespace scheduling
 
 #endif
