@@ -22,6 +22,23 @@ std::optional<setup::SupportedLogger> setup::getSupportedLoggerFromString(
     return std::nullopt;
 }
 
+std::optional<setup::SupportedLogger> setup::getSupportedSimpleLoggerFromString(
+    const std::string& loggerStr) {
+    for (auto& c : loggerStr) {
+        std::tolower(c);
+    }
+
+    if (loggerStr == "console") {
+        return SupportedLogger::TaskConsole;
+    }
+
+    if (loggerStr == "text") {
+        return SupportedLogger::TaskText;
+    }
+
+    return std::nullopt;
+}
+
 std::optional<setup::SupportedTaskInstanceReader>
 setup::getSupportedTaskInstanceReaderFromString(const std::string& readerStr) {
     for (auto& c : readerStr) {
@@ -68,6 +85,16 @@ std::unique_ptr<ILogger> setup::getLoggerFromType(SupportedLogger loggerType) {
             std::cout << "Enter output path: ";
             std::cin >> outputPath;
             return std::make_unique<TextLogger>(outputPath);
+
+        case SupportedLogger::TaskConsole:
+            std::cout << "Logger type: console" << std::endl;
+            return std::make_unique<TaskConsoleLogger>();
+
+        case SupportedLogger::TaskText:
+            std::cout << "Logger type: text" << std::endl;
+            std::cout << "Enter output path: ";
+            std::cin >> outputPath;
+            return std::make_unique<TaskTextLogger>(outputPath);
 
         default:
             return nullptr;
@@ -121,6 +148,18 @@ std::unique_ptr<ITaskReader> e2e::setup::getTaskReaderFromType(
 std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
     std::optional<setup::SupportedLogger> loggerType =
         setup::getSupportedLoggerFromString(loggerStr);
+
+    if (!loggerType.has_value()) {
+        std::cerr << "Provided reader is not supported" << std::endl;
+        return nullptr;
+    }
+
+    return setup::getLoggerFromType(loggerType.value());
+}
+
+std::unique_ptr<ILogger> setup::simpleLogger(const std::string& loggerStr) {
+    std::optional<setup::SupportedLogger> loggerType =
+        setup::getSupportedSimpleLoggerFromString(loggerStr);
 
     if (!loggerType.has_value()) {
         std::cerr << "Provided reader is not supported" << std::endl;

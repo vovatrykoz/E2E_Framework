@@ -3,11 +3,12 @@
 
 #include <io/ConsoleLogger.h>
 #include <io/ConsoleTaskReader.h>
-#include <io/ConsoleTaskReader.h>
 #include <io/SimpleTextTaskReader.h>
-#include <io/TaskInstanceSimpleTextReader.h>
 #include <io/TaskInstanceInputReader.h>
+#include <io/TaskInstanceSimpleTextReader.h>
 #include <io/TextLogger.h>
+#include <io/TaskTextLogger.h>
+#include <io/TaskConsoleLogger.h>
 
 #include <memory>
 #include <optional>
@@ -17,13 +18,16 @@ namespace setup {
 
 using namespace e2e::io;
 
-enum class SupportedLogger { Console, Text };
+enum class SupportedLogger { Console, Text, TaskConsole, TaskText };
 enum class SupportedTaskInstanceReader { Console, Text };
 enum class SupportedTaskReader { Console, Text };
 
 // Get supported types from string-----------------------------------
 
 std::optional<SupportedLogger> getSupportedLoggerFromString(
+    const std::string& loggerStr);
+
+std::optional<SupportedLogger> getSupportedSimpleLoggerFromString(
     const std::string& loggerStr);
 
 std::optional<SupportedTaskInstanceReader>
@@ -47,6 +51,7 @@ std::unique_ptr<ITaskReader> getTaskReaderFromType(
 // Get objects from strings types------------------------------------
 
 std::unique_ptr<ILogger> logger(const std::string& loggerStr);
+std::unique_ptr<ILogger> simpleLogger(const std::string& loggerStr);
 std::unique_ptr<ITaskInstanceReader> taskInstanceReader(
     const std::string& readerStr);
 std::unique_ptr<ITaskReader> taskReader(const std::string& readerStr);
