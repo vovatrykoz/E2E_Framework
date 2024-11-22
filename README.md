@@ -80,8 +80,12 @@ Contains test for the implementation
 
 # Executable usage
 
-Default build process produced an executable called ```runner``` <br>
-```Usage: ./runner <reader_type> <logger_type>```
+Default build process produced an executable called ```individualPathAnalyzer``` and an executable ```taskAnalyzer``` <br>
+```Usage: ./individualPathAnalyzer <reader_type> <logger_type>```
+```Usage: ./taskAnalyzer <reader_type> <logger_type>```
+
+```taskAnalyzer``` uses the taskExample1.txt and taskExample2.txt as examples
+```individualPathAnalyzer``` uses the example1.txt and example2.txt as examples
 
 Currently supported logger types:
 - ```console```
