@@ -2,6 +2,8 @@
 
 #include <numeric>
 
+using namespace e2e;
+
 int scheduling::calculateLcmForEndToEndPath(
     const std::vector<Task>& endToEndPath) {
     if (endToEndPath.empty()) {

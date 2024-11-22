@@ -3,6 +3,9 @@
 #include <fstream>
 #include <sstream>
 
+using namespace e2e;
+using namespace e2e::io;
+
 SimpleTextReader::SimpleTextReader(const std::string& filePath)
     : filePath(filePath) {}
 

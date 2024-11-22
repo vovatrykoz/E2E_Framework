@@ -1,7 +1,8 @@
 #include <MathFramework.h>
 #include <gtest/gtest.h>
 
-using namespace mathframework;
+using namespace e2e;
+using namespace e2e::mathframework;
 
 TEST(MathFramework, CanDetectTimeTravel) {
     Task writerTask(10, 5, 1);

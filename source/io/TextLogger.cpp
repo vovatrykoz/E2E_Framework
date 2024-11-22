@@ -3,6 +3,8 @@
 #include <fstream>
 #include <sstream>
 
+using namespace e2e::io;
+
 TextLogger::TextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 

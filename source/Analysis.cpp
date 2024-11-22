@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+using namespace e2e;
+
 std::set<TimedPath> analysis::removeUnreachablePaths(
     const std::set<TimedPath>& pathSet) {
     std::set<TimedPath> output;

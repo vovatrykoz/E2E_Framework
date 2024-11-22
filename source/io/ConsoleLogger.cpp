@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+using namespace e2e::io;
+
 void ConsoleLogger::logValidInvalidPaths(
     const std::set<TimedPath>& allPathsSet,
     const std::set<TimedPath>& validPathSet,

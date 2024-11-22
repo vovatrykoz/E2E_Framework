@@ -9,7 +9,10 @@
 #include <memory>
 #include <optional>
 
+namespace e2e {
 namespace setup {
+
+using namespace e2e::io;
 
 enum class SupportedLogger { Console, Text };
 enum class SupportedReader { Console, Text };
@@ -26,5 +29,6 @@ std::unique_ptr<ILogger> logger(const std::string& loggerStr);
 std::unique_ptr<IReader> reader(const std::string& readerStr);
 
 }  // namespace setup
+}  // namespace e2e
 
 #endif

@@ -6,6 +6,7 @@
 #include <optional>
 #include <set>
 
+namespace e2e {
 namespace analysis {
 
 /**
@@ -65,7 +66,8 @@ int getOverarchingDelay(const std::set<TimedPath>& pathSet);
 /**
  * @brief Determines if a path has a "predecessor"
  *
- * A predecessor is a path that has an activation time of current path - path period
+ * A predecessor is a path that has an activation time of current path - path
+ * period
  *
  * @param path A path for which we want to find a predecessor
  * @param pathSet A set of TimedPath objects to analyse
@@ -76,5 +78,6 @@ std::optional<TimedPath> findPredecessor(const TimedPath& path,
                                          const std::set<TimedPath>& pathSet);
 
 }  // namespace analysis
+}  // namespace e2e
 
 #endif

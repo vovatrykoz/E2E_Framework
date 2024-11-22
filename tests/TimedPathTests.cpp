@@ -1,6 +1,8 @@
 #include <TimedPath.h>
 #include <gtest/gtest.h>
 
+using namespace e2e;
+
 TEST(TimedPath, CanAppendTaskToPath) {
     Task task(10, 5, 1);
     TaskInstance taskInstance(task, 10);

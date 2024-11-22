@@ -7,6 +7,7 @@
 #include <set>
 #include <vector>
 
+namespace e2e {
 namespace scheduling {
 
 int calculateLcmForEndToEndPath(const std::vector<Task>& endToEndPath);
@@ -20,9 +21,11 @@ std::set<TimedPath> generateTimedPaths(
 std::vector<std::vector<TaskInstance>> buildTimedPaths(
     const std::vector<std::vector<TaskInstance>>& taskInstanceChains);
 
-std::vector<std::vector<TaskInstance>> pathCartesianProduct(const std::vector<std::vector<TaskInstance>>& timedPaths,
-                          const std::vector<TaskInstance>& taskInstanceChain);
+std::vector<std::vector<TaskInstance>> pathCartesianProduct(
+    const std::vector<std::vector<TaskInstance>>& timedPaths,
+    const std::vector<TaskInstance>& taskInstanceChain);
 
 }  // namespace scheduling
+}  // namespace e2e
 
 #endif

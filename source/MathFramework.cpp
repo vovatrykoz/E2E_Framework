@@ -1,5 +1,7 @@
 #include "MathFramework.h"
 
+using namespace e2e;
+
 bool mathframework::att(const TaskInstance& writerTaskInstance,
                         const TaskInstance& readerTaskInstance) {
     if (readerTaskInstance.activationTime < writerTaskInstance.activationTime) {

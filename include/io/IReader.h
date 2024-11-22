@@ -6,10 +6,16 @@
 #include <set>
 #include <string>
 
+namespace e2e {
+namespace io {
+
 class IReader {
 public:
     virtual std::set<TimedPath> readPathsSet() const = 0;
     virtual ~IReader() = default;
 };
+
+}  // namespace io
+}  // namespace e2e
 
 #endif

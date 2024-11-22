@@ -10,6 +10,7 @@
 
 #include <vector>
 
+namespace e2e {
 namespace mathframework {
 
 /**
@@ -114,5 +115,6 @@ bool reach(const TaskInstance& currentWriterTaskInstance,
 bool pathReach(const std::vector<TaskInstance>& timedPath);
 
 }  // namespace mathframework
+}  // namespace e2e
 
 #endif

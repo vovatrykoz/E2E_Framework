@@ -6,6 +6,8 @@
 #include <string>
 #include <vector>
 
+namespace e2e {
+
 /**
  * @brief Represents a timed path consisting of a sequence of task instances.
  *
@@ -118,9 +120,7 @@ inline const std::vector<TaskInstance>& TimedPath::asVector() const {
     return this->tasks;
 }
 
-inline std::string TimedPath::name() const {
-    return this->instanceName;
-}
+inline std::string TimedPath::name() const { return this->instanceName; }
 
 inline bool TimedPath::operator<(const TimedPath& other) const {
     return this->instanceName < other.instanceName;
@@ -133,5 +133,7 @@ inline bool TimedPath::operator==(const TimedPath& other) const {
 inline bool TimedPath::operator!=(const TimedPath& other) const {
     return !(*this == other);
 }
+
+}  // namespace e2e
 
 #endif

@@ -6,6 +6,9 @@
 #include <optional>
 #include <set>
 
+namespace e2e {
+namespace io {
+
 class ILogger {
 public:
     virtual void logValidInvalidPaths(
@@ -25,5 +28,8 @@ public:
 
     virtual ~ILogger() = default;
 };
+
+}  // namespace io
+}  // namespace e2e
 
 #endif

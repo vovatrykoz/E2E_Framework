@@ -2,6 +2,8 @@
 
 #include <numeric>
 
+using namespace e2e;
+
 void TimedPath::popTaskInstance() {
     if (this->tasks.empty()) {
         return;

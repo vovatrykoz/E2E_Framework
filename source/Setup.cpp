@@ -2,6 +2,9 @@
 
 #include <iostream>
 
+using namespace e2e;
+using namespace e2e::io;
+
 std::optional<setup::SupportedLogger> setup::getSupportedLoggerFromString(
     const std::string& loggerStr) {
     for (auto& c : loggerStr) {

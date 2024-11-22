@@ -6,6 +6,9 @@
 #include <set>
 #include <string>
 
+namespace e2e {
+namespace io {
+
 class InputReader : public IReader {
 public:
     virtual std::set<TimedPath> readPathsSet() const override;
@@ -16,4 +19,6 @@ private:
     TimedPath readTimedPath(const std::string& name) const;
 };
 
+}  // namespace io
+}  // namespace e2e
 #endif

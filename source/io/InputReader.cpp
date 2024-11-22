@@ -2,6 +2,9 @@
 #include <limits>
 #include <iostream>
 
+using namespace e2e;
+using namespace e2e::io;
+
 std::set<TimedPath> InputReader::readPathsSet() const {
     std::set<TimedPath> result;
     std::string name;

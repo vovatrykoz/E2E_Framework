@@ -1,7 +1,8 @@
 #include <Analysis.h>
 #include <gtest/gtest.h>
 
-using namespace analysis;
+using namespace e2e;
+using namespace e2e::analysis;
 
 TEST(Analysis, CanRemoveUnreachablePaths) {
     Task t1(40, 4, 1);

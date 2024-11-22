@@ -1,6 +1,8 @@
 #include <TaskScheduling.h>
 #include <gtest/gtest.h>
 
+using namespace e2e;
+
 TEST(TaskScheduling, EmptyTaskChainReturnsZero) {
     int expected = 0;
     int actual = scheduling::calculateLcmForEndToEndPath({});

@@ -3,6 +3,9 @@
 
 #include <io/ILogger.h>
 
+namespace e2e {
+namespace io {
+
 class TextLogger : public ILogger {
 public:
     TextLogger(const std::string& pathToOutputFile);
@@ -27,5 +30,8 @@ private:
 
     void writeOutputToFile(const std::string& output) const;
 };
+
+}  // namespace io
+}  // namespace e2e
 
 #endif

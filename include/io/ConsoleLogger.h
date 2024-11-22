@@ -3,6 +3,9 @@
 
 #include <io/ILogger.h>
 
+namespace e2e {
+namespace io {
+
 class ConsoleLogger : public ILogger {
 public:
     virtual void logValidInvalidPaths(
@@ -20,5 +23,8 @@ public:
 
     virtual void logResults_FF(int maxFirstToFirstPathDelay) const override;
 };
+
+}  // namespace io
+}  // namespace e2e
 
 #endif

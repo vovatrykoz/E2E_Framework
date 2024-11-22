@@ -1,6 +1,8 @@
 #ifndef _TASK_H_
 #define _TASK_H_
 
+namespace e2e {
+
 struct Task {
     int period;
     int wcrt;
@@ -47,5 +49,7 @@ inline bool TaskInstance::operator==(const TaskInstance& other) const {
 inline bool TaskInstance::operator!=(const TaskInstance& other) const {
     return !(*this == other);
 }
+
+}  // namespace e2e
 
 #endif
