@@ -22,6 +22,8 @@ public:
     TimedPath(const std::vector<TaskInstance>& tasks);
     TimedPath(const std::string& name, const std::vector<TaskInstance>& tasks);
 
+    std::string name;  // Name of the timed path
+
     /**
      * @brief Appends a task instance to the end of the timed path.
      *
@@ -54,15 +56,6 @@ public:
      * @return A const reference to the vector of task instances.
      */
     const std::vector<TaskInstance>& asVector() const;
-
-    /**
-     * @brief Allows to retreive the name of the TimedPath
-     *
-     * Returns a string containing the name of the TimedPath
-     *
-     * @return Name of the TimedPath
-     */
-    std::string name() const;
 
     int firstTaskActivationTime() const;
 
@@ -98,19 +91,18 @@ public:
 private:
     std::vector<TaskInstance>
         tasks;  // Stores the sequence of task instances in the path.
-    std::string instanceName;  // name of the path
 };
 
 inline TimedPath::TimedPath() {}
 
-inline TimedPath::TimedPath(const std::string& name) : instanceName(name) {}
+inline TimedPath::TimedPath(const std::string& name) : name(name) {}
 
 inline TimedPath::TimedPath(const std::vector<TaskInstance>& tasks)
     : tasks(tasks) {}
 
 inline TimedPath::TimedPath(const std::string& name,
                             const std::vector<TaskInstance>& tasks)
-    : instanceName(name), tasks(tasks) {}
+    : name(name), tasks(tasks) {}
 
 inline void TimedPath::appendTaskInstance(const TaskInstance& taskInstance) {
     this->tasks.push_back(taskInstance);
@@ -120,14 +112,12 @@ inline const std::vector<TaskInstance>& TimedPath::asVector() const {
     return this->tasks;
 }
 
-inline std::string TimedPath::name() const { return this->instanceName; }
-
 inline bool TimedPath::operator<(const TimedPath& other) const {
-    return this->instanceName < other.instanceName;
+    return this->name < other.name;
 }
 
 inline bool TimedPath::operator==(const TimedPath& other) const {
-    return this->instanceName == other.instanceName;
+    return this->name == other.name;
 }
 
 inline bool TimedPath::operator!=(const TimedPath& other) const {
