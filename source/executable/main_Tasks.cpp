@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
         case 1:
             // default to console if the user has not provided any input
             inputReader =
-                setup::getTaskReaderFromType(setup::SupportedTaskReader::Text);
+                setup::getTaskReaderFromType(setup::SupportedTaskReader::Console);
             logger = setup::getLoggerFromType(setup::SupportedLogger::SimplifiedConsole);
             break;
 
