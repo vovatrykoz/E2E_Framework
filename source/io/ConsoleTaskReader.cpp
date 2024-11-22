@@ -1,4 +1,4 @@
-#include "ConsoleTaskReader.h"
+#include <io/ConsoleTaskReader.h>
 
 #include <iostream>
 #include <limits>
@@ -13,6 +13,8 @@ std::vector<NamedTask> ConsoleTaskReader::readTaskChain() const {
     for (int i = 0; i < numOfChains; i++) {
         NamedTask task = this->readTask();
         result.push_back(task);
+
+        std::cout << std::endl;
     }
 
     return result;

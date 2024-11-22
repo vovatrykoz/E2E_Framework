@@ -16,6 +16,7 @@ add_library(
     e2e_io
 
     ${CODE_SOURCE_DIR}/io/ConsoleLogger.cpp
+    ${CODE_SOURCE_DIR}/io/ConsoleTaskReader.cpp
     ${CODE_SOURCE_DIR}/io/TextLogger.cpp
     ${CODE_SOURCE_DIR}/io/TaskInstanceInputReader.cpp
     ${CODE_SOURCE_DIR}/io/TaskInstanceSimpleTextReader.cpp
@@ -33,12 +34,20 @@ add_library(
 
 add_library(
     e2e_setup
+
     ${CODE_SOURCE_DIR}/Setup.cpp
 )
 
 add_executable(
     individualPathAnalyzer
+
     ${CODE_SOURCE_DIR}/executable/main_IndividualPath.cpp
+)
+
+add_executable(
+    taskAnalyzer
+    
+    ${CODE_SOURCE_DIR}/executable/main_Tasks.cpp
 )
 
 target_compile_features(individualPathAnalyzer PUBLIC cxx_std_17)
@@ -50,6 +59,12 @@ target_link_libraries(
 
 target_link_libraries(
     individualPathAnalyzer 
+    e2e_core
+    e2e_setup
+)
+
+target_link_libraries(
+    taskAnalyzer 
     e2e_core
     e2e_setup
 )

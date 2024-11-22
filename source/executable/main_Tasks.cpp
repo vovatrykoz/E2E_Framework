@@ -11,7 +11,10 @@ using namespace e2e::io;
 void printUsageInfo();
 
 int main(int argc, char* argv[]) {
-    
+    ConsoleTaskReader ctr;
+    std::vector<NamedTask> tasks = ctr.readTaskChain();
+
+    int bruh = 1;
 }
 
 void printUsageInfo() {

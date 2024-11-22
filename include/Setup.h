@@ -2,6 +2,7 @@
 #define _SETUP_H_
 
 #include <io/ConsoleLogger.h>
+#include <io/ConsoleTaskReader.h>
 #include <io/TaskInstanceInputReader.h>
 #include <io/TaskInstanceSimpleTextReader.h>
 #include <io/TextLogger.h>
