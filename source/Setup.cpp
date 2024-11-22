@@ -120,7 +120,7 @@ std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
     return setup::getLoggerFromType(loggerType.value());
 }
 
-std::unique_ptr<ITaskInstanceReader> setup::taskInstancereader(
+std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
     const std::string& readerStr) {
     std::optional<setup::SupportedTaskInstanceReader> readerType =
         setup::getSupportedTaskInstanceReaderFromString(readerStr);

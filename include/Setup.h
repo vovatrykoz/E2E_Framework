@@ -45,7 +45,7 @@ std::unique_ptr<ITaskReader> getTaskReaderFromType(
 // Get objects from strings types------------------------------------
 
 std::unique_ptr<ILogger> logger(const std::string& loggerStr);
-std::unique_ptr<ITaskInstanceReader> taskInstancereader(
+std::unique_ptr<ITaskInstanceReader> taskInstanceReader(
     const std::string& readerStr);
 std::unique_ptr<ITaskReader> taskReader(const std::string& readerStr);
 
