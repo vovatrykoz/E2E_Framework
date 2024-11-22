@@ -1,0 +1,15 @@
+START t1
+40,4,1,0
+END t1
+
+START t2
+10,3,1,0
+END t2
+
+START t3
+30,2,1,0
+END t3
+
+START t4
+20,1,1,0
+END t4
