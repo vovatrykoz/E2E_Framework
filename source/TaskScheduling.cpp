@@ -9,7 +9,7 @@ int scheduling::calculateLcmForEndToEndPath(
     }
 
     int acc = 1;
-    for(const auto& task : endToEndPath) {
+    for (const auto& task : endToEndPath) {
         acc = std::lcm(task.period, acc);
     }
 
