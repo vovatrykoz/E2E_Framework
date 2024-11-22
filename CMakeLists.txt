@@ -63,7 +63,7 @@ add_library(
 
 add_executable(
     individualPathAnalyzer
-    ${CODE_SOURCE_DIR}/executable/main_individualPath.cpp
+    ${CODE_SOURCE_DIR}/executable/main_IndividualPath.cpp
 )
 
 target_compile_features(individualPathAnalyzer PUBLIC cxx_std_17)
