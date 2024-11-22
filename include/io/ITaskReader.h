@@ -20,6 +20,9 @@ public:
 struct NamedTask {
     Task task;
     std::string name;
+
+    NamedTask(const Task& task, const std::string& name)
+        : task(task), name(name) {}
 };
 
 }  // namespace io
