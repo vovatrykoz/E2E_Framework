@@ -70,7 +70,7 @@ Represent a task chain and allows simple manipulations and calculations on it, f
 
 Contain data structures used to represnt tasks and task instances
 
-## main.cpp
+## main_IndividualPath.cpp
 
 Entry point of the program. Reads user input, performs the analysis, and logs the results. The analysis itself starts on line 57:
 
