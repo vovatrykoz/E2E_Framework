@@ -40,3 +40,22 @@ scheduling::generateTaskInstancesFromTasks(
 
     return result;
 }
+
+std::set<TimedPath> scheduling::generateTimedPaths(
+    const std::vector<std::vector<TaskInstance>>& taskInstanceChains) {
+    std::set<TimedPath> result;
+    if (taskInstanceChains.empty()) {
+        return result;
+    }
+
+    int counter = 1;
+    for (const auto& instanceChain : taskInstanceChains) {
+        for (const auto& path : instanceChain) {
+            std::string pathId = "#" + std::to_string(counter);
+            result.insert(TimedPath(pathId, {path}));
+            counter++;
+        }
+    }
+
+    return result;
+}

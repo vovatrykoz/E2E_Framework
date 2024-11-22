@@ -90,3 +90,43 @@ TEST(TaskScheduling, CorrectInstanceChainsForSeveralTasksWithOffsets) {
 
     EXPECT_EQ(expected, actual);
 }
+
+TEST(TaskScheduling, EmptyTaskChainReturnsEmptySet) {
+    std::set<TimedPath> actual = scheduling::generateTimedPaths({});
+
+    EXPECT_TRUE(actual.empty());
+}
+
+TEST(TaskScheduling, TaskChainWithOneInstanceChain) {
+    Task t1(40, 4, 1);
+
+    std::vector<std::vector<TaskInstance>> taskInstanceChain = {
+        {TaskInstance(t1, 0)}};
+
+    TimedPath onlyPossiblePath("#1", taskInstanceChain[0]);
+
+    std::set<TimedPath> expected = {onlyPossiblePath};
+
+    std::set<TimedPath> actual =
+        scheduling::generateTimedPaths(taskInstanceChain);
+
+    EXPECT_EQ(expected, actual);
+}
+
+TEST(TaskScheduling, TaskChainWithOneTaskReturnsSetWithPathContainingOneTask) {
+    Task t1(20, 4, 1);
+
+    std::vector<std::vector<TaskInstance>> taskInstanceChain = {
+        {TaskInstance(t1, 0), TaskInstance(t1, 20), TaskInstance(t1, 40)}};
+
+    TimedPath tp1("#1", {taskInstanceChain[0][0]});
+    TimedPath tp2("#2", {taskInstanceChain[0][1]});
+    TimedPath tp3("#3", {taskInstanceChain[0][2]});
+
+    std::set<TimedPath> expected = {tp1, tp2, tp3};
+
+    std::set<TimedPath> actual =
+        scheduling::generateTimedPaths(taskInstanceChain);
+
+    EXPECT_EQ(expected, actual);
+}
