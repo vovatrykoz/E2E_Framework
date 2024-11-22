@@ -20,19 +20,19 @@ int main(int argc, char* argv[]) {
         case 1:
             // default to console if the user has not provided any input
             inputReader =
-                setup::getReaderFromType(setup::SupportedReader::Console);
+                setup::getTaskInstanceReaderFromType(setup::SupportedTaskInstanceReader::Console);
             logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
             break;
 
         case 2:
             // if only one parameter is provided, we assume that to be a reader
             // deafault to console logger
-            inputReader = setup::reader(argv[1]);
+            inputReader = setup::taskInstancereader(argv[1]);
             logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
             break;
 
         case 3:
-            inputReader = setup::reader(argv[1]);
+            inputReader = setup::taskInstancereader(argv[1]);
             logger = setup::logger(argv[2]);
             break;
 
