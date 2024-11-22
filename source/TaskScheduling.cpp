@@ -78,12 +78,15 @@ std::vector<std::vector<TaskInstance>> scheduling::pathCartesianProduct(
     std::vector<std::vector<TaskInstance>> product;
 
     if (timedPaths.empty()) {
+        product.reserve(taskInstanceChain.size());
         for (const auto& taskInstance : taskInstanceChain) {
             product.push_back({taskInstance});
         }
 
         return product;
     }
+
+    product.reserve(timedPaths.size() * taskInstanceChain.size());
 
     for (const auto& timedPath : timedPaths) {
         for (const auto& taskInstance : taskInstanceChain) {
