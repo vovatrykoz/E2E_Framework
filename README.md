@@ -8,6 +8,9 @@ The code is split into the include folder containing all the headers and the sou
 
 ### io/
 The include/io/ and source/io/ subfolders contain implementation and definitions for code that is responsible for taking in user input and logging the analysis results. Right now, two ways for reading and writing are supported: console-based and text-based. 
+
+#### individualPathAnalyzer
+
 Text based option supports a file that is formated as follows:
 ```
 START <timed_path_name>
@@ -67,7 +70,7 @@ Represent a task chain and allows simple manipulations and calculations on it, f
 
 Contain data structures used to represnt tasks and task instances
 
-## main.cpp
+## main_IndividualPath.cpp
 
 Entry point of the program. Reads user input, performs the analysis, and logs the results. The analysis itself starts on line 57:
 
@@ -80,8 +83,12 @@ Contains test for the implementation
 
 # Executable usage
 
-Default build process produced an executable called ```runner``` <br>
-```Usage: ./runner <reader_type> <logger_type>```
+Default build process produced an executable called ```individualPathAnalyzer``` and an executable ```taskAnalyzer``` <br>
+```Usage: ./individualPathAnalyzer <reader_type> <logger_type>```
+```Usage: ./taskAnalyzer <reader_type> <logger_type>```
+
+```taskAnalyzer``` uses the taskExample1.txt and taskExample2.txt as examples
+```individualPathAnalyzer``` uses the example1.txt and example2.txt as examples
 
 Currently supported logger types:
 - ```console```
