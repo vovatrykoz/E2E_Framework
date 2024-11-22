@@ -1,13 +1,15 @@
-#ifndef _TASK_CONSOLE_LOGGER_H_
-#define _TASK_CONSOLE_LOGGER_H_
+#ifndef _TASK_TEXT_LOGGER_H_
+#define _TASK_TEXT_LOGGER_H_
 
 #include <io/logger/ILogger.h>
 
 namespace e2e {
 namespace io {
 
-class TaskConsoleLogger : public ILogger {
+class SimplifiedTextLogger : public ILogger {
 public:
+    SimplifiedTextLogger(const std::string& pathToOutputFile);
+
     virtual void logValidInvalidPaths(
         const std::set<TimedPath>& allPathsSet,
         const std::set<TimedPath>& validPathSet,
@@ -22,6 +24,11 @@ public:
     virtual void logResults_FL(int maxFirstToLastPathDelay) const override;
 
     virtual void logResults_FF(int maxFirstToFirstPathDelay) const override;
+
+private:
+    const std::string pathToOutputFile;
+
+    void writeOutputToFile(const std::string& output) const;
 };
 
 }  // namespace io

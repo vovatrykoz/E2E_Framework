@@ -1,14 +1,14 @@
-#include "io/logger/TaskTextLogger.h"
+#include "io/logger/SimplifiedTextLogger.h"
 
 #include <fstream>
 #include <sstream>
 
 using namespace e2e::io;
 
-TaskTextLogger::TaskTextLogger(const std::string& pathToOutputFile)
+SimplifiedTextLogger::SimplifiedTextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
-void TaskTextLogger::logValidInvalidPaths(
+void SimplifiedTextLogger::logValidInvalidPaths(
     const std::set<TimedPath>& allPathsSet,
     const std::set<TimedPath>& validPathSet,
     const std::set<TimedPath>& invalidPathSet) const {
@@ -34,7 +34,7 @@ void TaskTextLogger::logValidInvalidPaths(
     this->writeOutputToFile(output.str());
 }
 
-void TaskTextLogger::logResults_LL(
+void SimplifiedTextLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
@@ -54,7 +54,7 @@ void TaskTextLogger::logResults_LL(
     this->writeOutputToFile(output.str());
 }
 
-void TaskTextLogger::logResults_LF(
+void SimplifiedTextLogger::logResults_LF(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
@@ -74,7 +74,7 @@ void TaskTextLogger::logResults_LF(
     this->writeOutputToFile(output.str());
 }
 
-void TaskTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
+void SimplifiedTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -86,7 +86,7 @@ void TaskTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     this->writeOutputToFile(output.str());
 }
 
-void TaskTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+void SimplifiedTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -98,7 +98,7 @@ void TaskTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     this->writeOutputToFile(output.str());
 }
 
-void TaskTextLogger::writeOutputToFile(const std::string& output) const {
+void SimplifiedTextLogger::writeOutputToFile(const std::string& output) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
 
     if (!outFile.is_open()) {

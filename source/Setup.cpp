@@ -6,8 +6,8 @@
 #include <io/reader/TaskInstanceInputReader.h>
 #include <io/reader/TaskInstanceSimpleTextReader.h>
 #include <io/logger/TextLogger.h>
-#include <io/logger/TaskTextLogger.h>
-#include <io/logger/TaskConsoleLogger.h>
+#include <io/logger/SimplifiedTextLogger.h>
+#include <io/logger/SimplifiedConsoleLogger.h>
 
 #include <iostream>
 
@@ -38,11 +38,11 @@ std::optional<setup::SupportedLogger> setup::getSupportedSimpleLoggerFromString(
     }
 
     if (loggerStr == "console") {
-        return SupportedLogger::TaskConsole;
+        return SupportedLogger::SimplifiedConsole;
     }
 
     if (loggerStr == "text") {
-        return SupportedLogger::TaskText;
+        return SupportedLogger::SimplifiedText;
     }
 
     return std::nullopt;
@@ -95,15 +95,15 @@ std::unique_ptr<ILogger> setup::getLoggerFromType(SupportedLogger loggerType) {
             std::cin >> outputPath;
             return std::make_unique<TextLogger>(outputPath);
 
-        case SupportedLogger::TaskConsole:
+        case SupportedLogger::SimplifiedConsole:
             std::cout << "Logger type: console" << std::endl;
-            return std::make_unique<TaskConsoleLogger>();
+            return std::make_unique<SimplifiedConsoleLogger>();
 
-        case SupportedLogger::TaskText:
+        case SupportedLogger::SimplifiedText:
             std::cout << "Logger type: text" << std::endl;
             std::cout << "Enter output path: ";
             std::cin >> outputPath;
-            return std::make_unique<TaskTextLogger>(outputPath);
+            return std::make_unique<SimplifiedTextLogger>(outputPath);
 
         default:
             return nullptr;

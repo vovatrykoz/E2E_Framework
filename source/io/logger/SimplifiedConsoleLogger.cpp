@@ -1,10 +1,10 @@
-#include "io/logger/TaskConsoleLogger.h"
+#include "io/logger/SimplifiedConsoleLogger.h"
 
 #include <iostream>
 
 using namespace e2e::io;
 
-void TaskConsoleLogger::logValidInvalidPaths(
+void SimplifiedConsoleLogger::logValidInvalidPaths(
     const std::set<TimedPath>& allPathsSet,
     const std::set<TimedPath>& validPathSet,
     const std::set<TimedPath>& invalidPathSet) const {
@@ -24,7 +24,7 @@ void TaskConsoleLogger::logValidInvalidPaths(
     std::cout << std::endl;
 }
 
-void TaskConsoleLogger::logResults_LL(
+void SimplifiedConsoleLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::cout << "Last-to-Last semantics:" << std::endl;
 
@@ -40,7 +40,7 @@ void TaskConsoleLogger::logResults_LL(
     std::cout << std::endl;
 }
 
-void TaskConsoleLogger::logResults_LF(
+void SimplifiedConsoleLogger::logResults_LF(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::cout << "Last-to-First semantics:" << std::endl;
 
@@ -56,7 +56,7 @@ void TaskConsoleLogger::logResults_LF(
     std::cout << std::endl;
 }
 
-void TaskConsoleLogger::logResults_FL(int maxFirstToLastPathDelay) const {
+void SimplifiedConsoleLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     std::cout << "First-to-Last semantics:" << std::endl;
 
     std::cout << "  Maximum path delay: " << maxFirstToLastPathDelay
@@ -64,7 +64,7 @@ void TaskConsoleLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     std::cout << std::endl;
 }
 
-void TaskConsoleLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+void SimplifiedConsoleLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     std::cout << "First-to-First semantics:" << std::endl;
 
     std::cout << "  Maximum path delay: " << maxFirstToFirstPathDelay

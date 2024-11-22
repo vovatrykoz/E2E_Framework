@@ -16,9 +16,9 @@ add_library(
     e2e_io
 
     ${CODE_SOURCE_DIR}/io/logger/ConsoleLogger.cpp
-    ${CODE_SOURCE_DIR}/io/logger/TaskConsoleLogger.cpp
+    ${CODE_SOURCE_DIR}/io/logger/SimplifiedConsoleLogger.cpp
     ${CODE_SOURCE_DIR}/io/logger/TextLogger.cpp
-    ${CODE_SOURCE_DIR}/io/logger/TaskTextLogger.cpp
+    ${CODE_SOURCE_DIR}/io/logger/SimplifiedTextLogger.cpp
     ${CODE_SOURCE_DIR}/io/reader/ConsoleTaskReader.cpp
     ${CODE_SOURCE_DIR}/io/reader/SimpleTextTaskReader.cpp
     ${CODE_SOURCE_DIR}/io/reader/TaskInstanceInputReader.cpp

@@ -13,7 +13,7 @@ namespace setup {
 
 using namespace e2e::io;
 
-enum class SupportedLogger { Console, Text, TaskConsole, TaskText };
+enum class SupportedLogger { Console, Text, SimplifiedConsole, SimplifiedText };
 enum class SupportedTaskInstanceReader { Console, Text };
 enum class SupportedTaskReader { Console, Text };
 
