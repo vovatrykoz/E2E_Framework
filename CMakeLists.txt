@@ -41,6 +41,10 @@ add_library(
     ${CODE_SOURCE_DIR}/Setup.cpp
 )
 
+add_library(
+    scheduling
+    ${CODE_SOURCE_DIR}/TaskScheduling.cpp
+)
 
 add_library(
     analysis
@@ -93,6 +97,7 @@ add_executable(
     testRunner
     ${TESTS_SOURCE_DIR}/AnalysisTests.cpp
     ${TESTS_SOURCE_DIR}/MathFrameworkTests.cpp
+    ${TESTS_SOURCE_DIR}/TaskSchedulingTests.cpp
     ${TESTS_SOURCE_DIR}/TimedPathTests.cpp
 )
 
@@ -103,6 +108,7 @@ target_link_libraries(
     timedPath
     task
     analysis
+    scheduling
 )
 
 include(GoogleTest)
