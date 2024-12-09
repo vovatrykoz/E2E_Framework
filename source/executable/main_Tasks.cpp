@@ -66,6 +66,8 @@ int main(int argc, char* argv[]) {
         taskChain.push_back(namedTask.task);
     }
 
+    // given a set of tasks, we generate every possible task instance in the
+    // set, as well as every possible timed path
     std::vector<std::vector<PeriodicTaskInstance>> taskInstances =
         scheduling::generateTaskInstancesFromPath(taskChain);
 

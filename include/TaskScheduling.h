@@ -48,8 +48,8 @@ std::vector<std::vector<PeriodicTaskInstance>> generateTaskInstancesFromPath(
  *
  * @param taskInstanceChains A vector of vectors of task instances.
  *
- * @return A set of timed paths, where each path is a sequence of task instances
- * with specific activation times.
+ * @return A multiset of timed paths, where each path is a sequence of task
+ * instances with specific activation times.
  */
 std::multiset<TimedPath> generateTimedPathsFromInstances(
     const std::vector<std::vector<PeriodicTaskInstance>>& taskInstanceChains);

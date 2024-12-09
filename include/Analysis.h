@@ -10,29 +10,33 @@ namespace e2e {
 namespace analysis {
 
 /**
- * @brief Remove all unreachable paths from a set
+ * @brief Remove all unreachable paths from a multiset
  *
- * Removes all unreachable paths from the provided set. Each path in the set is
- * checeked against the reachability conditions defined in MathFramework.h and
- * MathFramework.cpp. If the path passes all the checks, it is added to the
- * output set.
+ * Removes all unreachable paths from the provided multiset. Each path in the
+ * multiset is checked against the reachability conditions defined in
+ * MathFramework.h and MathFramework.cpp. If the path passes all the checks, it
+ * is added to the output multiset.
  *
- * @param pathSet A set of TimedPath objects to be checked for reachability.
+ * @param pathSet A multiset of TimedPath objects to be checked for
+ * reachability.
  *
- * @return A new set of TimedPath objects that are reachable according to the
- * reachability conditions.
+ * @return A new multiset of TimedPath objects that are reachable according to
+ * the reachability conditions.
  */
-std::multiset<TimedPath> removeUnreachablePaths(const std::multiset<TimedPath>& pathSet);
+std::multiset<TimedPath> removeUnreachablePaths(
+    const std::multiset<TimedPath>& pathSet);
 
 /**
- * @brief Remove all paths that produce dublicate values
+ * @brief Remove all paths that produce duplicate values
  *
- * Removes all produce dublicate values due to identical start time. This is
- * relevant when using Last-To-First or Last-To-Last semantics
+ * Removes all paths that produce duplicate values due to identical start times.
+ * This is relevant when using Last-To-First or Last-To-Last semantics.
  *
- * @param pathSet A set of TimedPath objects to be checked for dublicate output.
+ * @param pathSet A multiset of TimedPath objects to be checked for duplicate
+ * output.
  *
- * @return A new set of TimedPath objects that do not produce dublicate values
+ * @return A new multiset of TimedPath objects that do not produce duplicate
+ * values.
  */
 std::multiset<TimedPath> removePathsProducingDublicateValues(
     const std::multiset<TimedPath>& pathSet);
@@ -74,8 +78,8 @@ int getOverarchingDelay(const std::multiset<TimedPath>& pathSet);
  *
  * @return Predecessor to path, if such exists
  */
-std::optional<TimedPath> findPredecessor(const TimedPath& path,
-                                         const std::multiset<TimedPath>& pathSet);
+std::optional<TimedPath> findPredecessor(
+    const TimedPath& path, const std::multiset<TimedPath>& pathSet);
 
 }  // namespace analysis
 }  // namespace e2e
