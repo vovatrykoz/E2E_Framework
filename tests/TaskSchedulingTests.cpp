@@ -44,7 +44,8 @@ TEST(TaskScheduling,
      TaskChainReturnsWithOneTaskReturnsSingleTaskInstanceInChain) {
     PeriodicTask t1(40, 4, 1);
 
-    std::vector<std::vector<PeriodicTaskInstance>> expected = {{PeriodicTaskInstance(t1, 0)}};
+    std::vector<std::vector<PeriodicTaskInstance>> expected = {
+        {PeriodicTaskInstance(t1, 0)}};
     std::vector<std::vector<PeriodicTaskInstance>> actual =
         scheduling::generateTaskInstancesFromPath({t1});
 
@@ -61,10 +62,11 @@ TEST(TaskScheduling, CorrectInstanceChainsForSeveralTasks) {
     std::vector<std::vector<PeriodicTaskInstance>> expected = {
         {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t1, 20)},
         {PeriodicTaskInstance(t2, 0)},
-        {PeriodicTaskInstance(t3, 0), PeriodicTaskInstance(t3, 4), PeriodicTaskInstance(t3, 8),
-         PeriodicTaskInstance(t3, 12), PeriodicTaskInstance(t3, 16), PeriodicTaskInstance(t3, 20),
-         PeriodicTaskInstance(t3, 24), PeriodicTaskInstance(t3, 28), PeriodicTaskInstance(t3, 32),
-         PeriodicTaskInstance(t3, 36)}};
+        {PeriodicTaskInstance(t3, 0), PeriodicTaskInstance(t3, 4),
+         PeriodicTaskInstance(t3, 8), PeriodicTaskInstance(t3, 12),
+         PeriodicTaskInstance(t3, 16), PeriodicTaskInstance(t3, 20),
+         PeriodicTaskInstance(t3, 24), PeriodicTaskInstance(t3, 28),
+         PeriodicTaskInstance(t3, 32), PeriodicTaskInstance(t3, 36)}};
 
     std::vector<std::vector<PeriodicTaskInstance>> actual =
         scheduling::generateTaskInstancesFromPath(tasks);
@@ -82,10 +84,11 @@ TEST(TaskScheduling, CorrectInstanceChainsForSeveralTasksWithOffsets) {
     std::vector<std::vector<PeriodicTaskInstance>> expected = {
         {PeriodicTaskInstance(t1, 2), PeriodicTaskInstance(t1, 22)},
         {PeriodicTaskInstance(t2, 7)},
-        {PeriodicTaskInstance(t3, 5), PeriodicTaskInstance(t3, 9), PeriodicTaskInstance(t3, 13),
-         PeriodicTaskInstance(t3, 17), PeriodicTaskInstance(t3, 21), PeriodicTaskInstance(t3, 25),
-         PeriodicTaskInstance(t3, 29), PeriodicTaskInstance(t3, 33), PeriodicTaskInstance(t3, 37),
-         PeriodicTaskInstance(t3, 41)}};
+        {PeriodicTaskInstance(t3, 5), PeriodicTaskInstance(t3, 9),
+         PeriodicTaskInstance(t3, 13), PeriodicTaskInstance(t3, 17),
+         PeriodicTaskInstance(t3, 21), PeriodicTaskInstance(t3, 25),
+         PeriodicTaskInstance(t3, 29), PeriodicTaskInstance(t3, 33),
+         PeriodicTaskInstance(t3, 37), PeriodicTaskInstance(t3, 41)}};
 
     std::vector<std::vector<PeriodicTaskInstance>> actual =
         scheduling::generateTaskInstancesFromPath(tasks);
@@ -94,7 +97,8 @@ TEST(TaskScheduling, CorrectInstanceChainsForSeveralTasksWithOffsets) {
 }
 
 TEST(TaskScheduling, EmptyTaskChainReturnsEmptySet) {
-    std::set<TimedPath> actual = scheduling::generateTimedPathsFromInstances({});
+    std::set<TimedPath> actual =
+        scheduling::generateTimedPathsFromInstances({});
 
     EXPECT_TRUE(actual.empty());
 }
@@ -119,7 +123,8 @@ TEST(TaskScheduling, TaskChainWithOneTaskReturnsSetWithPathContainingOneTask) {
     PeriodicTask t1(20, 4, 1);
 
     std::vector<std::vector<PeriodicTaskInstance>> taskInstanceChain = {
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t1, 40)}};
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t1, 20),
+         PeriodicTaskInstance(t1, 40)}};
 
     TimedPath tp1("#1", {taskInstanceChain[0][0]});
     TimedPath tp2("#2", {taskInstanceChain[0][1]});
@@ -130,7 +135,8 @@ TEST(TaskScheduling, TaskChainWithOneTaskReturnsSetWithPathContainingOneTask) {
     std::vector<std::vector<PeriodicTaskInstance>> possiblePaths =
         scheduling::buildTaskExecutionPaths(taskInstanceChain);
 
-    std::set<TimedPath> actual = scheduling::generateTimedPathsFromInstances(possiblePaths);
+    std::set<TimedPath> actual =
+        scheduling::generateTimedPathsFromInstances(possiblePaths);
 
     EXPECT_EQ(expected, actual);
 }
@@ -143,26 +149,46 @@ TEST(TaskScheduling, CanBuildTaskChain) {
     std::vector<PeriodicTask> tasks = {t1, t2, t3};
 
     std::vector<std::vector<PeriodicTaskInstance>> expected = {
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 0)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 4)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 8)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 12)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 16)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 20)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 24)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 28)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 32)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 36)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 0)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 4)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 8)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 12)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 16)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 20)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 24)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 28)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 32)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 36)}};
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 0)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 4)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 8)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 12)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 16)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 20)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 24)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 28)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 32)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 36)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 0)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 4)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 8)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 12)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 16)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 20)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 24)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 28)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 32)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 36)}};
 
     std::vector<std::vector<PeriodicTaskInstance>> taskInstances =
         scheduling::generateTaskInstancesFromPath(tasks);
@@ -181,26 +207,46 @@ TEST(TaskScheduling, CanCreateTimedPathSet) {
     std::vector<PeriodicTask> tasks = {t1, t2, t3};
 
     std::vector<std::vector<PeriodicTaskInstance>> possiblePaths = {
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 0)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 4)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 8)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 12)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 16)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 20)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 24)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 28)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 32)},
-        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 36)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 0)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 4)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 8)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 12)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 16)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 20)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 24)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 28)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 32)},
-        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0), PeriodicTaskInstance(t3, 36)}};
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 0)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 4)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 8)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 12)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 16)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 20)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 24)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 28)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 32)},
+        {PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 36)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 0)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 4)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 8)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 12)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 16)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 20)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 24)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 28)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 32)},
+        {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
+         PeriodicTaskInstance(t3, 36)}};
 
     std::set<TimedPath> expected;
     int counter = 1;

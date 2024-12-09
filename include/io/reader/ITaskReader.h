@@ -43,13 +43,13 @@ public:
 /**
  * @brief A struct representing a task with an associated name.
  *
- * The `NamedTask` struct combines a `PeriodicTask` object with a name. The name helps
- * in identifying or labeling the task, which could be useful for logging,
+ * The `NamedTask` struct combines a `PeriodicTask` object with a name. The name
+ * helps in identifying or labeling the task, which could be useful for logging,
  * debugging, or task management.
  */
 struct NamedTask {
-    PeriodicTask task;  // The task object that contains task-specific data like period,
-                // latency, etc.
+    PeriodicTask task;  // The task object that contains task-specific data like
+                        // period, latency, etc.
     std::string name;  // The name associated with the task.
 
     /**

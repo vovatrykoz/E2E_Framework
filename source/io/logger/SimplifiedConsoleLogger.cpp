@@ -64,7 +64,8 @@ void SimplifiedConsoleLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     std::cout << std::endl;
 }
 
-void SimplifiedConsoleLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+void SimplifiedConsoleLogger::logResults_FF(
+    int maxFirstToFirstPathDelay) const {
     std::cout << "First-to-First semantics:" << std::endl;
 
     std::cout << "  Maximum path delay: " << maxFirstToFirstPathDelay

@@ -23,7 +23,8 @@ bool mathframework::crit(const PeriodicTaskInstance& writerTaskInstance,
     return false;
 }
 
-bool mathframework::wait(const PeriodicTask& writerTask, const PeriodicTask& readerTask) {
+bool mathframework::wait(const PeriodicTask& writerTask,
+                         const PeriodicTask& readerTask) {
     if (readerTask.priority < writerTask.priority) {
         return true;
     }
@@ -64,7 +65,8 @@ bool mathframework::reach(const PeriodicTaskInstance& currentWriterTaskInstance,
     return false;
 }
 
-bool mathframework::pathReach(const std::vector<PeriodicTaskInstance>& timedPath) {
+bool mathframework::pathReach(
+    const std::vector<PeriodicTaskInstance>& timedPath) {
     if (timedPath.empty()) {
         return false;
     }
@@ -75,8 +77,7 @@ bool mathframework::pathReach(const std::vector<PeriodicTaskInstance>& timedPath
     }
 
     for (std::size_t i = 0; i < pathSize - 1; i++) {
-        if (!reach(timedPath[i],
-                   timedPath[i + 1],
+        if (!reach(timedPath[i], timedPath[i + 1],
                    timedPath[i].nextInstance())) {
             return false;
         }

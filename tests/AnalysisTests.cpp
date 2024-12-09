@@ -11,28 +11,28 @@ TEST(Analysis, CanRemoveUnreachablePaths) {
     PeriodicTask t4(20, 1, 1);
 
     std::vector<PeriodicTaskInstance> unreachablePath_1 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11), PeriodicTaskInstance(t3, 5),
-        PeriodicTaskInstance(t4, 22)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11),
+        PeriodicTaskInstance(t3, 5), PeriodicTaskInstance(t4, 22)};
 
     std::vector<PeriodicTaskInstance> unreachablePath_2 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 100), PeriodicTaskInstance(t3, 15),
-        PeriodicTaskInstance(t4, 22)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 100),
+        PeriodicTaskInstance(t3, 15), PeriodicTaskInstance(t4, 22)};
 
     std::vector<PeriodicTaskInstance> unreachablePath_3 = {
-        PeriodicTaskInstance(t1, 40), PeriodicTaskInstance(t2, 51), PeriodicTaskInstance(t3, 75),
-        PeriodicTaskInstance(t4, 92)};
+        PeriodicTaskInstance(t1, 40), PeriodicTaskInstance(t2, 51),
+        PeriodicTaskInstance(t3, 75), PeriodicTaskInstance(t4, 92)};
 
     std::vector<PeriodicTaskInstance> reachablePath_1 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11), PeriodicTaskInstance(t3, 15),
-        PeriodicTaskInstance(t4, 32)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11),
+        PeriodicTaskInstance(t3, 15), PeriodicTaskInstance(t4, 32)};
 
     std::vector<PeriodicTaskInstance> reachablePath_2 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41), PeriodicTaskInstance(t3, 45),
-        PeriodicTaskInstance(t4, 52)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41),
+        PeriodicTaskInstance(t3, 45), PeriodicTaskInstance(t4, 52)};
 
     std::vector<PeriodicTaskInstance> reachablePath_3 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41), PeriodicTaskInstance(t3, 45),
-        PeriodicTaskInstance(t4, 72)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41),
+        PeriodicTaskInstance(t3, 45), PeriodicTaskInstance(t4, 72)};
 
     TimedPath timedPath_A("A", unreachablePath_1);
     TimedPath timedPath_B("B", unreachablePath_2);
@@ -57,20 +57,20 @@ TEST(Analysis, CanCalculateLongestEndToEndTime) {
     PeriodicTask t4(20, 1, 1);
 
     std::vector<PeriodicTaskInstance> reachablePath_1 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11), PeriodicTaskInstance(t3, 15),
-        PeriodicTaskInstance(t4, 32)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11),
+        PeriodicTaskInstance(t3, 15), PeriodicTaskInstance(t4, 32)};
 
     std::vector<PeriodicTaskInstance> reachablePath_2 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41), PeriodicTaskInstance(t3, 45),
-        PeriodicTaskInstance(t4, 52)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41),
+        PeriodicTaskInstance(t3, 45), PeriodicTaskInstance(t4, 52)};
 
     std::vector<PeriodicTaskInstance> reachablePath_3 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41), PeriodicTaskInstance(t3, 45),
-        PeriodicTaskInstance(t4, 72)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41),
+        PeriodicTaskInstance(t3, 45), PeriodicTaskInstance(t4, 72)};
 
     std::vector<PeriodicTaskInstance> reachablePath_4 = {
-        PeriodicTaskInstance(t1, 40), PeriodicTaskInstance(t2, 71), PeriodicTaskInstance(t3, 75),
-        PeriodicTaskInstance(t4, 92)};
+        PeriodicTaskInstance(t1, 40), PeriodicTaskInstance(t2, 71),
+        PeriodicTaskInstance(t3, 75), PeriodicTaskInstance(t4, 92)};
 
     TimedPath timedPath_A("A", reachablePath_1);
     TimedPath timedPath_B("B", reachablePath_2);
@@ -109,24 +109,24 @@ TEST(Analysis, CanAnalyzeUsingLastToFirstSemantics) {
     PeriodicTask t4(20, 1, 1);
 
     std::vector<PeriodicTaskInstance> unreachablePath_2 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 100), PeriodicTaskInstance(t3, 15),
-        PeriodicTaskInstance(t4, 22)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 100),
+        PeriodicTaskInstance(t3, 15), PeriodicTaskInstance(t4, 22)};
 
     std::vector<PeriodicTaskInstance> unreachablePath_3 = {
-        PeriodicTaskInstance(t1, 40), PeriodicTaskInstance(t2, 51), PeriodicTaskInstance(t3, 75),
-        PeriodicTaskInstance(t4, 92)};
+        PeriodicTaskInstance(t1, 40), PeriodicTaskInstance(t2, 51),
+        PeriodicTaskInstance(t3, 75), PeriodicTaskInstance(t4, 92)};
 
     std::vector<PeriodicTaskInstance> reachablePath_1 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11), PeriodicTaskInstance(t3, 15),
-        PeriodicTaskInstance(t4, 32)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 11),
+        PeriodicTaskInstance(t3, 15), PeriodicTaskInstance(t4, 32)};
 
     std::vector<PeriodicTaskInstance> reachablePath_2 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41), PeriodicTaskInstance(t3, 45),
-        PeriodicTaskInstance(t4, 52)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41),
+        PeriodicTaskInstance(t3, 45), PeriodicTaskInstance(t4, 52)};
 
     std::vector<PeriodicTaskInstance> reachablePath_3 = {
-        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41), PeriodicTaskInstance(t3, 45),
-        PeriodicTaskInstance(t4, 72)};
+        PeriodicTaskInstance(t1, 0), PeriodicTaskInstance(t2, 41),
+        PeriodicTaskInstance(t3, 45), PeriodicTaskInstance(t4, 72)};
 
     TimedPath timedPath_A("A", reachablePath_1);
     TimedPath timedPath_B("B", reachablePath_2);
@@ -168,18 +168,18 @@ TEST(Analysis, CanAnalyzeUsingFirstToLastSemantics) {
         t1, t1_firstInstance.activationTime + t1.period * 2);
 
     PeriodicTaskInstance t2_firstInstance(t2, 5);
-    PeriodicTaskInstance t2_secondInstance(t2,
-                                   t2_firstInstance.activationTime + t2.period);
+    PeriodicTaskInstance t2_secondInstance(
+        t2, t2_firstInstance.activationTime + t2.period);
 
     PeriodicTaskInstance t3_fourthInstance(t3, 39);
     PeriodicTaskInstance t3_eighthInstance(
         t3, t3_fourthInstance.activationTime + t3.period * 4);
 
-    std::vector<PeriodicTaskInstance> firstPath = {t1_firstInstance, t2_firstInstance,
-                                           t3_fourthInstance};
+    std::vector<PeriodicTaskInstance> firstPath = {
+        t1_firstInstance, t2_firstInstance, t3_fourthInstance};
 
-    std::vector<PeriodicTaskInstance> secondPath = {t1_thirdInstance, t2_secondInstance,
-                                            t3_eighthInstance};
+    std::vector<PeriodicTaskInstance> secondPath = {
+        t1_thirdInstance, t2_secondInstance, t3_eighthInstance};
 
     TimedPath firstTimedPath("First path", firstPath);
     TimedPath secondTimedPath("Second path", secondPath);
@@ -209,27 +209,27 @@ TEST(Analysis, CanAnalyzeUsingFirstToFirstSemantics) {
         t1, t1_firstInstance.activationTime + t1.period * 2);
 
     PeriodicTaskInstance t2_firstInstance(t2, 5);
-    PeriodicTaskInstance t2_secondInstance(t2,
-                                   t2_firstInstance.activationTime + t2.period);
+    PeriodicTaskInstance t2_secondInstance(
+        t2, t2_firstInstance.activationTime + t2.period);
 
     PeriodicTaskInstance t3_firstInstance(t3, 9);
     PeriodicTaskInstance t3_fourthInstance(t3, 39);
-    PeriodicTaskInstance t3_fifthInstance(t3,
-                                  t3_fourthInstance.activationTime + t3.period);
+    PeriodicTaskInstance t3_fifthInstance(
+        t3, t3_fourthInstance.activationTime + t3.period);
     PeriodicTaskInstance t3_eighthInstance(
         t3, t3_fourthInstance.activationTime + t3.period * 4);
 
-    std::vector<PeriodicTaskInstance> firstPath = {t1_firstInstance, t2_firstInstance,
-                                           t3_fourthInstance};
+    std::vector<PeriodicTaskInstance> firstPath = {
+        t1_firstInstance, t2_firstInstance, t3_fourthInstance};
 
-    std::vector<PeriodicTaskInstance> secondPath = {t1_firstInstance, t2_firstInstance,
-                                            t3_firstInstance};
+    std::vector<PeriodicTaskInstance> secondPath = {
+        t1_firstInstance, t2_firstInstance, t3_firstInstance};
 
-    std::vector<PeriodicTaskInstance> thirdPath = {t1_thirdInstance, t2_secondInstance,
-                                           t3_fifthInstance};
+    std::vector<PeriodicTaskInstance> thirdPath = {
+        t1_thirdInstance, t2_secondInstance, t3_fifthInstance};
 
-    std::vector<PeriodicTaskInstance> fourthPath = {t1_thirdInstance, t2_secondInstance,
-                                            t3_eighthInstance};
+    std::vector<PeriodicTaskInstance> fourthPath = {
+        t1_thirdInstance, t2_secondInstance, t3_eighthInstance};
 
     TimedPath firstTimedPath("First path", firstPath);
     TimedPath secondTimedPath("Second path", secondPath);

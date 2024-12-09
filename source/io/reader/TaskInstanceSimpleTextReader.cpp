@@ -6,7 +6,8 @@
 using namespace e2e;
 using namespace e2e::io;
 
-TaskInstanceSimpleTextReader::TaskInstanceSimpleTextReader(const std::string& filePath)
+TaskInstanceSimpleTextReader::TaskInstanceSimpleTextReader(
+    const std::string& filePath)
     : filePath(filePath) {}
 
 std::set<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
@@ -68,7 +69,8 @@ PeriodicTaskInstance TaskInstanceSimpleTextReader::parseTaskInstance(
         int priority = std::stoi(taskInstanceParams[2]);
         int activaionTime = std::stoi(taskInstanceParams[3]);
 
-        return PeriodicTaskInstance(PeriodicTask(period, wcrt, priority), activaionTime);
+        return PeriodicTaskInstance(PeriodicTask(period, wcrt, priority),
+                                    activaionTime);
     } catch (...) {
         throw std::runtime_error("Error: could not parse some of the lines");
     }

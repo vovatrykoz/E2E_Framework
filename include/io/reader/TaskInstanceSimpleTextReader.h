@@ -13,7 +13,8 @@ public:
     virtual std::set<TimedPath> readPathsSet() const override;
 
 private:
-    PeriodicTaskInstance parseTaskInstance(const std::string& taskInstanceStr) const;
+    PeriodicTaskInstance parseTaskInstance(
+        const std::string& taskInstanceStr) const;
 
     const std::string filePath;
     static const std::string startStr;

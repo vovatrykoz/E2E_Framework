@@ -11,9 +11,9 @@ namespace e2e {
 /**
  * @brief Represents a timed path consisting of a sequence of task instances.
  *
- * The TimedPath class manages a series of PeriodicTaskInstance objects, providing
- * methods to add and remove instances, calculate the end-to-end delay, and
- * retrieve the sequence in different forms.
+ * The TimedPath class manages a series of PeriodicTaskInstance objects,
+ * providing methods to add and remove instances, calculate the end-to-end
+ * delay, and retrieve the sequence in different forms.
  */
 class TimedPath {
 public:
@@ -44,8 +44,8 @@ public:
      * instances. The `name` will be an empty string. This constructor is used
      * when the TimedPath is created with a set of tasks, but no name is needed.
      *
-     * @param tasks A vector of PeriodicTaskInstance objects that will define the
-     * sequence of tasks in the TimedPath.
+     * @param tasks A vector of PeriodicTaskInstance objects that will define
+     * the sequence of tasks in the TimedPath.
      */
     TimedPath(const std::vector<PeriodicTaskInstance>& tasks);
 
@@ -59,10 +59,11 @@ public:
      * of creation.
      *
      * @param name  The name to assign to the TimedPath.
-     * @param tasks A vector of PeriodicTaskInstance objects that will define the
-     * sequence of tasks in the TimedPath.
+     * @param tasks A vector of PeriodicTaskInstance objects that will define
+     * the sequence of tasks in the TimedPath.
      */
-    TimedPath(const std::string& name, const std::vector<PeriodicTaskInstance>& tasks);
+    TimedPath(const std::string& name,
+              const std::vector<PeriodicTaskInstance>& tasks);
 
     /**
      * @brief The name of the timed path.
@@ -103,8 +104,8 @@ public:
      * @brief Provides a const reference to the task instances in the timed
      * path.
      *
-     * Returns a reference to the underlying vector of PeriodicTaskInstance objects,
-     * allowing read-only access to the sequence.
+     * Returns a reference to the underlying vector of PeriodicTaskInstance
+     * objects, allowing read-only access to the sequence.
      *
      * @return A const reference to the vector of task instances.
      */
@@ -204,7 +205,8 @@ inline TimedPath::TimedPath(const std::string& name,
                             const std::vector<PeriodicTaskInstance>& tasks)
     : name(name), tasks(tasks) {}
 
-inline void TimedPath::appendTaskInstance(const PeriodicTaskInstance& taskInstance) {
+inline void TimedPath::appendTaskInstance(
+    const PeriodicTaskInstance& taskInstance) {
     this->tasks.push_back(taskInstance);
 }
 

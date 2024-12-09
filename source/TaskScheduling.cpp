@@ -60,19 +60,21 @@ std::set<TimedPath> scheduling::generateTimedPathsFromInstances(
     return result;
 }
 
-std::vector<std::vector<PeriodicTaskInstance>> scheduling::buildTaskExecutionPaths(
+std::vector<std::vector<PeriodicTaskInstance>>
+scheduling::buildTaskExecutionPaths(
     const std::vector<std::vector<PeriodicTaskInstance>>& taskInstanceChains) {
     std::vector<std::vector<PeriodicTaskInstance>> timedPaths;
 
     for (const auto& taskInstanceChain : taskInstanceChains) {
-        timedPaths =
-            scheduling::cartesianProductOfTimedPaths(timedPaths, taskInstanceChain);
+        timedPaths = scheduling::cartesianProductOfTimedPaths(
+            timedPaths, taskInstanceChain);
     }
 
     return timedPaths;
 }
 
-std::vector<std::vector<PeriodicTaskInstance>> scheduling::cartesianProductOfTimedPaths(
+std::vector<std::vector<PeriodicTaskInstance>>
+scheduling::cartesianProductOfTimedPaths(
     const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths,
     const std::vector<PeriodicTaskInstance>& taskInstanceChain) {
     std::vector<std::vector<PeriodicTaskInstance>> product;

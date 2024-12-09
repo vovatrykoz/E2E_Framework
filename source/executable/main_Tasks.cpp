@@ -1,6 +1,6 @@
 #include <Analysis.h>
-#include <TaskScheduling.h>
 #include <Setup.h>
+#include <TaskScheduling.h>
 
 #include <iostream>
 #include <memory>
@@ -20,16 +20,18 @@ int main(int argc, char* argv[]) {
     switch (argc) {
         case 1:
             // default to console if the user has not provided any input
-            inputReader =
-                setup::getTaskReaderFromType(setup::SupportedTaskReader::Console);
-            logger = setup::getLoggerFromType(setup::SupportedLogger::SimplifiedConsole);
+            inputReader = setup::getTaskReaderFromType(
+                setup::SupportedTaskReader::Console);
+            logger = setup::getLoggerFromType(
+                setup::SupportedLogger::SimplifiedConsole);
             break;
 
         case 2:
             // if only one parameter is provided, we assume that to be a reader
             // deafault to console logger
             inputReader = setup::taskReader(argv[1]);
-            logger = setup::getLoggerFromType(setup::SupportedLogger::SimplifiedConsole);
+            logger = setup::getLoggerFromType(
+                setup::SupportedLogger::SimplifiedConsole);
             break;
 
         case 3:
@@ -60,7 +62,7 @@ int main(int argc, char* argv[]) {
 
     std::vector<PeriodicTask> taskChain;
     taskChain.reserve(namedTasks.size());
-    for(const auto& namedTask : namedTasks) {
+    for (const auto& namedTask : namedTasks) {
         taskChain.push_back(namedTask.task);
     }
 
