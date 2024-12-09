@@ -2,6 +2,8 @@
 
 using namespace e2e;
 
+// Return true if the reader task is activated before the writer task
+// (activation time travel occurs).
 bool mathframework::att(const PeriodicTaskInstance& writerTaskInstance,
                         const PeriodicTaskInstance& readerTaskInstance) {
     if (readerTaskInstance.activationTime < writerTaskInstance.activationTime) {
@@ -10,7 +12,8 @@ bool mathframework::att(const PeriodicTaskInstance& writerTaskInstance,
 
     return false;
 }
-
+// Check if the reader task overlaps with the writer task, considering the
+// writer's worst-case response time (wcrt).
 bool mathframework::crit(const PeriodicTaskInstance& writerTaskInstance,
                          const PeriodicTaskInstance& readerTaskInstance) {
     int writerTaskTerminationTime =
@@ -23,6 +26,8 @@ bool mathframework::crit(const PeriodicTaskInstance& writerTaskInstance,
     return false;
 }
 
+// Return true if the reader task must wait for the writer task to finish due to
+// the writer's higher priority.
 bool mathframework::wait(const PeriodicTask& writerTask,
                          const PeriodicTask& readerTask) {
     if (readerTask.priority < writerTask.priority) {
@@ -32,6 +37,8 @@ bool mathframework::wait(const PeriodicTask& writerTask,
     return false;
 }
 
+// Determine if the reader task can reach the writer task, based on activation
+// time travel, criticality, and priority.
 bool mathframework::forw(const PeriodicTaskInstance& writerTaskInstance,
                          const PeriodicTaskInstance& readerTaskInstance) {
     bool instancesDoNotTimeTravel =
@@ -49,6 +56,8 @@ bool mathframework::forw(const PeriodicTaskInstance& writerTaskInstance,
     return false;
 }
 
+// Check if a writer task instance can reach a reader task instance, detecting
+// potential overwrites based on forward reachability.
 bool mathframework::reach(const PeriodicTaskInstance& currentWriterTaskInstance,
                           const PeriodicTaskInstance& readerTaskInstance,
                           const PeriodicTaskInstance& nextWriterTaskInstance) {
@@ -65,6 +74,8 @@ bool mathframework::reach(const PeriodicTaskInstance& currentWriterTaskInstance,
     return false;
 }
 
+// Determine if the entire timed path is reachable by checking the reachability
+// of each consecutive pair of task instances.
 bool mathframework::pathReach(
     const std::vector<PeriodicTaskInstance>& timedPath) {
     if (timedPath.empty()) {

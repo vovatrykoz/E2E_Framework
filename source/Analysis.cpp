@@ -5,6 +5,8 @@
 
 using namespace e2e;
 
+// Check if the path is reachable according to the conditions defined in
+// MathFramework.
 std::multiset<TimedPath> analysis::removeUnreachablePaths(
     const std::multiset<TimedPath>& pathSet) {
     std::multiset<TimedPath> output;
@@ -18,13 +20,18 @@ std::multiset<TimedPath> analysis::removeUnreachablePaths(
     return output;
 }
 
+// Iterate through all paths and check if they produce duplicate values due to
+// identical start time. A path is considered duplicate if it finishes later
+// than another path with the same start time.
 std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
     const std::multiset<TimedPath>& pathSet) {
     std::multiset<TimedPath> output;
 
     int totalTaskCount = pathSet.size();
     for (const auto& currentPath : pathSet) {
+        // Keep track of paths that are not considered duplicates
         int counter = 0;
+
         for (const auto& otherPath : pathSet) {
             if (currentPath == otherPath) {
                 counter++;
@@ -55,6 +62,8 @@ std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
     return output;
 }
 
+// Find the path with the maximum end-to-end latency by comparing paths in the
+// set.
 std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     const std::multiset<TimedPath>& pathSet) {
     auto maxLatencyIt =
@@ -70,6 +79,8 @@ std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     return (*maxLatencyIt);
 }
 
+// For each path, calculate the delay between the current path and its
+// predecessor, then compute the overall maximum delay.
 int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
     int maxDelay = 0;
 
@@ -93,6 +104,8 @@ int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
     return maxDelay;
 }
 
+// Find the predecessor of the current path, which is a path that ends before
+// the current path starts.
 std::optional<TimedPath> analysis::findPredecessor(
     const TimedPath& path, const std::multiset<TimedPath>& pathSet) {
     auto predecessorIt = std::find_if(
