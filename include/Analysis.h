@@ -22,7 +22,7 @@ namespace analysis {
  * @return A new set of TimedPath objects that are reachable according to the
  * reachability conditions.
  */
-std::set<TimedPath> removeUnreachablePaths(const std::set<TimedPath>& pathSet);
+std::multiset<TimedPath> removeUnreachablePaths(const std::multiset<TimedPath>& pathSet);
 
 /**
  * @brief Remove all paths that produce dublicate values
@@ -34,8 +34,8 @@ std::set<TimedPath> removeUnreachablePaths(const std::set<TimedPath>& pathSet);
  *
  * @return A new set of TimedPath objects that do not produce dublicate values
  */
-std::set<TimedPath> removePathsProducingDublicateValues(
-    const std::set<TimedPath>& pathSet);
+std::multiset<TimedPath> removePathsProducingDublicateValues(
+    const std::multiset<TimedPath>& pathSet);
 
 /**
  * @brief Finds the path with maximum end-to-end latency in the set
@@ -48,7 +48,7 @@ std::set<TimedPath> removePathsProducingDublicateValues(
  * @return A TimedPath with the maximum end-to-end latency, is such exists
  */
 std::optional<TimedPath> getPathWithMaximumLatency(
-    const std::set<TimedPath>& pathSet);
+    const std::multiset<TimedPath>& pathSet);
 
 /**
  * @brief Calculate path delay using First-to-x semantics
@@ -61,7 +61,7 @@ std::optional<TimedPath> getPathWithMaximumLatency(
  *
  * @return Maximum path delay with First-to-x semantics
  */
-int getOverarchingDelay(const std::set<TimedPath>& pathSet);
+int getOverarchingDelay(const std::multiset<TimedPath>& pathSet);
 
 /**
  * @brief Determines if a path has a "predecessor"
@@ -75,7 +75,7 @@ int getOverarchingDelay(const std::set<TimedPath>& pathSet);
  * @return Predecessor to path, if such exists
  */
 std::optional<TimedPath> findPredecessor(const TimedPath& path,
-                                         const std::set<TimedPath>& pathSet);
+                                         const std::multiset<TimedPath>& pathSet);
 
 }  // namespace analysis
 }  // namespace e2e

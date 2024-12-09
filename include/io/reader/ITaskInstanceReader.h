@@ -29,7 +29,7 @@ public:
      * @return A set of timed paths, where each path represents a valid sequence
      *         of task instances.
      */
-    virtual std::set<TimedPath> readPathsSet() const = 0;
+    virtual std::multiset<TimedPath> readPathsSet() const = 0;
 
     /**
      * @brief Virtual destructor for the task instance reader.

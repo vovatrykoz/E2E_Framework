@@ -11,7 +11,7 @@ namespace io {
 
 class TaskInstanceInputReader : public ITaskInstanceReader {
 public:
-    virtual std::set<TimedPath> readPathsSet() const override;
+    virtual std::multiset<TimedPath> readPathsSet() const override;
 
 private:
     int readInt(const std::string& message) const;

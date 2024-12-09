@@ -9,9 +9,9 @@ namespace io {
 class SimplifiedConsoleLogger : public ILogger {
 public:
     virtual void logValidInvalidPaths(
-        const std::set<TimedPath>& allPathsSet,
-        const std::set<TimedPath>& validPathSet,
-        const std::set<TimedPath>& invalidPathSet) const override;
+        const std::multiset<TimedPath>& allPathsSet,
+        const std::multiset<TimedPath>& validPathSet,
+        const std::multiset<TimedPath>& invalidPathSet) const override;
 
     virtual void logResults_LL(
         const std::optional<TimedPath>& maximumLatencyPath) const override;

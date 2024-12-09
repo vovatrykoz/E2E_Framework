@@ -10,14 +10,14 @@ TaskInstanceSimpleTextReader::TaskInstanceSimpleTextReader(
     const std::string& filePath)
     : filePath(filePath) {}
 
-std::set<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
+std::multiset<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
     std::ifstream file(this->filePath);
 
     if (!file) {
         throw std::runtime_error("Error: file not found");
     }
 
-    std::set<TimedPath> output;
+    std::multiset<TimedPath> output;
     std::vector<std::vector<std::string>> lines;
 
     bool isOnTaskChain = false;

@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    std::set<TimedPath> pathSet;
+    std::multiset<TimedPath> pathSet;
 
     // read user input
     try {
@@ -58,7 +58,7 @@ int main(int argc, char* argv[]) {
     }
 
     // perform the analysis
-    std::set<TimedPath> validPathSet_LL =
+    std::multiset<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
 
     // perform end-to-end analysis using Last-to-Last semantics
@@ -66,7 +66,7 @@ int main(int argc, char* argv[]) {
         analysis::getPathWithMaximumLatency(validPathSet_LL);
 
     // get a set for Last-To-First semantics analysis
-    std::set<TimedPath> validPathSet_LF =
+    std::multiset<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDublicateValues(validPathSet_LL);
 
     // perform end-to-end analysis using Last-To-First semantics
@@ -80,7 +80,7 @@ int main(int argc, char* argv[]) {
     int maxFirstToFirstDelay = analysis::getOverarchingDelay(validPathSet_LF);
 
     // idenrify which paths turned out to be invalid
-    std::set<TimedPath> invalidPathSet;
+    std::multiset<TimedPath> invalidPathSet;
     for (const auto& path : pathSet) {
         if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
             invalidPathSet.insert(path);

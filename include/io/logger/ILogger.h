@@ -31,9 +31,9 @@ public:
      * @param invalidPathSet A set containing invalid timed paths.
      */
     virtual void logValidInvalidPaths(
-        const std::set<TimedPath>& allPathsSet,
-        const std::set<TimedPath>& validPathSet,
-        const std::set<TimedPath>& invalidPathSet) const = 0;
+        const std::multiset<TimedPath>& allPathsSet,
+        const std::multiset<TimedPath>& validPathSet,
+        const std::multiset<TimedPath>& invalidPathSet) const = 0;
 
     /**
      * @brief Logs the results of maximum latency path calculation (LL).

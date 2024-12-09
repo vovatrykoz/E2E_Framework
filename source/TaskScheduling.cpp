@@ -43,9 +43,9 @@ scheduling::generateTaskInstancesFromPath(
     return result;
 }
 
-std::set<TimedPath> scheduling::generateTimedPathsFromInstances(
+std::multiset<TimedPath> scheduling::generateTimedPathsFromInstances(
     const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths) {
-    std::set<TimedPath> result;
+    std::multiset<TimedPath> result;
     if (timedPaths.empty()) {
         return result;
     }

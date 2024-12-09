@@ -5,9 +5,9 @@
 
 using namespace e2e;
 
-std::set<TimedPath> analysis::removeUnreachablePaths(
-    const std::set<TimedPath>& pathSet) {
-    std::set<TimedPath> output;
+std::multiset<TimedPath> analysis::removeUnreachablePaths(
+    const std::multiset<TimedPath>& pathSet) {
+    std::multiset<TimedPath> output;
 
     for (const auto& path : pathSet) {
         if (mathframework::pathReach(path.asVector())) {
@@ -18,9 +18,9 @@ std::set<TimedPath> analysis::removeUnreachablePaths(
     return output;
 }
 
-std::set<TimedPath> analysis::removePathsProducingDublicateValues(
-    const std::set<TimedPath>& pathSet) {
-    std::set<TimedPath> output;
+std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
+    const std::multiset<TimedPath>& pathSet) {
+    std::multiset<TimedPath> output;
 
     int totalTaskCount = pathSet.size();
     for (const auto& currentPath : pathSet) {
@@ -56,7 +56,7 @@ std::set<TimedPath> analysis::removePathsProducingDublicateValues(
 }
 
 std::optional<TimedPath> analysis::getPathWithMaximumLatency(
-    const std::set<TimedPath>& pathSet) {
+    const std::multiset<TimedPath>& pathSet) {
     auto maxLatencyIt =
         std::max_element(pathSet.begin(), pathSet.end(),
                          [](const TimedPath& a, const TimedPath& b) {
@@ -70,7 +70,7 @@ std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     return (*maxLatencyIt);
 }
 
-int analysis::getOverarchingDelay(const std::set<TimedPath>& pathSet) {
+int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
     int maxDelay = 0;
 
     for (const auto& currentPath : pathSet) {
@@ -94,7 +94,7 @@ int analysis::getOverarchingDelay(const std::set<TimedPath>& pathSet) {
 }
 
 std::optional<TimedPath> analysis::findPredecessor(
-    const TimedPath& path, const std::set<TimedPath>& pathSet) {
+    const TimedPath& path, const std::multiset<TimedPath>& pathSet) {
     auto predecessorIt = std::find_if(
         pathSet.begin(), pathSet.end(), [path](const TimedPath& otherPath) {
             return path != otherPath && path.succeeds(otherPath);

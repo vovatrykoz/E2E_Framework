@@ -9,9 +9,9 @@ SimplifiedTextLogger::SimplifiedTextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
 void SimplifiedTextLogger::logValidInvalidPaths(
-    const std::set<TimedPath>& allPathsSet,
-    const std::set<TimedPath>& validPathSet,
-    const std::set<TimedPath>& invalidPathSet) const {
+    const std::multiset<TimedPath>& allPathsSet,
+    const std::multiset<TimedPath>& validPathSet,
+    const std::multiset<TimedPath>& invalidPathSet) const {
     std::stringstream output;
 
     output << "Results" << std::endl << std::endl;

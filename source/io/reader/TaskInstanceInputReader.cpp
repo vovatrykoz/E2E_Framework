@@ -6,8 +6,8 @@
 using namespace e2e;
 using namespace e2e::io;
 
-std::set<TimedPath> TaskInstanceInputReader::readPathsSet() const {
-    std::set<TimedPath> result;
+std::multiset<TimedPath> TaskInstanceInputReader::readPathsSet() const {
+    std::multiset<TimedPath> result;
     std::string name;
     int numOfChains = readInt("How many task chains do you want to analyse: ");
 
