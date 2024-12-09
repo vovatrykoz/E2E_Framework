@@ -20,16 +20,17 @@ namespace io {
 class ITaskInstanceReader {
 public:
     /**
-     * @brief Reads a set of timed paths.
+     * @brief Reads a multiset of timed paths.
      *
-     * This method returns a set of `TimedPath` objects, where each `TimedPath`
-     * contains a sequence of task instances. The set ensures that each path
-     * is unique within the collection.
+     * This method returns a multiset of `TimedPath` objects, where each
+     * `TimedPath` contains a sequence of task instances. The multiset allows
+     * for duplicate paths in the collection, which can be useful for scenarios
+     * where multiple paths are identical.
      *
-     * @return A set of timed paths, where each path represents a valid sequence
-     *         of task instances.
+     * @return A multiset of timed paths, where each path represents a valid
+     * sequence of task instances.
      */
-    virtual std::set<TimedPath> readPathsSet() const = 0;
+    virtual std::multiset<TimedPath> readPathsSet() const = 0;
 
     /**
      * @brief Virtual destructor for the task instance reader.

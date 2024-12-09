@@ -22,18 +22,18 @@ public:
     /**
      * @brief Logs the valid and invalid paths.
      *
-     * This function logs the entire set of paths, along with separate logs for
-     * valid and invalid paths. It helps in analyzing the correctness of the
+     * This function logs the entire multiset of paths, along with separate logs
+     * for valid and invalid paths. It helps in analyzing the correctness of the
      * paths.
      *
-     * @param allPathsSet A set containing all the timed paths.
-     * @param validPathSet A set containing valid timed paths.
-     * @param invalidPathSet A set containing invalid timed paths.
+     * @param allPathsSet A multiset containing all the timed paths.
+     * @param validPathSet A multiset containing valid timed paths.
+     * @param invalidPathSet A multiset containing invalid timed paths.
      */
     virtual void logValidInvalidPaths(
-        const std::set<TimedPath>& allPathsSet,
-        const std::set<TimedPath>& validPathSet,
-        const std::set<TimedPath>& invalidPathSet) const = 0;
+        const std::multiset<TimedPath>& allPathsSet,
+        const std::multiset<TimedPath>& validPathSet,
+        const std::multiset<TimedPath>& invalidPathSet) const = 0;
 
     /**
      * @brief Logs the results of maximum latency path calculation (LL).

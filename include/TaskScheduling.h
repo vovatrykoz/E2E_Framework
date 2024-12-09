@@ -20,7 +20,8 @@ namespace scheduling {
  *
  * @param taskPath A vector of tasks representing the task path.
  *
- * @return The least common multiple of the periods of the tasks in the path.
+ * @return 0 if the path is empty, or the LCM of the periods of the tasks in the
+ * path.
  */
 int calculateLcmForEndToEndPath(const std::vector<PeriodicTask>& endToEndPath);
 
@@ -48,10 +49,10 @@ std::vector<std::vector<PeriodicTaskInstance>> generateTaskInstancesFromPath(
  *
  * @param taskInstanceChains A vector of vectors of task instances.
  *
- * @return A set of timed paths, where each path is a sequence of task instances
- * with specific activation times.
+ * @return A multiset of timed paths, where each path is a sequence of task
+ * instances with specific activation times.
  */
-std::set<TimedPath> generateTimedPathsFromInstances(
+std::multiset<TimedPath> generateTimedPathsFromInstances(
     const std::vector<std::vector<PeriodicTaskInstance>>& taskInstanceChains);
 
 /**

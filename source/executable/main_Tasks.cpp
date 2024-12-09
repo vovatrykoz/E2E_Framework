@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
     switch (argc) {
         case 1:
             // default to console if the user has not provided any input
-            inputReader = setup::getTaskReaderFromType(
-                setup::SupportedTaskReader::Console);
+            inputReader =
+                setup::getTaskReaderFromType(setup::SupportedTaskReader::Text);
             logger = setup::getLoggerFromType(
                 setup::SupportedLogger::SimplifiedConsole);
             break;
@@ -66,17 +66,36 @@ int main(int argc, char* argv[]) {
         taskChain.push_back(namedTask.task);
     }
 
-    std::vector<std::vector<PeriodicTaskInstance>> taskInstances =
-        scheduling::generateTaskInstancesFromPath(taskChain);
+    // given a set of tasks, we generate every possible task instance in the
+    // set, as well as every possible timed path
+    std::vector<std::vector<PeriodicTaskInstance>> taskInstances;
+    try {
+        taskInstances = scheduling::generateTaskInstancesFromPath(taskChain);
+    } catch (std::bad_alloc) {
+        std::cout << "The provided input resulted in too many task instances "
+                     "being genereated. Review your task parameters to ensure "
+                     "a reasonable number of taks instances can be generated"
+                  << std::endl;
+        return 0;
+    }
 
-    std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths =
-        scheduling::buildTaskExecutionPaths(taskInstances);
+    std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths;
+    try {
+        allPossiblePaths = scheduling::buildTaskExecutionPaths(taskInstances);
+    } catch (std::bad_alloc) {
+        std::cout
+            << "The provided input resulted in too many task exectution paths "
+               "being genereated. Review your task parameters to ensure "
+               "a reasonable number of taks instances can be generated"
+            << std::endl;
+        return 0;
+    }
 
-    std::set<TimedPath> pathSet =
+    std::multiset<TimedPath> pathSet =
         scheduling::generateTimedPathsFromInstances(allPossiblePaths);
 
     // perform the analysis
-    std::set<TimedPath> validPathSet_LL =
+    std::multiset<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
 
     // perform end-to-end analysis using Last-to-Last semantics
@@ -84,7 +103,7 @@ int main(int argc, char* argv[]) {
         analysis::getPathWithMaximumLatency(validPathSet_LL);
 
     // get a set for Last-To-First semantics analysis
-    std::set<TimedPath> validPathSet_LF =
+    std::multiset<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDublicateValues(validPathSet_LL);
 
     // perform end-to-end analysis using Last-To-First semantics
@@ -98,7 +117,7 @@ int main(int argc, char* argv[]) {
     int maxFirstToFirstDelay = analysis::getOverarchingDelay(validPathSet_LF);
 
     // idenrify which paths turned out to be invalid
-    std::set<TimedPath> invalidPathSet;
+    std::multiset<TimedPath> invalidPathSet;
     for (const auto& path : pathSet) {
         if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
             invalidPathSet.insert(path);

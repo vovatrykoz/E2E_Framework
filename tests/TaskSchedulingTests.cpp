@@ -97,7 +97,7 @@ TEST(TaskScheduling, CorrectInstanceChainsForSeveralTasksWithOffsets) {
 }
 
 TEST(TaskScheduling, EmptyTaskChainReturnsEmptySet) {
-    std::set<TimedPath> actual =
+    std::multiset<TimedPath> actual =
         scheduling::generateTimedPathsFromInstances({});
 
     EXPECT_TRUE(actual.empty());
@@ -111,9 +111,9 @@ TEST(TaskScheduling, TaskChainWithOneInstanceChain) {
 
     TimedPath onlyPossiblePath("#1", taskInstanceChain[0]);
 
-    std::set<TimedPath> expected = {onlyPossiblePath};
+    std::multiset<TimedPath> expected = {onlyPossiblePath};
 
-    std::set<TimedPath> actual =
+    std::multiset<TimedPath> actual =
         scheduling::generateTimedPathsFromInstances(taskInstanceChain);
 
     EXPECT_EQ(expected, actual);
@@ -130,12 +130,12 @@ TEST(TaskScheduling, TaskChainWithOneTaskReturnsSetWithPathContainingOneTask) {
     TimedPath tp2("#2", {taskInstanceChain[0][1]});
     TimedPath tp3("#3", {taskInstanceChain[0][2]});
 
-    std::set<TimedPath> expected = {tp1, tp2, tp3};
+    std::multiset<TimedPath> expected = {tp1, tp2, tp3};
 
     std::vector<std::vector<PeriodicTaskInstance>> possiblePaths =
         scheduling::buildTaskExecutionPaths(taskInstanceChain);
 
-    std::set<TimedPath> actual =
+    std::multiset<TimedPath> actual =
         scheduling::generateTimedPathsFromInstances(possiblePaths);
 
     EXPECT_EQ(expected, actual);
@@ -248,7 +248,7 @@ TEST(TaskScheduling, CanCreateTimedPathSet) {
         {PeriodicTaskInstance(t1, 20), PeriodicTaskInstance(t2, 0),
          PeriodicTaskInstance(t3, 36)}};
 
-    std::set<TimedPath> expected;
+    std::multiset<TimedPath> expected;
     int counter = 1;
     for (const auto& path : possiblePaths) {
         std::string pathId = "#" + std::to_string(counter);
@@ -262,7 +262,7 @@ TEST(TaskScheduling, CanCreateTimedPathSet) {
     std::vector<std::vector<PeriodicTaskInstance>> actualPossiblePaths =
         scheduling::buildTaskExecutionPaths(taskInstances);
 
-    std::set<TimedPath> actual =
+    std::multiset<TimedPath> actual =
         scheduling::generateTimedPathsFromInstances(actualPossiblePaths);
 
     EXPECT_EQ(expected, actual);
@@ -284,7 +284,7 @@ TEST(TaskScheduling, CanCreateTimedPathSetForMoreComplexTasks) {
     std::vector<std::vector<PeriodicTaskInstance>> actualPossiblePaths =
         scheduling::buildTaskExecutionPaths(taskInstances);
 
-    std::set<TimedPath> actual =
+    std::multiset<TimedPath> actual =
         scheduling::generateTimedPathsFromInstances(actualPossiblePaths);
 
     EXPECT_EQ(expected, actual.size());

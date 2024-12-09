@@ -5,9 +5,9 @@
 using namespace e2e::io;
 
 void SimplifiedConsoleLogger::logValidInvalidPaths(
-    const std::set<TimedPath>& allPathsSet,
-    const std::set<TimedPath>& validPathSet,
-    const std::set<TimedPath>& invalidPathSet) const {
+    const std::multiset<TimedPath>& allPathsSet,
+    const std::multiset<TimedPath>& validPathSet,
+    const std::multiset<TimedPath>& invalidPathSet) const {
     std::cout << std::endl << "Results" << std::endl << std::endl;
     std::cout << "Number of analyzed paths: " << allPathsSet.size()
               << std::endl;

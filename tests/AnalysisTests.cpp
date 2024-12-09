@@ -40,12 +40,12 @@ TEST(Analysis, CanRemoveUnreachablePaths) {
     TimedPath timedPath_D("D", reachablePath_2);
     TimedPath timedPath_E("E", reachablePath_3);
 
-    std::set<TimedPath> timedPaths = {timedPath_A, timedPath_B, timedPath_C,
+    std::multiset<TimedPath> timedPaths = {timedPath_A, timedPath_B, timedPath_C,
                                       timedPath_D, timedPath_E};
 
-    std::set<TimedPath> expected = {timedPath_C, timedPath_D, timedPath_E};
+    std::multiset<TimedPath> expected = {timedPath_C, timedPath_D, timedPath_E};
 
-    std::set<TimedPath> actual = removeUnreachablePaths(timedPaths);
+    std::multiset<TimedPath> actual = removeUnreachablePaths(timedPaths);
 
     EXPECT_EQ(expected, actual);
 }
@@ -77,7 +77,7 @@ TEST(Analysis, CanCalculateLongestEndToEndTime) {
     TimedPath timedPath_C("C", reachablePath_3);
     TimedPath timedPath_D("D", reachablePath_4);
 
-    std::set<TimedPath> timedPaths = {timedPath_A, timedPath_B, timedPath_C,
+    std::multiset<TimedPath> timedPaths = {timedPath_A, timedPath_B, timedPath_C,
                                       timedPath_D};
 
     // 72 + 1 - 0
@@ -95,7 +95,7 @@ TEST(Analysis, CanCalculateLongestEndToEndTime) {
 }
 
 TEST(Analysis, NoEndToEndTimeIfThereAreNoPaths) {
-    std::set<TimedPath> timedPaths;
+    std::multiset<TimedPath> timedPaths;
     std::optional<TimedPath> actualValueContainer =
         getPathWithMaximumLatency(timedPaths);
 
@@ -134,14 +134,14 @@ TEST(Analysis, CanAnalyzeUsingLastToFirstSemantics) {
     TimedPath timedPath_E("E", unreachablePath_2);
     TimedPath timedPath_F("F", unreachablePath_3);
 
-    std::set<TimedPath> timedPaths = {timedPath_A, timedPath_B, timedPath_C,
+    std::multiset<TimedPath> timedPaths = {timedPath_A, timedPath_B, timedPath_C,
                                       timedPath_E, timedPath_F};
 
     int expectedLatency = timedPath_A.endToEndDelay();
     TimedPath expectedPath = timedPath_A;
 
-    std::set<TimedPath> reachablePaths = removeUnreachablePaths(timedPaths);
-    std::set<TimedPath> reachablePaths_LF =
+    std::multiset<TimedPath> reachablePaths = removeUnreachablePaths(timedPaths);
+    std::multiset<TimedPath> reachablePaths_LF =
         removePathsProducingDublicateValues(reachablePaths);
 
     std::optional<TimedPath> actualValueContainer =
@@ -189,10 +189,10 @@ TEST(Analysis, CanAnalyzeUsingFirstToLastSemantics) {
     int expectedFirstToLastDelay = 80;
     TimedPath expectedPath = secondTimedPath;
 
-    std::set<TimedPath> paths = {firstTimedPath, secondTimedPath};
+    std::multiset<TimedPath> paths = {firstTimedPath, secondTimedPath};
 
     // make sure both paths are reachable
-    std::set<TimedPath> reachablePaths = removeUnreachablePaths(paths);
+    std::multiset<TimedPath> reachablePaths = removeUnreachablePaths(paths);
 
     int actualFirstToLastDelay = analysis::getOverarchingDelay(reachablePaths);
 
@@ -241,14 +241,14 @@ TEST(Analysis, CanAnalyzeUsingFirstToFirstSemantics) {
     int expectedFirstToFirstDelay = 50;
     TimedPath expectedPath = secondTimedPath;
 
-    std::set<TimedPath> paths = {firstTimedPath, secondTimedPath,
+    std::multiset<TimedPath> paths = {firstTimedPath, secondTimedPath,
                                  thirdTimedPath, fourthTimedPath};
 
     // make sure both paths are reachable
-    std::set<TimedPath> reachablePaths_LL = removeUnreachablePaths(paths);
+    std::multiset<TimedPath> reachablePaths_LL = removeUnreachablePaths(paths);
 
     // this should remove the third path
-    std::set<TimedPath> reachablePaths_LF =
+    std::multiset<TimedPath> reachablePaths_LF =
         removePathsProducingDublicateValues(reachablePaths_LL);
 
     int actualFirstToFirstDelay =
