@@ -1,7 +1,7 @@
 #ifndef _TASK_SCHEDULING_H_
 #define _TASK_SCHEDULING_H_
 
-#include <Task.h>
+#include <PeriodicTask.h>
 #include <TimedPath.h>
 
 #include <set>

@@ -1,7 +1,7 @@
 #ifndef _TIMED_PATH_H_
 #define _TIMED_PATH_H_
 
-#include <Task.h>
+#include <PeriodicTask.h>
 
 #include <string>
 #include <vector>

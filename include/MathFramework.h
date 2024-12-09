@@ -6,7 +6,7 @@
 #ifndef _MATH_FRAMEWORK_H_
 #define _MATH_FRAMEWORK_H_
 
-#include <Task.h>
+#include <PeriodicTask.h>
 
 #include <vector>
 

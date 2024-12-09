@@ -1,7 +1,7 @@
 #ifndef _I_TASK_READER_H_
 #define _I_TASK_READER_H_
 
-#include <Task.h>
+#include <PeriodicTask.h>
 
 #include <string>
 #include <vector>
