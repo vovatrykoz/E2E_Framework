@@ -77,8 +77,10 @@ bool mathframework::pathReach(
     }
 
     for (std::size_t i = 0; i < pathSize - 1; i++) {
-        if (!reach(timedPath[i], timedPath[i + 1],
-                   timedPath[i].nextInstance())) {
+        bool pathIsNotReachable =
+            !reach(timedPath[i], timedPath[i + 1], timedPath[i].nextInstance());
+
+        if (pathIsNotReachable) {
             return false;
         }
     }
