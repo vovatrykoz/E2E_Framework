@@ -9,6 +9,7 @@
 #include <io/reader/TaskInstanceInputReader.h>
 #include <io/reader/TaskInstanceSimpleTextReader.h>
 
+#include <algorithm>
 #include <iostream>
 
 using namespace e2e;
@@ -16,15 +17,16 @@ using namespace e2e::io;
 
 std::optional<setup::SupportedLogger> setup::getSupportedLoggerFromString(
     const std::string& loggerStr) {
-    for (auto& c : loggerStr) {
-        std::tolower(c);
-    }
+    std::string lowercaseLoggerStr;
+    std::transform(loggerStr.begin(), loggerStr.end(), std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
+        return std::tolower(c);
+    });
 
-    if (loggerStr == "console") {
+    if (lowercaseLoggerStr == "console") {
         return SupportedLogger::Console;
     }
 
-    if (loggerStr == "text") {
+    if (lowercaseLoggerStr == "text") {
         return SupportedLogger::Text;
     }
 
@@ -33,15 +35,16 @@ std::optional<setup::SupportedLogger> setup::getSupportedLoggerFromString(
 
 std::optional<setup::SupportedLogger> setup::getSupportedSimpleLoggerFromString(
     const std::string& loggerStr) {
-    for (auto& c : loggerStr) {
-        std::tolower(c);
-    }
+    std::string lowercaseLoggerStr;
+    std::transform(loggerStr.begin(), loggerStr.end(), std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
+        return std::tolower(c);
+    });
 
-    if (loggerStr == "console") {
+    if (lowercaseLoggerStr == "console") {
         return SupportedLogger::SimplifiedConsole;
     }
 
-    if (loggerStr == "text") {
+    if (lowercaseLoggerStr == "text") {
         return SupportedLogger::SimplifiedText;
     }
 
@@ -50,15 +53,16 @@ std::optional<setup::SupportedLogger> setup::getSupportedSimpleLoggerFromString(
 
 std::optional<setup::SupportedTaskInstanceReader>
 setup::getSupportedTaskInstanceReaderFromString(const std::string& readerStr) {
-    for (auto& c : readerStr) {
-        std::tolower(c);
-    }
+    std::string lowercaseReaderStr;
+    std::transform(readerStr.begin(), readerStr.end(), std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
+        return std::tolower(c);
+    });
 
-    if (readerStr == "console") {
+    if (lowercaseReaderStr == "console") {
         return SupportedTaskInstanceReader::Console;
     }
 
-    if (readerStr == "text") {
+    if (lowercaseReaderStr == "text") {
         return SupportedTaskInstanceReader::Text;
     }
 
@@ -67,15 +71,16 @@ setup::getSupportedTaskInstanceReaderFromString(const std::string& readerStr) {
 
 std::optional<setup::SupportedTaskReader>
 setup::getSupportedTaskReaderFromString(const std::string& readerStr) {
-    for (auto& c : readerStr) {
-        std::tolower(c);
-    }
+    std::string lowercaseReaderStr;
+    std::transform(readerStr.begin(), readerStr.end(), std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
+        return std::tolower(c);
+    });
 
-    if (readerStr == "console") {
+    if (lowercaseReaderStr == "console") {
         return SupportedTaskReader::Console;
     }
 
-    if (readerStr == "text") {
+    if (lowercaseReaderStr == "text") {
         return SupportedTaskReader::Text;
     }
 
