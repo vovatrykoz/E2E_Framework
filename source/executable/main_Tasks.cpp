@@ -20,8 +20,8 @@ int main(int argc, char* argv[]) {
     switch (argc) {
         case 1:
             // default to console if the user has not provided any input
-            inputReader = setup::getTaskReaderFromType(
-                setup::SupportedTaskReader::Console);
+            inputReader =
+                setup::getTaskReaderFromType(setup::SupportedTaskReader::Text);
             logger = setup::getLoggerFromType(
                 setup::SupportedLogger::SimplifiedConsole);
             break;
@@ -68,11 +68,28 @@ int main(int argc, char* argv[]) {
 
     // given a set of tasks, we generate every possible task instance in the
     // set, as well as every possible timed path
-    std::vector<std::vector<PeriodicTaskInstance>> taskInstances =
-        scheduling::generateTaskInstancesFromPath(taskChain);
+    std::vector<std::vector<PeriodicTaskInstance>> taskInstances;
+    try {
+        taskInstances = scheduling::generateTaskInstancesFromPath(taskChain);
+    } catch (std::bad_alloc) {
+        std::cout << "The provided input resulted in too many task instances "
+                     "being genereated. Review your task parameters to ensure "
+                     "a reasonable number of taks instances can be generated"
+                  << std::endl;
+        return 0;
+    }
 
-    std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths =
-        scheduling::buildTaskExecutionPaths(taskInstances);
+    std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths;
+    try {
+        allPossiblePaths = scheduling::buildTaskExecutionPaths(taskInstances);
+    } catch (std::bad_alloc) {
+        std::cout
+            << "The provided input resulted in too many task exectution paths "
+               "being genereated. Review your task parameters to ensure "
+               "a reasonable number of taks instances can be generated"
+            << std::endl;
+        return 0;
+    }
 
     std::multiset<TimedPath> pathSet =
         scheduling::generateTimedPathsFromInstances(allPossiblePaths);
