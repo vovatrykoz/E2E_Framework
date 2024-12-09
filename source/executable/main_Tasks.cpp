@@ -58,16 +58,16 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    std::vector<Task> taskChain;
+    std::vector<PeriodicTask> taskChain;
     taskChain.reserve(namedTasks.size());
     for(const auto& namedTask : namedTasks) {
         taskChain.push_back(namedTask.task);
     }
 
-    std::vector<std::vector<TaskInstance>> taskInstances =
+    std::vector<std::vector<PeriodicTaskInstance>> taskInstances =
         scheduling::generateTaskInstancesFromPath(taskChain);
 
-    std::vector<std::vector<TaskInstance>> allPossiblePaths =
+    std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths =
         scheduling::buildTaskExecutionPaths(taskInstances);
 
     std::set<TimedPath> pathSet =

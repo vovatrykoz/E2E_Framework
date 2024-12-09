@@ -2,8 +2,8 @@
 
 using namespace e2e;
 
-bool mathframework::att(const TaskInstance& writerTaskInstance,
-                        const TaskInstance& readerTaskInstance) {
+bool mathframework::att(const PeriodicTaskInstance& writerTaskInstance,
+                        const PeriodicTaskInstance& readerTaskInstance) {
     if (readerTaskInstance.activationTime < writerTaskInstance.activationTime) {
         return true;
     }
@@ -11,8 +11,8 @@ bool mathframework::att(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool mathframework::crit(const TaskInstance& writerTaskInstance,
-                         const TaskInstance& readerTaskInstance) {
+bool mathframework::crit(const PeriodicTaskInstance& writerTaskInstance,
+                         const PeriodicTaskInstance& readerTaskInstance) {
     int writerTaskTerminationTime =
         writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcrt;
 
@@ -23,7 +23,7 @@ bool mathframework::crit(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool mathframework::wait(const Task& writerTask, const Task& readerTask) {
+bool mathframework::wait(const PeriodicTask& writerTask, const PeriodicTask& readerTask) {
     if (readerTask.priority < writerTask.priority) {
         return true;
     }
@@ -31,8 +31,8 @@ bool mathframework::wait(const Task& writerTask, const Task& readerTask) {
     return false;
 }
 
-bool mathframework::forw(const TaskInstance& writerTaskInstance,
-                         const TaskInstance& readerTaskInstance) {
+bool mathframework::forw(const PeriodicTaskInstance& writerTaskInstance,
+                         const PeriodicTaskInstance& readerTaskInstance) {
     bool instancesDoNotTimeTravel =
         !att(writerTaskInstance, readerTaskInstance);
     bool instancesAreNonCritical =
@@ -48,9 +48,9 @@ bool mathframework::forw(const TaskInstance& writerTaskInstance,
     return false;
 }
 
-bool mathframework::reach(const TaskInstance& currentWriterTaskInstance,
-                          const TaskInstance& readerTaskInstance,
-                          const TaskInstance& nextWriterTaskInstance) {
+bool mathframework::reach(const PeriodicTaskInstance& currentWriterTaskInstance,
+                          const PeriodicTaskInstance& readerTaskInstance,
+                          const PeriodicTaskInstance& nextWriterTaskInstance) {
     bool readerInstanceIsReachable =
         forw(currentWriterTaskInstance, readerTaskInstance);
     bool nextWriterInstanceCannotReachReaderInstance =
@@ -64,7 +64,7 @@ bool mathframework::reach(const TaskInstance& currentWriterTaskInstance,
     return false;
 }
 
-bool mathframework::pathReach(const std::vector<TaskInstance>& timedPath) {
+bool mathframework::pathReach(const std::vector<PeriodicTaskInstance>& timedPath) {
     if (timedPath.empty()) {
         return false;
     }

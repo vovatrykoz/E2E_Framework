@@ -15,7 +15,7 @@ public:
 
 private:
     int readInt(const std::string& message) const;
-    TaskInstance readTaskInstance() const;
+    PeriodicTaskInstance readTaskInstance() const;
     TimedPath readTimedPath(const std::string& name) const;
 };
 

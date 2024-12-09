@@ -21,7 +21,7 @@ std::vector<NamedTask> SimpleTextTaskReader::readTaskChain() const {
 
     bool isOnTask = false;
     std::string line;
-    NamedTask namedTask(Task(0, 0, 0, 0), "");
+    NamedTask namedTask(PeriodicTask(0, 0, 0, 0), "");
 
     while (std::getline(file, line)) {
         size_t startStringPos = line.find(this->startStr);
@@ -39,7 +39,7 @@ std::vector<NamedTask> SimpleTextTaskReader::readTaskChain() const {
         }
 
         if (isOnTask) {
-            Task task = this->parseTask(line);
+            PeriodicTask task = this->parseTask(line);
             namedTask.task = task;
         }
     }
@@ -47,7 +47,7 @@ std::vector<NamedTask> SimpleTextTaskReader::readTaskChain() const {
     return output;
 }
 
-Task SimpleTextTaskReader::parseTask(const std::string& taskStr) const {
+PeriodicTask SimpleTextTaskReader::parseTask(const std::string& taskStr) const {
     std::vector<std::string> taskParams;
     std::stringstream ss(taskStr);
 
@@ -67,7 +67,7 @@ Task SimpleTextTaskReader::parseTask(const std::string& taskStr) const {
         int priority = std::stoi(taskParams[2]);
         int offset = std::stoi(taskParams[3]);
 
-        return Task(Task(period, wcrt, priority, offset));
+        return PeriodicTask(PeriodicTask(period, wcrt, priority, offset));
     } catch (...) {
         throw std::runtime_error("Error: could not parse some of the lines");
     }

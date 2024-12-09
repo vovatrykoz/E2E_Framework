@@ -5,7 +5,7 @@
 using namespace e2e;
 
 int scheduling::calculateLcmForEndToEndPath(
-    const std::vector<Task>& endToEndPath) {
+    const std::vector<PeriodicTask>& endToEndPath) {
     if (endToEndPath.empty()) {
         return 0;
     }
@@ -18,21 +18,21 @@ int scheduling::calculateLcmForEndToEndPath(
     return acc;
 }
 
-std::vector<std::vector<TaskInstance>>
+std::vector<std::vector<PeriodicTaskInstance>>
 scheduling::generateTaskInstancesFromPath(
-    const std::vector<Task>& endToEndPath) {
+    const std::vector<PeriodicTask>& endToEndPath) {
     if (endToEndPath.empty()) {
-        return std::vector<std::vector<TaskInstance>>();
+        return std::vector<std::vector<PeriodicTaskInstance>>();
     }
 
-    std::vector<std::vector<TaskInstance>> result(endToEndPath.size());
+    std::vector<std::vector<PeriodicTaskInstance>> result(endToEndPath.size());
     int lcm = scheduling::calculateLcmForEndToEndPath(endToEndPath);
 
     for (int i = 0; i < endToEndPath.size(); i++) {
         int instanceCount = lcm / endToEndPath[i].period;
 
         for (int j = 0; j < instanceCount; j++) {
-            TaskInstance taskInstance(
+            PeriodicTaskInstance taskInstance(
                 endToEndPath[i],
                 endToEndPath[i].offset + endToEndPath[i].period * j);
 
@@ -44,7 +44,7 @@ scheduling::generateTaskInstancesFromPath(
 }
 
 std::set<TimedPath> scheduling::generateTimedPathsFromInstances(
-    const std::vector<std::vector<TaskInstance>>& timedPaths) {
+    const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths) {
     std::set<TimedPath> result;
     if (timedPaths.empty()) {
         return result;
@@ -60,9 +60,9 @@ std::set<TimedPath> scheduling::generateTimedPathsFromInstances(
     return result;
 }
 
-std::vector<std::vector<TaskInstance>> scheduling::buildTaskExecutionPaths(
-    const std::vector<std::vector<TaskInstance>>& taskInstanceChains) {
-    std::vector<std::vector<TaskInstance>> timedPaths;
+std::vector<std::vector<PeriodicTaskInstance>> scheduling::buildTaskExecutionPaths(
+    const std::vector<std::vector<PeriodicTaskInstance>>& taskInstanceChains) {
+    std::vector<std::vector<PeriodicTaskInstance>> timedPaths;
 
     for (const auto& taskInstanceChain : taskInstanceChains) {
         timedPaths =
@@ -72,10 +72,10 @@ std::vector<std::vector<TaskInstance>> scheduling::buildTaskExecutionPaths(
     return timedPaths;
 }
 
-std::vector<std::vector<TaskInstance>> scheduling::cartesianProductOfTimedPaths(
-    const std::vector<std::vector<TaskInstance>>& timedPaths,
-    const std::vector<TaskInstance>& taskInstanceChain) {
-    std::vector<std::vector<TaskInstance>> product;
+std::vector<std::vector<PeriodicTaskInstance>> scheduling::cartesianProductOfTimedPaths(
+    const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths,
+    const std::vector<PeriodicTaskInstance>& taskInstanceChain) {
+    std::vector<std::vector<PeriodicTaskInstance>> product;
 
     if (timedPaths.empty()) {
         product.reserve(taskInstanceChain.size());

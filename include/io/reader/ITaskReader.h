@@ -25,7 +25,7 @@ public:
      * @brief Reads a chain of named tasks.
      *
      * This method returns a vector of `NamedTask` objects, where each
-     * `NamedTask` consists of a `Task` and its corresponding name. It
+     * `NamedTask` consists of a `PeriodicTask` and its corresponding name. It
      * represents a sequence of tasks to be executed in a certain order.
      *
      * @return A vector containing the named tasks in the chain.
@@ -43,12 +43,12 @@ public:
 /**
  * @brief A struct representing a task with an associated name.
  *
- * The `NamedTask` struct combines a `Task` object with a name. The name helps
+ * The `NamedTask` struct combines a `PeriodicTask` object with a name. The name helps
  * in identifying or labeling the task, which could be useful for logging,
  * debugging, or task management.
  */
 struct NamedTask {
-    Task task;  // The task object that contains task-specific data like period,
+    PeriodicTask task;  // The task object that contains task-specific data like period,
                 // latency, etc.
     std::string name;  // The name associated with the task.
 
@@ -57,10 +57,10 @@ struct NamedTask {
      *
      * Initializes a NamedTask with a specific task and its associated name.
      *
-     * @param task The Task object representing the task's properties.
+     * @param task The PeriodicTask object representing the task's properties.
      * @param name The name associated with the task.
      */
-    NamedTask(const Task& task, const std::string& name)
+    NamedTask(const PeriodicTask& task, const std::string& name)
         : task(task), name(name) {}
 };
 

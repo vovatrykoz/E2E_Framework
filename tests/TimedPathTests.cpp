@@ -4,28 +4,28 @@
 using namespace e2e;
 
 TEST(TimedPath, CanAppendTaskToPath) {
-    Task task(10, 5, 1);
-    TaskInstance taskInstance(task, 10);
+    PeriodicTask task(10, 5, 1);
+    PeriodicTaskInstance taskInstance(task, 10);
 
     TimedPath tp;
     tp.appendTaskInstance(taskInstance);
 
-    std::vector<TaskInstance> expected = {taskInstance};
-    std::vector<TaskInstance> actual = tp.asVector();
+    std::vector<PeriodicTaskInstance> expected = {taskInstance};
+    std::vector<PeriodicTaskInstance> actual = tp.asVector();
 
     EXPECT_EQ(expected, actual);
 }
 
 TEST(TimedPath, CanPopTaskFromPath) {
-    Task task(10, 5, 1);
-    TaskInstance taskInstance(task, 10);
+    PeriodicTask task(10, 5, 1);
+    PeriodicTaskInstance taskInstance(task, 10);
 
     TimedPath tp;
     tp.appendTaskInstance(taskInstance);
     tp.popTaskInstance();
 
-    std::vector<TaskInstance> expected;
-    std::vector<TaskInstance> actual = tp.asVector();
+    std::vector<PeriodicTaskInstance> expected;
+    std::vector<PeriodicTaskInstance> actual = tp.asVector();
 
     EXPECT_EQ(expected, actual);
 }
@@ -40,8 +40,8 @@ TEST(TimedPath, ReturnsZeroWhenCalculatingEndToEndDelayForEmptyTaskPath) {
 }
 
 TEST(TimedPath, ReturnsWcetWhenCalculatingEndToEndDelayForTaskPathWithOneTask) {
-    Task t1(40, 4, 1);
-    TaskInstance t1Instance(t1, 4);
+    PeriodicTask t1(40, 4, 1);
+    PeriodicTaskInstance t1Instance(t1, 4);
 
     TimedPath tp;
     tp.appendTaskInstance(t1Instance);
@@ -53,15 +53,15 @@ TEST(TimedPath, ReturnsWcetWhenCalculatingEndToEndDelayForTaskPathWithOneTask) {
 }
 
 TEST(TimedPath, CanCalculateEndToEndDelayForTaskPath) {
-    Task t1(40, 4, 1);
-    Task t2(10, 3, 1);
-    Task t3(30, 2, 1);
-    Task t4(20, 1, 1);
+    PeriodicTask t1(40, 4, 1);
+    PeriodicTask t2(10, 3, 1);
+    PeriodicTask t3(30, 2, 1);
+    PeriodicTask t4(20, 1, 1);
 
-    TaskInstance t1Instance(t1, 4);
-    TaskInstance t2Instance(t2, 11);
-    TaskInstance t3Instance(t3, 15);
-    TaskInstance t4Instance(t4, 22);
+    PeriodicTaskInstance t1Instance(t1, 4);
+    PeriodicTaskInstance t2Instance(t2, 11);
+    PeriodicTaskInstance t3Instance(t3, 15);
+    PeriodicTaskInstance t4Instance(t4, 22);
 
     TimedPath tp;
     tp.appendTaskInstance(t1Instance);

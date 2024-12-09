@@ -2,7 +2,7 @@
 
 using namespace e2e;
 
-TaskInstance TaskInstance::nextInstance() const {
+PeriodicTaskInstance PeriodicTaskInstance::nextInstance() const {
     int nextActivationTime = this->activationTime + this->baseTask.period;
-    return TaskInstance(this->baseTask, nextActivationTime);
+    return PeriodicTaskInstance(this->baseTask, nextActivationTime);
 }
