@@ -76,7 +76,7 @@ public:
      * @note The name is optional, and if not explicitly set, it will default to
      * an empty string.
      */
-    std::string name;
+    std::string name = "";
 
     /**
      * @brief Appends a task instance to the end of the timed path.
@@ -190,8 +190,11 @@ public:
     bool operator!=(const TimedPath& other) const;
 
 private:
-    std::vector<PeriodicTaskInstance>
-        tasks;  // Stores the sequence of task instances in the path.
+    /**
+     * Stores the sequence of task instances in the path.
+     */
+    std::vector<PeriodicTaskInstance> tasks =
+        std::vector<PeriodicTaskInstance>();
 };
 
 inline TimedPath::TimedPath() {}
