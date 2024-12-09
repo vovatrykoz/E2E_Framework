@@ -18,9 +18,9 @@ using namespace e2e::io;
 std::optional<setup::SupportedLogger> setup::getSupportedLoggerFromString(
     const std::string& loggerStr) {
     std::string lowercaseLoggerStr;
-    std::transform(loggerStr.begin(), loggerStr.end(), std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
-        return std::tolower(c);
-    });
+    std::transform(loggerStr.begin(), loggerStr.end(),
+                   std::back_inserter(lowercaseLoggerStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
     if (lowercaseLoggerStr == "console") {
         return SupportedLogger::Console;
@@ -36,9 +36,9 @@ std::optional<setup::SupportedLogger> setup::getSupportedLoggerFromString(
 std::optional<setup::SupportedLogger> setup::getSupportedSimpleLoggerFromString(
     const std::string& loggerStr) {
     std::string lowercaseLoggerStr;
-    std::transform(loggerStr.begin(), loggerStr.end(), std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
-        return std::tolower(c);
-    });
+    std::transform(loggerStr.begin(), loggerStr.end(),
+                   std::back_inserter(lowercaseLoggerStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
     if (lowercaseLoggerStr == "console") {
         return SupportedLogger::SimplifiedConsole;
@@ -54,9 +54,9 @@ std::optional<setup::SupportedLogger> setup::getSupportedSimpleLoggerFromString(
 std::optional<setup::SupportedTaskInstanceReader>
 setup::getSupportedTaskInstanceReaderFromString(const std::string& readerStr) {
     std::string lowercaseReaderStr;
-    std::transform(readerStr.begin(), readerStr.end(), std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
-        return std::tolower(c);
-    });
+    std::transform(readerStr.begin(), readerStr.end(),
+                   std::back_inserter(lowercaseReaderStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
     if (lowercaseReaderStr == "console") {
         return SupportedTaskInstanceReader::Console;
@@ -72,9 +72,9 @@ setup::getSupportedTaskInstanceReaderFromString(const std::string& readerStr) {
 std::optional<setup::SupportedTaskReader>
 setup::getSupportedTaskReaderFromString(const std::string& readerStr) {
     std::string lowercaseReaderStr;
-    std::transform(readerStr.begin(), readerStr.end(), std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
-        return std::tolower(c);
-    });
+    std::transform(readerStr.begin(), readerStr.end(),
+                   std::back_inserter(lowercaseReaderStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
     if (lowercaseReaderStr == "console") {
         return SupportedTaskReader::Console;

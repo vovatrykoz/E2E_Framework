@@ -29,12 +29,10 @@ std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
 
     int totalTaskCount = pathSet.size();
     for (const auto& currentPath : pathSet) {
-        // Keep track of paths that are not considered duplicates
-        int counter = 0;
+        bool isDuplicate = false;
 
         for (const auto& otherPath : pathSet) {
             if (currentPath == otherPath) {
-                counter++;
                 continue;
             }
 
@@ -48,13 +46,12 @@ std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
 
             if (pathInstancesHaveSameStart &&
                 currentInstanceFinishesLaterThanOther) {
+                isDuplicate = true;
                 break;
             }
-
-            counter++;
         }
 
-        if (counter == totalTaskCount) {
+        if (!isDuplicate) {
             output.insert(currentPath);
         }
     }
@@ -88,17 +85,15 @@ int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
         std::optional<TimedPath> predecessor =
             findPredecessor(currentPath, pathSet);
 
-        int addend = 0;
+        int delayAdjustment = 0;
         if (predecessor.has_value()) {
-            addend = currentPath.firstTaskActivationTime() -
-                     predecessor->firstTaskActivationTime();
+            delayAdjustment = currentPath.firstTaskActivationTime() -
+                              predecessor->firstTaskActivationTime();
         }
 
-        int firstToLastDelay = currentPath.endToEndDelay() + addend;
+        int firstToLastDelay = currentPath.endToEndDelay() + delayAdjustment;
 
-        if (firstToLastDelay > maxDelay) {
-            maxDelay = firstToLastDelay;
-        }
+        maxDelay = std::max(maxDelay, firstToLastDelay);
     }
 
     return maxDelay;
