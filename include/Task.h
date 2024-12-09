@@ -7,8 +7,8 @@ namespace e2e {
  * @struct PeriodicTask
  * @brief Represents a task with its execution parameters.
  *
- * A `PeriodicTask` is a core unit of scheduling. It contains information about the
- * task's period, worst-case response time (WCRT), priority, and an optional
+ * A `PeriodicTask` is a core unit of scheduling. It contains information about
+ * the task's period, worst-case response time (WCRT), priority, and an optional
  * offset.
  *
  * Tasks are used to describe periodic tasks in a real-time system, where each
@@ -25,7 +25,8 @@ struct PeriodicTask {
         0;  // The offset (initial delay before task execution), default is 0.
 
     /**
-     * @brief Constructs a PeriodicTask with a specified period, WCRT, and priority.
+     * @brief Constructs a PeriodicTask with a specified period, WCRT, and
+     * priority.
      * @param period The period of the task.
      * @param wcrt The worst-case response time of the task.
      * @param priority The priority of the task.
@@ -34,8 +35,8 @@ struct PeriodicTask {
         : period(period), wcrt(wcrt), priority(priority) {}
 
     /**
-     * @brief Constructs a PeriodicTask with a specified period, WCRT, priority, and
-     * offset.
+     * @brief Constructs a PeriodicTask with a specified period, WCRT, priority,
+     * and offset.
      * @param period The period of the task.
      * @param wcrt The worst-case response time of the task.
      * @param priority The priority of the task.
@@ -63,17 +64,19 @@ struct PeriodicTask {
  * @struct PeriodicTaskInstance
  * @brief Represents an instance of a task in time.
  *
- * A `PeriodicTaskInstance` extends a `PeriodicTask` by adding an activation time that specifies
- * when the task should be executed. Each `PeriodicTaskInstance` represents a specific
- * execution of a task, occurring at a specific point in time.
+ * A `PeriodicTaskInstance` extends a `PeriodicTask` by adding an activation
+ * time that specifies when the task should be executed. Each
+ * `PeriodicTaskInstance` represents a specific execution of a task, occurring
+ * at a specific point in time.
  */
 struct PeriodicTaskInstance {
-    PeriodicTask baseTask;  // The base task, which contains the task's period, WCRT,
-                    // priority, and offset.
+    const PeriodicTask baseTask;  // The base task, which contains the task's
+                                  // period, WCRT, priority, and offset.
     int activationTime;  // The time at which this task instance is activated.
 
     /**
-     * @brief Constructs a PeriodicTaskInstance with a base task and an activation time.
+     * @brief Constructs a PeriodicTaskInstance with a base task and an
+     * activation time.
      * @param baseTask The base task object representing the task.
      * @param activationTime The activation time of this task instance.
      */
@@ -98,7 +101,8 @@ struct PeriodicTaskInstance {
     bool operator==(const PeriodicTaskInstance& other) const;
 
     /**
-     * @brief Inequality operator for comparing two PeriodicTaskInstance objects.
+     * @brief Inequality operator for comparing two PeriodicTaskInstance
+     * objects.
      * @param other The task instance to compare with.
      * @return True if the task instances are not equal, false otherwise.
      */
@@ -114,12 +118,14 @@ inline bool PeriodicTask::operator!=(const PeriodicTask& other) const {
     return !(*this == other);
 }
 
-inline bool PeriodicTaskInstance::operator==(const PeriodicTaskInstance& other) const {
+inline bool PeriodicTaskInstance::operator==(
+    const PeriodicTaskInstance& other) const {
     return this->baseTask == other.baseTask &&
            this->activationTime == other.activationTime;
 }
 
-inline bool PeriodicTaskInstance::operator!=(const PeriodicTaskInstance& other) const {
+inline bool PeriodicTaskInstance::operator!=(
+    const PeriodicTaskInstance& other) const {
     return !(*this == other);
 }
 
