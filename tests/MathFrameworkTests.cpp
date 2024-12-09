@@ -5,11 +5,11 @@ using namespace e2e;
 using namespace e2e::mathframework;
 
 TEST(MathFramework, CanDetectTimeTravel) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(5, 5, 1);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(5, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 5);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 5);
 
     bool expected = true;
     bool actual = att(writerTaskInstance, readerTaskInstance);
@@ -18,11 +18,11 @@ TEST(MathFramework, CanDetectTimeTravel) {
 }
 
 TEST(MathFramework, CanDetectWhenThereIsNoTimeTravel) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(5, 5, 1);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(5, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 5);
-    TaskInstance readerTaskInstance(readerTask, 10);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 5);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 10);
 
     bool expected = false;
     bool actual = att(writerTaskInstance, readerTaskInstance);
@@ -31,11 +31,11 @@ TEST(MathFramework, CanDetectWhenThereIsNoTimeTravel) {
 }
 
 TEST(MathFramework, CritFunctionCanDetectExecutionOverlap) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(5, 5, 1);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(5, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 12);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 12);
 
     bool expected = true;
     bool actual = crit(writerTaskInstance, readerTaskInstance);
@@ -44,11 +44,11 @@ TEST(MathFramework, CritFunctionCanDetectExecutionOverlap) {
 }
 
 TEST(MathFramework, CritFunctionCanDetectWhenThereIsNoExecutionOverlap) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(5, 5, 1);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(5, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 16);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 16);
 
     bool expected = false;
     bool actual = crit(writerTaskInstance, readerTaskInstance);
@@ -57,8 +57,8 @@ TEST(MathFramework, CritFunctionCanDetectWhenThereIsNoExecutionOverlap) {
 }
 
 TEST(MathFramework, WaitFunctionCanDetectReaderWaiting) {
-    Task writerTask(10, 5, 2);
-    Task readerTask(5, 5, 1);
+    PeriodicTask writerTask(10, 5, 2);
+    PeriodicTask readerTask(5, 5, 1);
 
     bool expected = true;
     bool actual = wait(writerTask, readerTask);
@@ -67,8 +67,8 @@ TEST(MathFramework, WaitFunctionCanDetectReaderWaiting) {
 }
 
 TEST(MathFramework, WaitFunctionCanDetectWhenReaderDoesNotHaveToWait) {
-    Task writerTask(10, 5, 2);
-    Task readerTask(5, 5, 2);
+    PeriodicTask writerTask(10, 5, 2);
+    PeriodicTask readerTask(5, 5, 2);
 
     bool expected = false;
     bool actual = wait(writerTask, readerTask);
@@ -79,11 +79,11 @@ TEST(MathFramework, WaitFunctionCanDetectWhenReaderDoesNotHaveToWait) {
 TEST(
     MathFramework,
     ForwCanDetectForwardReachabilityWhenThereIsNoTimeTravelAndTasksAreNonCritical) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(5, 5, 2);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(5, 5, 2);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 16);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 16);
 
     bool expected = true;
     bool actual = forw(writerTaskInstance, readerTaskInstance);
@@ -94,11 +94,11 @@ TEST(
 TEST(
     MathFramework,
     ForwCanDetectForwardReachabilityWhenThereIsNoTimeTravelAndReaderHasToWait) {
-    Task writerTask(10, 5, 2);
-    Task readerTask(5, 5, 1);
+    PeriodicTask writerTask(10, 5, 2);
+    PeriodicTask readerTask(5, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 12);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 12);
 
     bool expected = true;
     bool actual = forw(writerTaskInstance, readerTaskInstance);
@@ -108,11 +108,11 @@ TEST(
 
 TEST(MathFramework,
      ForwCanDetectWhenThereIsNoForwardReachabilityDueToTimeTravel) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(5, 5, 1);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(5, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 5);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 5);
 
     bool expected = false;
     bool actual = forw(writerTaskInstance, readerTaskInstance);
@@ -122,11 +122,11 @@ TEST(MathFramework,
 
 TEST(MathFramework,
      ForwCanDetectWhenThereIsNoForwardReachabilityDueToCriticality) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(5, 5, 2);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(5, 5, 2);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 12);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 12);
 
     bool expected = false;
     bool actual = forw(writerTaskInstance, readerTaskInstance);
@@ -135,11 +135,11 @@ TEST(MathFramework,
 }
 
 TEST(MathFramework, ForwCanDetectWhenThereIsNoForwardReachabilityDueToNoWait) {
-    Task writerTask(10, 5, 2);
-    Task readerTask(5, 5, 2);
+    PeriodicTask writerTask(10, 5, 2);
+    PeriodicTask readerTask(5, 5, 2);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 12);
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 12);
 
     bool expected = false;
     bool actual = forw(writerTaskInstance, readerTaskInstance);
@@ -148,12 +148,12 @@ TEST(MathFramework, ForwCanDetectWhenThereIsNoForwardReachabilityDueToNoWait) {
 }
 
 TEST(MathFramework, ReachCanDetectOverwrites) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(20, 5, 1);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(20, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 12);
-    TaskInstance nextWriterTaskInstance(
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 12);
+    PeriodicTaskInstance nextWriterTaskInstance(
         writerTask, writerTaskInstance.activationTime + writerTask.period);
 
     bool expected = false;
@@ -164,12 +164,12 @@ TEST(MathFramework, ReachCanDetectOverwrites) {
 }
 
 TEST(MathFramework, ReachCanDetectNoOverwrites) {
-    Task writerTask(10, 5, 1);
-    Task readerTask(10, 5, 1);
+    PeriodicTask writerTask(10, 5, 1);
+    PeriodicTask readerTask(10, 5, 1);
 
-    TaskInstance writerTaskInstance(writerTask, 10);
-    TaskInstance readerTaskInstance(readerTask, 16);
-    TaskInstance nextWriterTaskInstance(
+    PeriodicTaskInstance writerTaskInstance(writerTask, 10);
+    PeriodicTaskInstance readerTaskInstance(readerTask, 16);
+    PeriodicTaskInstance nextWriterTaskInstance(
         writerTask, writerTaskInstance.activationTime + writerTask.period);
 
     bool expected = true;
@@ -180,7 +180,7 @@ TEST(MathFramework, ReachCanDetectNoOverwrites) {
 }
 
 TEST(MathFramework, PathReachReturnsFalseIfPathIsEmpty) {
-    std::vector<TaskInstance> timedPath;
+    std::vector<PeriodicTaskInstance> timedPath;
 
     bool expected = false;
     bool actual = pathReach(timedPath);
@@ -189,10 +189,10 @@ TEST(MathFramework, PathReachReturnsFalseIfPathIsEmpty) {
 }
 
 TEST(MathFramework, PathReachReturnsFalseIfPathOnlyHasOneTask) {
-    Task task(10, 5, 1);
-    TaskInstance taskInstance(task, 10);
+    PeriodicTask task(10, 5, 1);
+    PeriodicTaskInstance taskInstance(task, 10);
 
-    std::vector<TaskInstance> timedPath;
+    std::vector<PeriodicTaskInstance> timedPath;
     timedPath.push_back(taskInstance);
 
     bool expected = true;
@@ -202,17 +202,17 @@ TEST(MathFramework, PathReachReturnsFalseIfPathOnlyHasOneTask) {
 }
 
 TEST(MathFramework, PathReachKnowsWhenTaskChainIsReachable) {
-    Task t1(40, 4, 1);
-    Task t2(10, 3, 1);
-    Task t3(30, 2, 1);
-    Task t4(20, 1, 1);
+    PeriodicTask t1(40, 4, 1);
+    PeriodicTask t2(10, 3, 1);
+    PeriodicTask t3(30, 2, 1);
+    PeriodicTask t4(20, 1, 1);
 
-    TaskInstance t1Instance(t1, 0);
-    TaskInstance t2Instance(t2, 11);
-    TaskInstance t3Instance(t3, 15);
-    TaskInstance t4Instance(t4, 22);
+    PeriodicTaskInstance t1Instance(t1, 0);
+    PeriodicTaskInstance t2Instance(t2, 11);
+    PeriodicTaskInstance t3Instance(t3, 15);
+    PeriodicTaskInstance t4Instance(t4, 22);
 
-    std::vector<TaskInstance> timedPath;
+    std::vector<PeriodicTaskInstance> timedPath;
     timedPath.push_back(t1Instance);
     timedPath.push_back(t2Instance);
     timedPath.push_back(t3Instance);
@@ -225,17 +225,17 @@ TEST(MathFramework, PathReachKnowsWhenTaskChainIsReachable) {
 }
 
 TEST(MathFramework, PathReachKnowsWhenTaskChainIsUnreachable) {
-    Task t1(40, 4, 1);
-    Task t2(10, 3, 1);
-    Task t3(30, 2, 1);
-    Task t4(20, 1, 1);
+    PeriodicTask t1(40, 4, 1);
+    PeriodicTask t2(10, 3, 1);
+    PeriodicTask t3(30, 2, 1);
+    PeriodicTask t4(20, 1, 1);
 
-    TaskInstance t1Instance(t1, 0);
-    TaskInstance t2Instance(t2, 11);
-    TaskInstance t3Instance(t3, 5);
-    TaskInstance t4Instance(t4, 22);
+    PeriodicTaskInstance t1Instance(t1, 0);
+    PeriodicTaskInstance t2Instance(t2, 11);
+    PeriodicTaskInstance t3Instance(t3, 5);
+    PeriodicTaskInstance t4Instance(t4, 22);
 
-    std::vector<TaskInstance> timedPath;
+    std::vector<PeriodicTaskInstance> timedPath;
     timedPath.push_back(t1Instance);
     timedPath.push_back(t2Instance);
     timedPath.push_back(t3Instance);

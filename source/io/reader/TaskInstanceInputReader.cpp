@@ -1,6 +1,7 @@
 #include "io/reader/TaskInstanceInputReader.h"
-#include <limits>
+
 #include <iostream>
+#include <limits>
 
 using namespace e2e;
 using namespace e2e::io;
@@ -44,23 +45,25 @@ int TaskInstanceInputReader::readInt(const std::string& message) const {
     return output;
 }
 
-TaskInstance TaskInstanceInputReader::readTaskInstance() const {
+PeriodicTaskInstance TaskInstanceInputReader::readTaskInstance() const {
     int period = readInt("Enter task period: ");
     int wcrt = readInt("Enter worst case response time for the task: ");
     int priority = readInt("Enter task priority: ");
     int activationTime = readInt("Enter task activation time or offset: ");
 
-    return TaskInstance(Task(period, wcrt, priority), activationTime);
+    return PeriodicTaskInstance(PeriodicTask(period, wcrt, priority),
+                                activationTime);
 }
 
-TimedPath TaskInstanceInputReader::readTimedPath(const std::string& name) const {
+TimedPath TaskInstanceInputReader::readTimedPath(
+    const std::string& name) const {
     TimedPath timedPath(name);
 
     int numOfTasks = readInt("How many tasks should be in the chain: ");
 
     for (int i = 0; i < numOfTasks; i++) {
         std::cout << "Reading Task " << i + 1 << std::endl;
-        TaskInstance taskInstance = readTaskInstance();
+        PeriodicTaskInstance taskInstance = readTaskInstance();
         timedPath.appendTaskInstance(taskInstance);
         std::cout << std::endl;
     }

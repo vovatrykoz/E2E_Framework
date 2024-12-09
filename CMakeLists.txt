@@ -28,7 +28,7 @@ add_library(
 add_library(
     e2e_core
 
-    ${CODE_SOURCE_DIR}/Task.cpp
+    ${CODE_SOURCE_DIR}/PeriodicTask.cpp
     ${CODE_SOURCE_DIR}/TaskScheduling.cpp
     ${CODE_SOURCE_DIR}/Analysis.cpp
     ${CODE_SOURCE_DIR}/MathFramework.cpp

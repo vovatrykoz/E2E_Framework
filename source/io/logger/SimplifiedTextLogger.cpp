@@ -80,7 +80,8 @@ void SimplifiedTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
 
     output << "- First-to-Last semantics:" << std::endl;
 
-    output << "    Maximum path delay: " << maxFirstToLastPathDelay << std::endl;
+    output << "    Maximum path delay: " << maxFirstToLastPathDelay
+           << std::endl;
     output << std::endl;
 
     this->writeOutputToFile(output.str());
@@ -92,7 +93,8 @@ void SimplifiedTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
 
     output << "- First-to-First semantics:" << std::endl;
 
-    output << "    Maximum path delay: " << maxFirstToFirstPathDelay << std::endl;
+    output << "    Maximum path delay: " << maxFirstToFirstPathDelay
+           << std::endl;
     output << std::endl;
 
     this->writeOutputToFile(output.str());

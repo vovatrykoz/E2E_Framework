@@ -6,7 +6,8 @@
 using namespace e2e;
 using namespace e2e::io;
 
-TaskInstanceSimpleTextReader::TaskInstanceSimpleTextReader(const std::string& filePath)
+TaskInstanceSimpleTextReader::TaskInstanceSimpleTextReader(
+    const std::string& filePath)
     : filePath(filePath) {}
 
 std::set<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
@@ -39,7 +40,7 @@ std::set<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
         }
 
         if (isOnTaskChain) {
-            TaskInstance taskInstance = this->parseTaskInstance(line);
+            PeriodicTaskInstance taskInstance = this->parseTaskInstance(line);
             path.appendTaskInstance(taskInstance);
         }
     }
@@ -47,7 +48,7 @@ std::set<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
     return output;
 }
 
-TaskInstance TaskInstanceSimpleTextReader::parseTaskInstance(
+PeriodicTaskInstance TaskInstanceSimpleTextReader::parseTaskInstance(
     const std::string& taskInstanceStr) const {
     std::vector<std::string> taskInstanceParams;
     std::stringstream ss(taskInstanceStr);
@@ -68,7 +69,8 @@ TaskInstance TaskInstanceSimpleTextReader::parseTaskInstance(
         int priority = std::stoi(taskInstanceParams[2]);
         int activaionTime = std::stoi(taskInstanceParams[3]);
 
-        return TaskInstance(Task(period, wcrt, priority), activaionTime);
+        return PeriodicTaskInstance(PeriodicTask(period, wcrt, priority),
+                                    activaionTime);
     } catch (...) {
         throw std::runtime_error("Error: could not parse some of the lines");
     }

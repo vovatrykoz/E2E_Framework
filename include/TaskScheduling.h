@@ -1,7 +1,7 @@
 #ifndef _TASK_SCHEDULING_H_
 #define _TASK_SCHEDULING_H_
 
-#include <Task.h>
+#include <PeriodicTask.h>
 #include <TimedPath.h>
 
 #include <set>
@@ -22,7 +22,7 @@ namespace scheduling {
  *
  * @return The least common multiple of the periods of the tasks in the path.
  */
-int calculateLcmForEndToEndPath(const std::vector<Task>& endToEndPath);
+int calculateLcmForEndToEndPath(const std::vector<PeriodicTask>& endToEndPath);
 
 /**
  * @brief Generates task instances from a task path.
@@ -36,8 +36,8 @@ int calculateLcmForEndToEndPath(const std::vector<Task>& endToEndPath);
  * @return A vector of vectors, where each inner vector contains task instances
  * for each task in the path.
  */
-std::vector<std::vector<TaskInstance>> generateTaskInstancesFromPath(
-    const std::vector<Task>& taskPath);
+std::vector<std::vector<PeriodicTaskInstance>> generateTaskInstancesFromPath(
+    const std::vector<PeriodicTask>& taskPath);
 
 /**
  * @brief Generates timed paths from task instances.
@@ -52,7 +52,7 @@ std::vector<std::vector<TaskInstance>> generateTaskInstancesFromPath(
  * with specific activation times.
  */
 std::set<TimedPath> generateTimedPathsFromInstances(
-    const std::vector<std::vector<TaskInstance>>& taskInstanceChains);
+    const std::vector<std::vector<PeriodicTaskInstance>>& taskInstanceChains);
 
 /**
  * @brief Builds execution paths from task instance chains.
@@ -66,8 +66,8 @@ std::set<TimedPath> generateTimedPathsFromInstances(
  * @return A vector of vectors, each representing an execution path of task
  * instances.
  */
-std::vector<std::vector<TaskInstance>> buildTaskExecutionPaths(
-    const std::vector<std::vector<TaskInstance>>& taskInstanceChains);
+std::vector<std::vector<PeriodicTaskInstance>> buildTaskExecutionPaths(
+    const std::vector<std::vector<PeriodicTaskInstance>>& taskInstanceChains);
 
 /**
  * @brief Computes the Cartesian product of timed paths.
@@ -84,9 +84,9 @@ std::vector<std::vector<TaskInstance>> buildTaskExecutionPaths(
  * @return A vector of vectors, where each inner vector represents a combination
  * of timed paths and task instances from the input.
  */
-std::vector<std::vector<TaskInstance>> cartesianProductOfTimedPaths(
-    const std::vector<std::vector<TaskInstance>>& timedPaths,
-    const std::vector<TaskInstance>& taskInstanceChain);
+std::vector<std::vector<PeriodicTaskInstance>> cartesianProductOfTimedPaths(
+    const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths,
+    const std::vector<PeriodicTaskInstance>& taskInstanceChain);
 
 }  // namespace scheduling
 }  // namespace e2e

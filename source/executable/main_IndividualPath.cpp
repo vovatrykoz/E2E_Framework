@@ -19,8 +19,8 @@ int main(int argc, char* argv[]) {
     switch (argc) {
         case 1:
             // default to console if the user has not provided any input
-            inputReader =
-                setup::getTaskInstanceReaderFromType(setup::SupportedTaskInstanceReader::Console);
+            inputReader = setup::getTaskInstanceReaderFromType(
+                setup::SupportedTaskInstanceReader::Console);
             logger = setup::getLoggerFromType(setup::SupportedLogger::Console);
             break;
 
@@ -103,7 +103,8 @@ int main(int argc, char* argv[]) {
 }
 
 void printUsageInfo() {
-    std::cerr << "Usage: individualPathAnalyzer <reader_type> <logger_type>" << std::endl;
+    std::cerr << "Usage: individualPathAnalyzer <reader_type> <logger_type>"
+              << std::endl;
     std::cerr << "Currently supported loggers: Console, Text" << std::endl;
     std::cerr << "Currently supported readers: Console, Text" << std::endl;
 }

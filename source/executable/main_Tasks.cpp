@@ -1,6 +1,6 @@
 #include <Analysis.h>
-#include <TaskScheduling.h>
 #include <Setup.h>
+#include <TaskScheduling.h>
 
 #include <iostream>
 #include <memory>
@@ -20,16 +20,18 @@ int main(int argc, char* argv[]) {
     switch (argc) {
         case 1:
             // default to console if the user has not provided any input
-            inputReader =
-                setup::getTaskReaderFromType(setup::SupportedTaskReader::Console);
-            logger = setup::getLoggerFromType(setup::SupportedLogger::SimplifiedConsole);
+            inputReader = setup::getTaskReaderFromType(
+                setup::SupportedTaskReader::Console);
+            logger = setup::getLoggerFromType(
+                setup::SupportedLogger::SimplifiedConsole);
             break;
 
         case 2:
             // if only one parameter is provided, we assume that to be a reader
             // deafault to console logger
             inputReader = setup::taskReader(argv[1]);
-            logger = setup::getLoggerFromType(setup::SupportedLogger::SimplifiedConsole);
+            logger = setup::getLoggerFromType(
+                setup::SupportedLogger::SimplifiedConsole);
             break;
 
         case 3:
@@ -58,16 +60,16 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    std::vector<Task> taskChain;
+    std::vector<PeriodicTask> taskChain;
     taskChain.reserve(namedTasks.size());
-    for(const auto& namedTask : namedTasks) {
+    for (const auto& namedTask : namedTasks) {
         taskChain.push_back(namedTask.task);
     }
 
-    std::vector<std::vector<TaskInstance>> taskInstances =
+    std::vector<std::vector<PeriodicTaskInstance>> taskInstances =
         scheduling::generateTaskInstancesFromPath(taskChain);
 
-    std::vector<std::vector<TaskInstance>> allPossiblePaths =
+    std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths =
         scheduling::buildTaskExecutionPaths(taskInstances);
 
     std::set<TimedPath> pathSet =
