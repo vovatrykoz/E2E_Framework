@@ -1,4 +1,4 @@
-#include "io/reader/TaskInstanceSimpleTextReader.h"
+#include "io/reader/PlainTextTaskInstanceReader.h"
 
 #include <fstream>
 #include <sstream>
@@ -6,11 +6,11 @@
 using namespace e2e;
 using namespace e2e::io;
 
-TaskInstanceSimpleTextReader::TaskInstanceSimpleTextReader(
+PlainTextTaskInstanceReader::PlainTextTaskInstanceReader(
     const std::string& filePath)
     : filePath(filePath) {}
 
-std::multiset<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
+std::multiset<TimedPath> PlainTextTaskInstanceReader::readPathsSet() const {
     std::ifstream file(this->filePath);
 
     if (!file) {
@@ -48,7 +48,7 @@ std::multiset<TimedPath> TaskInstanceSimpleTextReader::readPathsSet() const {
     return output;
 }
 
-PeriodicTaskInstance TaskInstanceSimpleTextReader::parseTaskInstance(
+PeriodicTaskInstance PlainTextTaskInstanceReader::parseTaskInstance(
     const std::string& taskInstanceStr) const {
     std::vector<std::string> taskInstanceParams;
     std::stringstream ss(taskInstanceStr);
@@ -76,5 +76,5 @@ PeriodicTaskInstance TaskInstanceSimpleTextReader::parseTaskInstance(
     }
 }
 
-const std::string TaskInstanceSimpleTextReader::startStr = "START";
-const std::string TaskInstanceSimpleTextReader::endStr = "END";
+const std::string PlainTextTaskInstanceReader::startStr = "START";
+const std::string PlainTextTaskInstanceReader::endStr = "END";

@@ -1,5 +1,5 @@
-#ifndef _TASK_CONSOLE_LOGGER_H_
-#define _TASK_CONSOLE_LOGGER_H_
+#ifndef _SIMPLIFIED_CONSOLE_LOGGER_H_
+#define _SIMPLIFIED_CONSOLE_LOGGER_H_
 
 #include <io/logger/ILogger.h>
 

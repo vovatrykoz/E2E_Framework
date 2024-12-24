@@ -1,5 +1,5 @@
-#ifndef _TASK_INSTANCE_INPUT_READER_H_
-#define _TASK_INSTANCE_INPUT_READER_H_
+#ifndef _CONSOLE_INSTANCE_READER_H_
+#define _CONSOLE_INSTANCE_READER_H_
 
 #include <io/reader/ITaskInstanceReader.h>
 
@@ -9,7 +9,7 @@
 namespace e2e {
 namespace io {
 
-class TaskInstanceInputReader : public ITaskInstanceReader {
+class ConsoleTaskInstanceReader : public ITaskInstanceReader {
 public:
     virtual std::multiset<TimedPath> readPathsSet() const override;
 

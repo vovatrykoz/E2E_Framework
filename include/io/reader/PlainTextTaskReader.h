@@ -1,14 +1,14 @@
-#ifndef _SIMPLE_TEXT_TASK_READER_H_
-#define _SIMPLE_TEXT_TASK_READER_H_
+#ifndef _PLAIN_TEXT_TASK_READER_H_
+#define _PLAIN_TEXT_TASK_READER_H_
 
 #include <io/reader/ITaskReader.h>
 
 namespace e2e {
 namespace io {
 
-class SimpleTextTaskReader : public ITaskReader {
+class PlainTextTaskReader : public ITaskReader {
 public:
-    SimpleTextTaskReader(const std::string& filePath);
+    PlainTextTaskReader(const std::string& filePath);
 
     virtual std::vector<NamedTask> readTaskChain() const override;
 

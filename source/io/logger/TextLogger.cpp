@@ -1,14 +1,14 @@
-#include "io/logger/TextLogger.h"
+#include "io/logger/PlainTextLogger.h"
 
 #include <fstream>
 #include <sstream>
 
 using namespace e2e::io;
 
-TextLogger::TextLogger(const std::string& pathToOutputFile)
+PlainTextLogger::PlainTextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
-void TextLogger::logValidInvalidPaths(
+void PlainTextLogger::logValidInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,
     const std::multiset<TimedPath>& invalidPathSet) const {
@@ -42,7 +42,7 @@ void TextLogger::logValidInvalidPaths(
     this->writeOutputToFile(output.str());
 }
 
-void TextLogger::logResults_LL(
+void PlainTextLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
@@ -65,7 +65,7 @@ void TextLogger::logResults_LL(
     this->writeOutputToFile(output.str());
 }
 
-void TextLogger::logResults_LF(
+void PlainTextLogger::logResults_LF(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
@@ -88,7 +88,7 @@ void TextLogger::logResults_LF(
     this->writeOutputToFile(output.str());
 }
 
-void TextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
+void PlainTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -101,7 +101,7 @@ void TextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     this->writeOutputToFile(output.str());
 }
 
-void TextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+void PlainTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -114,7 +114,7 @@ void TextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     this->writeOutputToFile(output.str());
 }
 
-void TextLogger::writeOutputToFile(const std::string& output) const {
+void PlainTextLogger::writeOutputToFile(const std::string& output) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
 
     if (!outFile.is_open()) {

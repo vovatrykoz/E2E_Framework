@@ -1,14 +1,14 @@
-#include "io/logger/SimplifiedTextLogger.h"
+#include "io/logger/SimplifiedPlainTextLogger.h"
 
 #include <fstream>
 #include <sstream>
 
 using namespace e2e::io;
 
-SimplifiedTextLogger::SimplifiedTextLogger(const std::string& pathToOutputFile)
+SimplifiedPlainTextLogger::SimplifiedPlainTextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
-void SimplifiedTextLogger::logValidInvalidPaths(
+void SimplifiedPlainTextLogger::logValidInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,
     const std::multiset<TimedPath>& invalidPathSet) const {
@@ -34,7 +34,7 @@ void SimplifiedTextLogger::logValidInvalidPaths(
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedTextLogger::logResults_LL(
+void SimplifiedPlainTextLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
@@ -54,7 +54,7 @@ void SimplifiedTextLogger::logResults_LL(
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedTextLogger::logResults_LF(
+void SimplifiedPlainTextLogger::logResults_LF(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
@@ -74,7 +74,7 @@ void SimplifiedTextLogger::logResults_LF(
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
+void SimplifiedPlainTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -87,7 +87,7 @@ void SimplifiedTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+void SimplifiedPlainTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -100,7 +100,7 @@ void SimplifiedTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedTextLogger::writeOutputToFile(const std::string& output) const {
+void SimplifiedPlainTextLogger::writeOutputToFile(const std::string& output) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
 
     if (!outFile.is_open()) {

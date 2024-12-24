@@ -1,4 +1,4 @@
-#include <io/reader/SimpleTextTaskReader.h>
+#include <io/reader/PlainTextTaskReader.h>
 
 #include <fstream>
 #include <sstream>
@@ -6,10 +6,10 @@
 using namespace e2e;
 using namespace e2e::io;
 
-e2e::io::SimpleTextTaskReader::SimpleTextTaskReader(const std::string& filePath)
+e2e::io::PlainTextTaskReader::PlainTextTaskReader(const std::string& filePath)
     : filePath(filePath) {}
 
-std::vector<NamedTask> SimpleTextTaskReader::readTaskChain() const {
+std::vector<NamedTask> PlainTextTaskReader::readTaskChain() const {
     std::ifstream file(this->filePath);
 
     if (!file) {
@@ -47,7 +47,7 @@ std::vector<NamedTask> SimpleTextTaskReader::readTaskChain() const {
     return output;
 }
 
-PeriodicTask SimpleTextTaskReader::parseTask(const std::string& taskStr) const {
+PeriodicTask PlainTextTaskReader::parseTask(const std::string& taskStr) const {
     std::vector<std::string> taskParams;
     std::stringstream ss(taskStr);
 
@@ -73,5 +73,5 @@ PeriodicTask SimpleTextTaskReader::parseTask(const std::string& taskStr) const {
     }
 }
 
-const std::string SimpleTextTaskReader::startStr = "START";
-const std::string SimpleTextTaskReader::endStr = "END";
+const std::string PlainTextTaskReader::startStr = "START";
+const std::string PlainTextTaskReader::endStr = "END";

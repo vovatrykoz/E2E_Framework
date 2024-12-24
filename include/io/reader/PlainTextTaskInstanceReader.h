@@ -1,14 +1,14 @@
-#ifndef _TASK_INSTANCE_SIMPLE_TEXT_READER_H_
-#define _TASK_INSTANCE_SIMPLE_TEXT_READER_H_
+#ifndef _PLAIN_TEXT_TASK_INSTANCE_READER_H_
+#define _PLAIN_TEXT_TASK_INSTANCE_READER_H_
 
 #include <io/reader/ITaskInstanceReader.h>
 
 namespace e2e {
 namespace io {
 
-class TaskInstanceSimpleTextReader : public ITaskInstanceReader {
+class PlainTextTaskInstanceReader : public ITaskInstanceReader {
 public:
-    TaskInstanceSimpleTextReader(const std::string& filePath);
+    PlainTextTaskInstanceReader(const std::string& filePath);
 
     virtual std::multiset<TimedPath> readPathsSet() const override;
 

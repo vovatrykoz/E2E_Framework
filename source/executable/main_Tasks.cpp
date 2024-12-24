@@ -1,7 +1,5 @@
 #include <Analysis.h>
 #include <TaskScheduling.h>
-#include <io/logger/SimplifiedConsoleLogger.h>
-#include <io/reader/ConsoleTaskReader.h>
 #include <setup/Preset.h>
 #include <setup/Setup.h>
 

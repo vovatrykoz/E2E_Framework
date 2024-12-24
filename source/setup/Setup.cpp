@@ -1,13 +1,12 @@
-#include <setup/Setup.h>
-
 #include <io/logger/ConsoleLogger.h>
+#include <io/logger/PlainTextLogger.h>
 #include <io/logger/SimplifiedConsoleLogger.h>
-#include <io/logger/SimplifiedTextLogger.h>
-#include <io/logger/TextLogger.h>
+#include <io/logger/SimplifiedPlainTextLogger.h>
+#include <io/reader/ConsoleTaskInstanceReader.h>
 #include <io/reader/ConsoleTaskReader.h>
-#include <io/reader/SimpleTextTaskReader.h>
-#include <io/reader/TaskInstanceInputReader.h>
-#include <io/reader/TaskInstanceSimpleTextReader.h>
+#include <io/reader/PlainTextTaskInstanceReader.h>
+#include <io/reader/PlainTextTaskReader.h>
+#include <setup/Setup.h>
 
 #include <algorithm>
 #include <iostream>
@@ -31,7 +30,7 @@ std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
         std::cout << "Logger type: text" << std::endl;
         std::cout << "Enter output path: ";
         std::cin >> outputPath;
-        return makeLogger<TextLogger>(outputPath);
+        return makeLogger<PlainTextLogger>(outputPath);
     }
 
     return nullptr;
@@ -53,7 +52,7 @@ std::unique_ptr<ILogger> setup::simpleLogger(const std::string& loggerStr) {
         std::cout << "Logger type: text" << std::endl;
         std::cout << "Enter output path: ";
         std::cin >> outputPath;
-        return makeLogger<SimplifiedTextLogger>(outputPath);
+        return makeLogger<SimplifiedPlainTextLogger>(outputPath);
     }
 
     return nullptr;
@@ -68,7 +67,7 @@ std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
 
     if (lowercaseReaderStr == "console") {
         std::cout << "Reader type: console" << std::endl;
-        return makeTaskInstanceReader<TaskInstanceInputReader>();
+        return makeTaskInstanceReader<ConsoleTaskInstanceReader>();
     }
 
     if (lowercaseReaderStr == "text") {
@@ -76,7 +75,7 @@ std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
         std::cout << "Reader type: text" << std::endl;
         std::cout << "Enter path to input file: ";
         std::cin >> inputPath;
-        return makeTaskInstanceReader<TaskInstanceSimpleTextReader>(inputPath);
+        return makeTaskInstanceReader<PlainTextTaskInstanceReader>(inputPath);
     }
 
     return nullptr;
@@ -99,7 +98,7 @@ std::unique_ptr<ITaskReader> e2e::setup::taskReader(
         std::cout << "Reader type: text" << std::endl;
         std::cout << "Enter path to input file: ";
         std::cin >> inputPath;
-        return makeTaskReader<SimpleTextTaskReader>(inputPath);
+        return makeTaskReader<PlainTextTaskReader>(inputPath);
     }
 
     return nullptr;

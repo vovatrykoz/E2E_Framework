@@ -1,6 +1,4 @@
 #include <Analysis.h>
-#include <io/logger/ConsoleLogger.h>
-#include <io/reader/TaskInstanceInputReader.h>
 #include <setup/Preset.h>
 #include <setup/Setup.h>
 

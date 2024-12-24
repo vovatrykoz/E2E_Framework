@@ -1,14 +1,14 @@
-#ifndef _TEXT_LOGGER_H_
-#define _TEXT_LOGGER_H_
+#ifndef _SIMPLIFIED_PLAIN_TEXT_LOGGER_H_
+#define _SIMPLIFIED_PLAIN_TEXT_LOGGER_H_
 
 #include <io/logger/ILogger.h>
 
 namespace e2e {
 namespace io {
 
-class TextLogger : public ILogger {
+class SimplifiedPlainTextLogger : public ILogger {
 public:
-    TextLogger(const std::string& pathToOutputFile);
+    SimplifiedPlainTextLogger(const std::string& pathToOutputFile);
 
     virtual void logValidInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
