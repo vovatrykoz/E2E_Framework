@@ -1,9 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 project(E2E_analysis_framework LANGUAGES C CXX)
 
-cmake_policy(SET CMP0135 NEW)
+if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
+    cmake_policy(SET CMP0135 NEW)
+endif()
 
-set (CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 20)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(CODE_SOURCE_DIR ${PROJECT_SOURCE_DIR}/source)
@@ -11,18 +13,20 @@ set(TESTS_SOURCE_DIR ${PROJECT_SOURCE_DIR}/tests)
 
 include_directories(${INCLUDE_DIR})
 
-
+set(IO_LOGGER_SOURCE_DIR ${CODE_SOURCE_DIR}/io/logger)
+set(IO_READER_SOURCE_DIR ${CODE_SOURCE_DIR}/io/reader)
 add_library(
     e2e_io
 
-    ${CODE_SOURCE_DIR}/io/logger/ConsoleLogger.cpp
-    ${CODE_SOURCE_DIR}/io/logger/SimplifiedConsoleLogger.cpp
-    ${CODE_SOURCE_DIR}/io/logger/TextLogger.cpp
-    ${CODE_SOURCE_DIR}/io/logger/SimplifiedTextLogger.cpp
-    ${CODE_SOURCE_DIR}/io/reader/ConsoleTaskReader.cpp
-    ${CODE_SOURCE_DIR}/io/reader/SimpleTextTaskReader.cpp
-    ${CODE_SOURCE_DIR}/io/reader/TaskInstanceInputReader.cpp
-    ${CODE_SOURCE_DIR}/io/reader/TaskInstanceSimpleTextReader.cpp
+    ${IO_LOGGER_SOURCE_DIR}/ConsoleLogger.cpp
+    ${IO_LOGGER_SOURCE_DIR}/SimplifiedConsoleLogger.cpp
+    ${IO_LOGGER_SOURCE_DIR}/TextLogger.cpp
+    ${IO_LOGGER_SOURCE_DIR}/SimplifiedTextLogger.cpp
+
+    ${IO_READER_SOURCE_DIR}/ConsoleTaskReader.cpp
+    ${IO_READER_SOURCE_DIR}/SimpleTextTaskReader.cpp
+    ${IO_READER_SOURCE_DIR}/TaskInstanceInputReader.cpp
+    ${IO_READER_SOURCE_DIR}/TaskInstanceSimpleTextReader.cpp
 )
 
 add_library(
@@ -35,11 +39,12 @@ add_library(
     ${CODE_SOURCE_DIR}/TimedPath.cpp
 )
 
+set(SETUP_SOURCE_DIR ${CODE_SOURCE_DIR}/setup)
 add_library(
     e2e_setup
 
-    ${CODE_SOURCE_DIR}/setup/Setup.cpp
-    ${CODE_SOURCE_DIR}/setup/Preset.cpp
+    ${SETUP_SOURCE_DIR}/Setup.cpp
+    ${SETUP_SOURCE_DIR}/Preset.cpp
 )
 
 add_executable(
@@ -72,6 +77,8 @@ target_link_libraries(
     e2e_core
     e2e_setup
 )
+
+# Google Test ----------------------
 
 include(FetchContent)
 FetchContent_Declare(
