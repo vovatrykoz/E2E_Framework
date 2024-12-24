@@ -15,196 +15,92 @@
 using namespace e2e;
 using namespace e2e::io;
 
-std::optional<setup::SupportedLogger> setup::getSupportedLoggerFromString(
-    const std::string& loggerStr) {
-    std::string lowercaseLoggerStr;
-    std::transform(loggerStr.begin(), loggerStr.end(),
-                   std::back_inserter(lowercaseLoggerStr),
-                   [](unsigned char c) { return std::tolower(c); });
-
-    if (lowercaseLoggerStr == "console") {
-        return SupportedLogger::Console;
-    }
-
-    if (lowercaseLoggerStr == "text") {
-        return SupportedLogger::Text;
-    }
-
-    return std::nullopt;
-}
-
-std::optional<setup::SupportedLogger> setup::getSupportedSimpleLoggerFromString(
-    const std::string& loggerStr) {
-    std::string lowercaseLoggerStr;
-    std::transform(loggerStr.begin(), loggerStr.end(),
-                   std::back_inserter(lowercaseLoggerStr),
-                   [](unsigned char c) { return std::tolower(c); });
-
-    if (lowercaseLoggerStr == "console") {
-        return SupportedLogger::SimplifiedConsole;
-    }
-
-    if (lowercaseLoggerStr == "text") {
-        return SupportedLogger::SimplifiedText;
-    }
-
-    return std::nullopt;
-}
-
-std::optional<setup::SupportedTaskInstanceReader>
-setup::getSupportedTaskInstanceReaderFromString(const std::string& readerStr) {
-    std::string lowercaseReaderStr;
-    std::transform(readerStr.begin(), readerStr.end(),
-                   std::back_inserter(lowercaseReaderStr),
-                   [](unsigned char c) { return std::tolower(c); });
-
-    if (lowercaseReaderStr == "console") {
-        return SupportedTaskInstanceReader::Console;
-    }
-
-    if (lowercaseReaderStr == "text") {
-        return SupportedTaskInstanceReader::Text;
-    }
-
-    return std::nullopt;
-}
-
-std::optional<setup::SupportedTaskReader>
-setup::getSupportedTaskReaderFromString(const std::string& readerStr) {
-    std::string lowercaseReaderStr;
-    std::transform(readerStr.begin(), readerStr.end(),
-                   std::back_inserter(lowercaseReaderStr),
-                   [](unsigned char c) { return std::tolower(c); });
-
-    if (lowercaseReaderStr == "console") {
-        return SupportedTaskReader::Console;
-    }
-
-    if (lowercaseReaderStr == "text") {
-        return SupportedTaskReader::Text;
-    }
-
-    return std::nullopt;
-}
-
-std::unique_ptr<ILogger> setup::getLoggerFromType(SupportedLogger loggerType) {
-    std::string outputPath;
-    switch (loggerType) {
-        case SupportedLogger::Console:
-            std::cout << "Logger type: console" << std::endl;
-            return std::make_unique<ConsoleLogger>();
-
-        case SupportedLogger::Text:
-            std::cout << "Logger type: text" << std::endl;
-            std::cout << "Enter output path: ";
-            std::cin >> outputPath;
-            return std::make_unique<TextLogger>(outputPath);
-
-        case SupportedLogger::SimplifiedConsole:
-            std::cout << "Logger type: console" << std::endl;
-            return std::make_unique<SimplifiedConsoleLogger>();
-
-        case SupportedLogger::SimplifiedText:
-            std::cout << "Logger type: text" << std::endl;
-            std::cout << "Enter output path: ";
-            std::cin >> outputPath;
-            return std::make_unique<SimplifiedTextLogger>(outputPath);
-
-        default:
-            return nullptr;
-    }
-
-    return nullptr;
-}
-
-std::unique_ptr<ITaskInstanceReader> setup::getTaskInstanceReaderFromType(
-    SupportedTaskInstanceReader readerType) {
-    std::string inputPath;
-    switch (readerType) {
-        case SupportedTaskInstanceReader::Console:
-            std::cout << "Reader type: console" << std::endl;
-            return std::make_unique<TaskInstanceInputReader>();
-
-        case SupportedTaskInstanceReader::Text:
-            std::cout << "Reader type: text" << std::endl;
-            std::cout << "Enter path to input file: ";
-            std::cin >> inputPath;
-            return std::make_unique<TaskInstanceSimpleTextReader>(inputPath);
-
-        default:
-            return nullptr;
-    }
-
-    return nullptr;
-}
-
-std::unique_ptr<ITaskReader> e2e::setup::getTaskReaderFromType(
-    SupportedTaskReader readerType) {
-    std::string inputPath;
-    switch (readerType) {
-        case SupportedTaskReader::Console:
-            std::cout << "Reader type: console" << std::endl;
-            return std::make_unique<ConsoleTaskReader>();
-
-        case SupportedTaskReader::Text:
-            std::cout << "Reader type: text" << std::endl;
-            std::cout << "Enter path to input file: ";
-            std::cin >> inputPath;
-            return std::make_unique<SimpleTextTaskReader>(inputPath);
-
-        default:
-            return nullptr;
-    }
-
-    return nullptr;
-}
-
 std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
-    std::optional<setup::SupportedLogger> loggerType =
-        setup::getSupportedLoggerFromString(loggerStr);
+    std::string lowercaseLoggerStr;
+    std::transform(loggerStr.begin(), loggerStr.end(),
+                   std::back_inserter(lowercaseLoggerStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
-    if (!loggerType.has_value()) {
-        std::cerr << "Provided reader is not supported" << std::endl;
-        return nullptr;
+    if (lowercaseLoggerStr == "console") {
+        std::cout << "Logger type: console" << std::endl;
+        return makeLogger<ConsoleLogger>();
     }
 
-    return setup::getLoggerFromType(loggerType.value());
+    if (lowercaseLoggerStr == "text") {
+        std::string outputPath;
+        std::cout << "Logger type: text" << std::endl;
+        std::cout << "Enter output path: ";
+        std::cin >> outputPath;
+        return makeLogger<TextLogger>(outputPath);
+    }
+
+    return nullptr;
 }
 
 std::unique_ptr<ILogger> setup::simpleLogger(const std::string& loggerStr) {
-    std::optional<setup::SupportedLogger> loggerType =
-        setup::getSupportedSimpleLoggerFromString(loggerStr);
+    std::string lowercaseLoggerStr;
+    std::transform(loggerStr.begin(), loggerStr.end(),
+                   std::back_inserter(lowercaseLoggerStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
-    if (!loggerType.has_value()) {
-        std::cerr << "Provided reader is not supported" << std::endl;
-        return nullptr;
+    if (lowercaseLoggerStr == "console") {
+        std::cout << "Logger type: console" << std::endl;
+        return makeLogger<SimplifiedConsoleLogger>();
     }
 
-    return setup::getLoggerFromType(loggerType.value());
+    if (lowercaseLoggerStr == "text") {
+        std::string outputPath;
+        std::cout << "Logger type: text" << std::endl;
+        std::cout << "Enter output path: ";
+        std::cin >> outputPath;
+        return makeLogger<SimplifiedTextLogger>(outputPath);
+    }
+
+    return nullptr;
 }
 
 std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
     const std::string& readerStr) {
-    std::optional<setup::SupportedTaskInstanceReader> readerType =
-        setup::getSupportedTaskInstanceReaderFromString(readerStr);
+    std::string lowercaseReaderStr;
+    std::transform(readerStr.begin(), readerStr.end(),
+                   std::back_inserter(lowercaseReaderStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
-    if (!readerType.has_value()) {
-        std::cerr << "Provided reader is not supported" << std::endl;
-        return nullptr;
+    if (lowercaseReaderStr == "console") {
+        std::cout << "Reader type: console" << std::endl;
+        return makeTaskInstanceReader<TaskInstanceInputReader>();
     }
 
-    return setup::getTaskInstanceReaderFromType(readerType.value());
+    if (lowercaseReaderStr == "text") {
+        std::string inputPath;
+        std::cout << "Reader type: text" << std::endl;
+        std::cout << "Enter path to input file: ";
+        std::cin >> inputPath;
+        return makeTaskInstanceReader<TaskInstanceSimpleTextReader>(inputPath);
+    }
+
+    return nullptr;
 }
 
 std::unique_ptr<ITaskReader> e2e::setup::taskReader(
     const std::string& readerStr) {
-    std::optional<setup::SupportedTaskReader> readerType =
-        setup::getSupportedTaskReaderFromString(readerStr);
+    std::string lowercaseReaderStr;
+    std::transform(readerStr.begin(), readerStr.end(),
+                   std::back_inserter(lowercaseReaderStr),
+                   [](unsigned char c) { return std::tolower(c); });
 
-    if (!readerType.has_value()) {
-        std::cerr << "Provided reader is not supported" << std::endl;
-        return nullptr;
+    if (lowercaseReaderStr == "console") {
+        std::cout << "Reader type: console" << std::endl;
+        return makeTaskReader<ConsoleTaskReader>();
     }
 
-    return setup::getTaskReaderFromType(readerType.value());
+    if (lowercaseReaderStr == "text") {
+        std::string inputPath;
+        std::cout << "Reader type: text" << std::endl;
+        std::cout << "Enter path to input file: ";
+        std::cin >> inputPath;
+        return makeTaskReader<SimpleTextTaskReader>(inputPath);
+    }
+
+    return nullptr;
 }
