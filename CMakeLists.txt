@@ -54,7 +54,7 @@ add_executable(
     ${CODE_SOURCE_DIR}/executable/main_Tasks.cpp
 )
 
-target_compile_features(individualPathAnalyzer PUBLIC cxx_std_17)
+target_compile_features(individualPathAnalyzer PUBLIC cxx_std_20)
 target_link_libraries(e2e_io e2e_core)
 target_link_libraries(
     e2e_setup 
