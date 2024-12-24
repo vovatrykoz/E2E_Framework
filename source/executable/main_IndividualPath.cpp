@@ -1,7 +1,8 @@
 #include <Analysis.h>
-#include <Setup.h>
 #include <io/logger/ConsoleLogger.h>
 #include <io/reader/TaskInstanceInputReader.h>
+#include <setup/Preset.h>
+#include <setup/Setup.h>
 
 #include <iostream>
 #include <memory>
@@ -21,16 +22,15 @@ int main(int argc, char* argv[]) {
     switch (argc) {
         case 1:
             // default to console if the user has not provided any input
-            inputReader =
-                setup::makeTaskInstanceReader<TaskInstanceInputReader>();
-            logger = setup::makeLogger<ConsoleLogger>();
+            inputReader = setup::preset::makeDefaultTaskInstanceReader();
+            logger = setup::preset::makeDefaultLogger();
             break;
 
         case 2:
             // if only one parameter is provided, we assume that to be a reader
-            // deafault to console logger
+            // deafault to preset for the logger
             inputReader = setup::taskInstanceReader(argv[1]);
-            logger = setup::makeLogger<ConsoleLogger>();
+            logger = setup::preset::makeDefaultLogger();
             break;
 
         case 3:

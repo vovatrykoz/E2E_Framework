@@ -1,8 +1,9 @@
 #include <Analysis.h>
-#include <Setup.h>
 #include <TaskScheduling.h>
 #include <io/logger/SimplifiedConsoleLogger.h>
 #include <io/reader/ConsoleTaskReader.h>
+#include <setup/Preset.h>
+#include <setup/Setup.h>
 
 #include <iostream>
 #include <memory>
@@ -21,16 +22,16 @@ int main(int argc, char* argv[]) {
     // setup
     switch (argc) {
         case 1:
-            // default to text if the user has not provided any input
-            inputReader = setup::makeTaskReader<ConsoleTaskReader>();
-            logger = setup::makeLogger<SimplifiedConsoleLogger>();
+            // use presets the user has not provided any input
+            inputReader = setup::preset::makeDefaultTaskReader();
+            logger = setup::preset::makeDefaultSimplifiedLogger();
             break;
 
         case 2:
             // if only one parameter is provided, we assume that to be a reader
-            // deafault to console logger
+            // deafault to presets for the logger
             inputReader = setup::taskReader(argv[1]);
-            logger = setup::makeLogger<SimplifiedConsoleLogger>();
+            logger = setup::preset::makeDefaultSimplifiedLogger();
             break;
 
         case 3:

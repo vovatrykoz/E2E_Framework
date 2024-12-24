@@ -38,7 +38,8 @@ add_library(
 add_library(
     e2e_setup
 
-    ${CODE_SOURCE_DIR}/Setup.cpp
+    ${CODE_SOURCE_DIR}/setup/Setup.cpp
+    ${CODE_SOURCE_DIR}/setup/Preset.cpp
 )
 
 add_executable(
