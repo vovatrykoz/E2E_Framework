@@ -34,19 +34,24 @@ namespace analysis {}
 
 /**
  * @namespace e2e::mathframework
- * @brief Namespace providing mathematical and logical functions for task instance analysis.
+ * @brief Namespace providing mathematical and logical functions for task
+ * instance analysis.
  *
- * The `mathframework` namespace contains critical functions for evaluating the relationships
- * and interactions between task instances in a system. These functions are integral to determining:
+ * The `mathframework` namespace contains critical functions for evaluating the
+ * relationships and interactions between task instances in a system. These
+ * functions are integral to determining:
  * - Activation time travel (whether a reader task activates before a writer).
  * - Overlap in execution between writer and reader tasks.
  * - Wait conditions based on task priorities during overlapping execution.
- * - Forward reachability between tasks, accounting for time travel and criticality.
- * - Detection of overwrites between writer task instances for the same reader task.
+ * - Forward reachability between tasks, accounting for time travel and
+ * criticality.
+ * - Detection of overwrites between writer task instances for the same reader
+ * task.
  * - Reachability of an entire timed path of task instances.
  *
- * These utilities form the foundation for analyzing temporal and logical properties of task sets,
- * enabling precise evaluation of scheduling and timing in complex systems.
+ * These utilities form the foundation for analyzing temporal and logical
+ * properties of task sets, enabling precise evaluation of scheduling and timing
+ * in complex systems.
  */
 namespace mathframework {}
 
@@ -54,27 +59,42 @@ namespace mathframework {}
  * @namespace e2e::setup
  * @brief Namespace for initialization and setup utilities.
  *
- * The `setup` namespace provides tools for configuring and initializing various components
- * of the framework. It includes functionalities to:
- * - Map string representations to supported logger and reader types.
- * - Create logger and reader objects from enumerated types or string representations.
- * - Manage different logging and task reading implementations for flexible framework usage.
- *
- * The namespace facilitates streamlined configuration by abstracting the creation and setup
- * of loggers (`ILogger`) and readers (`ITaskReader` and `ITaskInstanceReader`).
+ * The `setup` namespace provides tools for configuring and initializing various
+ * io components of the framework, such as readers and loggers.
  */
 namespace setup {}
+
+/**
+ * @namespace e2e::setup::preset
+ * @brief Provides default implementations for io components used in the
+ * system.
+ *
+ * Privides factory functions that return pre-configured default loggers and
+ * readers
+ */
+namespace preset {}
+
+/**
+ * @namespace e2e::setup::factory
+ * @brief Provides generic factory functions to create instances of io components.
+ *
+ * The `factory` namespace includes templated factory functions for creating loggers
+ * and task readers.
+ */
+namespace factory {}
 
 /**
  * @namespace e2e::scheduling
  * @brief Namespace for task and path scheduling utilities.
  *
- * The `scheduling` namespace provides essential tools for analyzing and managing
- * task scheduling in end-to-end paths. It offers functions to:
- * - Calculate properties such as the least common multiple (LCM) for task chains.
+ * The `scheduling` namespace provides essential tools for analyzing and
+ * managing task scheduling in end-to-end paths. It offers functions to:
+ * - Calculate properties such as the least common multiple (LCM) for task
+ * chains.
  * - Generate task instances from tasks in an end-to-end path.
  * - Construct timed paths based on task instances and their dependencies.
- * - Perform operations like Cartesian product to build complex path combinations.
+ * - Perform operations like Cartesian product to build complex path
+ * combinations.
  *
  * This namespace is crucial for tasks related to time-based path construction,
  * enabling efficient and accurate scheduling analysis.
@@ -89,8 +109,9 @@ namespace scheduling {}
  * - Logging results and path analysis outputs.
  * - Reading task chains, instances, and paths from various input sources.
  *
- * This namespace defines core interfaces (`ILogger`, `ITaskReader`, `ITaskInstanceReader`)
- * for extensible input and output functionality, along with example concrete
- * implementations such as `SimplifiedConsoleLogger` and `TaskInstanceInputReader`.
+ * This namespace defines core interfaces (`ILogger`, `ITaskReader`,
+ * `ITaskInstanceReader`) for extensible input and output functionality, along
+ * with example concrete implementations such as `SimplifiedConsoleLogger` and
+ * `TaskInstanceInputReader`.
  */
 namespace io {}
