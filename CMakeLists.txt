@@ -3,7 +3,7 @@ project(E2E_analysis_framework LANGUAGES C CXX)
 
 cmake_policy(SET CMP0135 NEW)
 
-set (CMAKE_CXX_STANDARD 17)
+set (CMAKE_CXX_STANDARD 20)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 set(CODE_SOURCE_DIR ${PROJECT_SOURCE_DIR}/source)
