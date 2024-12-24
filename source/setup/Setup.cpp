@@ -6,6 +6,7 @@
 #include <io/reader/ConsoleTaskReader.h>
 #include <io/reader/PlainTextTaskInstanceReader.h>
 #include <io/reader/PlainTextTaskReader.h>
+#include <setup/Factory.h>
 #include <setup/Setup.h>
 
 #include <algorithm>
@@ -22,7 +23,7 @@ std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
 
     if (lowercaseLoggerStr == "console") {
         std::cout << "Logger type: console" << std::endl;
-        return makeLogger<ConsoleLogger>();
+        return factory::makeLogger<ConsoleLogger>();
     }
 
     if (lowercaseLoggerStr == "text") {
@@ -30,7 +31,7 @@ std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
         std::cout << "Logger type: text" << std::endl;
         std::cout << "Enter output path: ";
         std::cin >> outputPath;
-        return makeLogger<PlainTextLogger>(outputPath);
+        return factory::makeLogger<PlainTextLogger>(outputPath);
     }
 
     return nullptr;
@@ -44,7 +45,7 @@ std::unique_ptr<ILogger> setup::simpleLogger(const std::string& loggerStr) {
 
     if (lowercaseLoggerStr == "console") {
         std::cout << "Logger type: console" << std::endl;
-        return makeLogger<SimplifiedConsoleLogger>();
+        return factory::makeLogger<SimplifiedConsoleLogger>();
     }
 
     if (lowercaseLoggerStr == "text") {
@@ -52,9 +53,10 @@ std::unique_ptr<ILogger> setup::simpleLogger(const std::string& loggerStr) {
         std::cout << "Logger type: text" << std::endl;
         std::cout << "Enter output path: ";
         std::cin >> outputPath;
-        return makeLogger<SimplifiedPlainTextLogger>(outputPath);
+        return factory::makeLogger<SimplifiedPlainTextLogger>(outputPath);
     }
 
+    std::cout << "Entered logger is not supported" << std::endl;
     return nullptr;
 }
 
@@ -67,7 +69,7 @@ std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
 
     if (lowercaseReaderStr == "console") {
         std::cout << "Reader type: console" << std::endl;
-        return makeTaskInstanceReader<ConsoleTaskInstanceReader>();
+        return factory::makeTaskInstanceReader<ConsoleTaskInstanceReader>();
     }
 
     if (lowercaseReaderStr == "text") {
@@ -75,9 +77,11 @@ std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
         std::cout << "Reader type: text" << std::endl;
         std::cout << "Enter path to input file: ";
         std::cin >> inputPath;
-        return makeTaskInstanceReader<PlainTextTaskInstanceReader>(inputPath);
+        return factory::makeTaskInstanceReader<PlainTextTaskInstanceReader>(
+            inputPath);
     }
 
+    std::cout << "Entered task instance reader is not supported" << std::endl;
     return nullptr;
 }
 
@@ -90,7 +94,7 @@ std::unique_ptr<ITaskReader> e2e::setup::taskReader(
 
     if (lowercaseReaderStr == "console") {
         std::cout << "Reader type: console" << std::endl;
-        return makeTaskReader<ConsoleTaskReader>();
+        return factory::makeTaskReader<ConsoleTaskReader>();
     }
 
     if (lowercaseReaderStr == "text") {
@@ -98,8 +102,9 @@ std::unique_ptr<ITaskReader> e2e::setup::taskReader(
         std::cout << "Reader type: text" << std::endl;
         std::cout << "Enter path to input file: ";
         std::cin >> inputPath;
-        return makeTaskReader<PlainTextTaskReader>(inputPath);
+        return factory::makeTaskReader<PlainTextTaskReader>(inputPath);
     }
 
+    std::cout << "Entered task reader is not supported" << std::endl;
     return nullptr;
 }
