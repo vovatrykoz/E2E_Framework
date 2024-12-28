@@ -125,9 +125,9 @@ int main(int argc, char* argv[]) {
             if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
                 invalidPathSet.insert(path);
             }
-
-            return invalidPathSet;
         }
+
+        return invalidPathSet;
     }();
 
     // log results
