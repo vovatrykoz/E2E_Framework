@@ -16,7 +16,7 @@ bool mathframework::att(const PeriodicTaskInstance& writerTaskInstance,
 // writer's worst-case response time (wcrt).
 bool mathframework::crit(const PeriodicTaskInstance& writerTaskInstance,
                          const PeriodicTaskInstance& readerTaskInstance) {
-    int writerTaskTerminationTime =
+    const int writerTaskTerminationTime =
         writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcrt;
 
     if (readerTaskInstance.activationTime < writerTaskTerminationTime) {
@@ -41,11 +41,11 @@ bool mathframework::wait(const PeriodicTask& writerTask,
 // time travel, criticality, and priority.
 bool mathframework::forw(const PeriodicTaskInstance& writerTaskInstance,
                          const PeriodicTaskInstance& readerTaskInstance) {
-    bool instancesDoNotTimeTravel =
+    const bool instancesDoNotTimeTravel =
         !att(writerTaskInstance, readerTaskInstance);
-    bool instancesAreNonCritical =
+    const bool instancesAreNonCritical =
         !crit(writerTaskInstance, readerTaskInstance);
-    bool readerHasToWait =
+    const bool readerHasToWait =
         wait(writerTaskInstance.baseTask, readerTaskInstance.baseTask);
 
     if (instancesDoNotTimeTravel &&
@@ -61,9 +61,9 @@ bool mathframework::forw(const PeriodicTaskInstance& writerTaskInstance,
 bool mathframework::reach(const PeriodicTaskInstance& currentWriterTaskInstance,
                           const PeriodicTaskInstance& readerTaskInstance,
                           const PeriodicTaskInstance& nextWriterTaskInstance) {
-    bool readerInstanceIsReachable =
+    const bool readerInstanceIsReachable =
         forw(currentWriterTaskInstance, readerTaskInstance);
-    bool nextWriterInstanceCannotReachReaderInstance =
+    const bool nextWriterInstanceCannotReachReaderInstance =
         !forw(nextWriterTaskInstance, readerTaskInstance);
 
     if (readerInstanceIsReachable &&
@@ -82,13 +82,13 @@ bool mathframework::pathReach(
         return false;
     }
 
-    std::size_t pathSize = timedPath.size();
+    const std::size_t pathSize = timedPath.size();
     if (pathSize == 1) {
         return true;
     }
 
     for (std::size_t i = 0; i < pathSize - 1; i++) {
-        bool pathIsNotReachable =
+        const bool pathIsNotReachable =
             !reach(timedPath[i], timedPath[i + 1], timedPath[i].nextInstance());
 
         if (pathIsNotReachable) {

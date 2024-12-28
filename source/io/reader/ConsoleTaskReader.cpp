@@ -8,7 +8,7 @@ using namespace e2e::io;
 std::vector<NamedTask> ConsoleTaskReader::readTaskChain() const {
     std::vector<NamedTask> result;
     std::string name;
-    int numOfChains = readInt("How many tasks should be in the system: ");
+    const int numOfChains = readInt("How many tasks should be in the system: ");
 
     for (int i = 0; i < numOfChains; i++) {
         NamedTask task = this->readTask();

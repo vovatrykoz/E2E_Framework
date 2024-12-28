@@ -1,7 +1,7 @@
-#include "io/reader/ConsoleTaskInstanceReader.h"
-
 #include <iostream>
 #include <limits>
+
+#include "io/reader/ConsoleTaskInstanceReader.h"
 
 using namespace e2e;
 using namespace e2e::io;
@@ -9,7 +9,8 @@ using namespace e2e::io;
 std::multiset<TimedPath> ConsoleTaskInstanceReader::readPathsSet() const {
     std::multiset<TimedPath> result;
     std::string name;
-    int numOfChains = readInt("How many task chains do you want to analyse: ");
+    const int numOfChains =
+        readInt("How many task chains do you want to analyse: ");
 
     for (int i = 0; i < numOfChains; i++) {
         std::cout << "Enter task chain name: ";
@@ -46,10 +47,11 @@ int ConsoleTaskInstanceReader::readInt(const std::string& message) const {
 }
 
 PeriodicTaskInstance ConsoleTaskInstanceReader::readTaskInstance() const {
-    int period = readInt("Enter task period: ");
-    int wcrt = readInt("Enter worst case response time for the task: ");
-    int priority = readInt("Enter task priority: ");
-    int activationTime = readInt("Enter task activation time or offset: ");
+    const int period = readInt("Enter task period: ");
+    const int wcrt = readInt("Enter worst case response time for the task: ");
+    const int priority = readInt("Enter task priority: ");
+    const int activationTime =
+        readInt("Enter task activation time or offset: ");
 
     return PeriodicTaskInstance(PeriodicTask(period, wcrt, priority),
                                 activationTime);
@@ -59,7 +61,7 @@ TimedPath ConsoleTaskInstanceReader::readTimedPath(
     const std::string& name) const {
     TimedPath timedPath(name);
 
-    int numOfTasks = readInt("How many tasks should be in the chain: ");
+    const int numOfTasks = readInt("How many tasks should be in the chain: ");
 
     for (int i = 0; i < numOfTasks; i++) {
         std::cout << "Reading Task " << i + 1 << std::endl;

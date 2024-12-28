@@ -17,7 +17,7 @@ int TimedPath::endToEndDelay() const {
         return 0;
     }
 
-    std::size_t size = this->tasks.size();
+    const std::size_t size = this->tasks.size();
     if (size == 1) {
         return this->tasks[0].baseTask.wcrt;
     }
@@ -42,19 +42,19 @@ int TimedPath::lastTaskActivationTime() const {
         return 0;
     }
 
-    std::size_t lastElementIndex = this->tasks.size() - 1;
+    const std::size_t lastElementIndex = this->tasks.size() - 1;
     return this->tasks[lastElementIndex].activationTime;
 }
 
 bool TimedPath::succeeds(const TimedPath& other) const {
-    int thisPathPeriod = this->calculatePathPeriod();
-    int otherPathPeriod = other.calculatePathPeriod();
+    const int thisPathPeriod = this->calculatePathPeriod();
+    const int otherPathPeriod = other.calculatePathPeriod();
 
     if (thisPathPeriod != otherPathPeriod) {
         return false;
     }
 
-    int otherPathInstanceResetTime =
+    const int otherPathInstanceResetTime =
         other.firstTaskActivationTime() + otherPathPeriod;
 
     return this->firstTaskActivationTime() == otherPathInstanceResetTime;

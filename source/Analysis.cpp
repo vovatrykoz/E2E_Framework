@@ -27,7 +27,6 @@ std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
     const std::multiset<TimedPath>& pathSet) {
     std::multiset<TimedPath> output;
 
-    int totalTaskCount = pathSet.size();
     for (const auto& currentPath : pathSet) {
         bool isDuplicate = false;
 
@@ -63,7 +62,7 @@ std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
 // set.
 std::optional<TimedPath> analysis::getPathWithMaximumLatency(
     const std::multiset<TimedPath>& pathSet) {
-    auto maxLatencyIt =
+    const auto maxLatencyIt =
         std::max_element(pathSet.begin(), pathSet.end(),
                          [](const TimedPath& a, const TimedPath& b) {
                              return a.endToEndDelay() < b.endToEndDelay();
