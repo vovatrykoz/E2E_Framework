@@ -89,38 +89,46 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
-    std::multiset<TimedPath> pathSet =
+    const std::multiset<TimedPath> pathSet =
         scheduling::generateTimedPathsFromInstances(allPossiblePaths);
 
     // perform the analysis
-    std::multiset<TimedPath> validPathSet_LL =
+    const std::multiset<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
 
     // perform end-to-end analysis using Last-to-Last semantics
-    std::optional<TimedPath> maximumLatencyPath_LL =
+    const std::optional<TimedPath> maximumLatencyPath_LL =
         analysis::getPathWithMaximumLatency(validPathSet_LL);
 
     // get a set for Last-To-First semantics analysis
-    std::multiset<TimedPath> validPathSet_LF =
+    const std::multiset<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDublicateValues(validPathSet_LL);
 
     // perform end-to-end analysis using Last-To-First semantics
-    std::optional<TimedPath> maximumLatencyPath_LF =
+    const std::optional<TimedPath> maximumLatencyPath_LF =
         analysis::getPathWithMaximumLatency(validPathSet_LF);
 
     // perform end-to-end analysis using First-To-Last semantics
-    int maxFirstToLastDelay = analysis::getOverarchingDelay(validPathSet_LL);
+    const int maxFirstToLastDelay =
+        analysis::getOverarchingDelay(validPathSet_LL);
 
     // perform end-to-end analysis using First-To-First semantics
-    int maxFirstToFirstDelay = analysis::getOverarchingDelay(validPathSet_LF);
+    const int maxFirstToFirstDelay =
+        analysis::getOverarchingDelay(validPathSet_LF);
 
     // idenrify which paths turned out to be invalid
-    std::multiset<TimedPath> invalidPathSet;
-    for (const auto& path : pathSet) {
-        if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
-            invalidPathSet.insert(path);
+    const std::multiset<TimedPath> invalidPathSet = [&validPathSet_LL,
+                                                     &pathSet]() {
+        std::multiset<TimedPath> invalidPathSet;
+
+        for (const auto& path : pathSet) {
+            if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
+                invalidPathSet.insert(path);
+            }
+
+            return invalidPathSet;
         }
-    }
+    }();
 
     // log results
     try {
