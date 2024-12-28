@@ -27,7 +27,7 @@ int main(int argc, char* argv[]) {
 
         case 2:
             // if only one parameter is provided, we assume that to be a reader
-            // deafault to presets for the logger
+            // default to presets for the logger
             inputReader = setup::taskReader(argv[1]);
             logger = setup::preset::makeDefaultSimplifiedLogger();
             break;
@@ -38,23 +38,27 @@ int main(int argc, char* argv[]) {
             break;
 
         default:
-            std::cerr << "Too many parameters" << std::endl;
+            std::cerr << "Too many parameters" << "\n";
             break;
     }
 
     if (logger == nullptr || inputReader == nullptr) {
-        std::cerr << "Setup incomplete, please try again" << std::endl;
+        std::cerr << "Setup incomplete, please try again" << "\n";
         printUsageInfo();
         return -1;
     }
 
     std::vector<NamedTask> namedTasks;
-
     // read user input
     try {
         namedTasks = inputReader->readTaskChain();
-    } catch (std::runtime_error err) {
-        std::cerr << "Failed to load tasks! " << err.what() << std::endl;
+    } catch (const std::exception& ex) {
+        std::cerr << "Failed to load tasks! " << ex.what() << "\n";
+        return -1;
+    } catch (...) {
+        std::cerr << "Unknown error has occured while reading the task chain! "
+                     "Please try again! "
+                  << "\n";
         return -1;
     }
 
@@ -71,9 +75,9 @@ int main(int argc, char* argv[]) {
         taskInstances = scheduling::generateTaskInstancesFromPath(taskChain);
     } catch (std::bad_alloc) {
         std::cout << "The provided input resulted in too many task instances "
-                     "being genereated. Review your task parameters to ensure "
-                     "a reasonable number of taks instances can be generated"
-                  << std::endl;
+                     "being generated. Review your task parameters to ensure "
+                     "a reasonable number of task instances can be generated"
+                  << "\n";
         return 0;
     }
 
@@ -84,8 +88,8 @@ int main(int argc, char* argv[]) {
         std::cout
             << "The provided input resulted in too many task exectution paths "
                "being genereated. Review your task parameters to ensure "
-               "a reasonable number of taks instances can be generated"
-            << std::endl;
+               "a reasonable number of task instances can be generated"
+            << "\n";
         return 0;
     }
 
@@ -116,7 +120,7 @@ int main(int argc, char* argv[]) {
     const int maxFirstToFirstDelay =
         analysis::getOverarchingDelay(validPathSet_LF);
 
-    // idenrify which paths turned out to be invalid
+    // indentify which paths turned out to be invalid
     const std::multiset<TimedPath> invalidPathSet = [&validPathSet_LL,
                                                      &pathSet]() {
         std::multiset<TimedPath> invalidPathSet;
@@ -137,16 +141,21 @@ int main(int argc, char* argv[]) {
         logger->logResults_LF(maximumLatencyPath_LF);
         logger->logResults_FL(maxFirstToLastDelay);
         logger->logResults_FF(maxFirstToFirstDelay);
-    } catch (std::runtime_error err) {
-        std::cerr << "Failed to log results! " << err.what() << std::endl;
-        return -1;
+    } catch (const std::exception& ex) {
+        std::cerr << "Failed to log results! " << ex.what() << "\n";
+        return 0;
+    } catch (...) {
+        std::cerr << "Unknown error has occured while logging the results! "
+                     "Please try again! "
+                  << "\n";
+        return 0;
     }
 
     return 0;
 }
 
 void printUsageInfo() {
-    std::cerr << "Usage: taskAnalyzer <reader_type> <logger_type>" << std::endl;
-    std::cerr << "Currently supported loggers: Console, Text" << std::endl;
-    std::cerr << "Currently supported readers: Console, Text" << std::endl;
+    std::cerr << "Usage: taskAnalyzer <reader_type> <logger_type>" << "\n";
+    std::cerr << "Currently supported loggers: Console, Text" << "\n";
+    std::cerr << "Currently supported readers: Console, Text" << "\n";
 }

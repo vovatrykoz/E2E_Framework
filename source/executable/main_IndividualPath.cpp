@@ -37,12 +37,12 @@ int main(int argc, char* argv[]) {
             break;
 
         default:
-            std::cerr << "Too many parameters" << std::endl;
+            std::cerr << "Too many parameters" << "\n";
             break;
     }
 
     if (logger == nullptr || inputReader == nullptr) {
-        std::cerr << "Setup incomplete, please try again" << std::endl;
+        std::cerr << "Setup incomplete, please try again" << "\n";
         printUsageInfo();
         return -1;
     }
@@ -52,9 +52,14 @@ int main(int argc, char* argv[]) {
     // read user input
     try {
         pathSet = inputReader->readPathsSet();
-    } catch (std::runtime_error err) {
-        std::cerr << "Failed to load timed path! " << err.what() << std::endl;
-        return -1;
+    } catch (const std::exception& ex) {
+        std::cerr << "Failed to load timed paths! " << ex.what() << "\n";
+        return 0;
+    } catch (...) {
+        std::cerr << "Unknown error has occured while reading the path set! "
+                     "Please try again! "
+                  << "\n";
+        return 0;
     }
 
     // perform the analysis
@@ -102,9 +107,14 @@ int main(int argc, char* argv[]) {
         logger->logResults_LF(maximumLatencyPath_LF);
         logger->logResults_FL(maxFirstToLastDelay);
         logger->logResults_FF(maxFirstToFirstDelay);
-    } catch (std::runtime_error err) {
-        std::cerr << "Failed to log results! " << err.what() << std::endl;
-        return -1;
+    } catch (const std::exception& ex) {
+        std::cerr << "Failed to log results! " << ex.what() << "\n";
+        return 0;
+    } catch (...) {
+        std::cerr << "Unknown error has occured while logging the results! "
+                     "Please try again! "
+                  << "\n";
+        return 0;
     }
 
     return 0;
@@ -112,7 +122,7 @@ int main(int argc, char* argv[]) {
 
 void printUsageInfo() {
     std::cerr << "Usage: individualPathAnalyzer <reader_type> <logger_type>"
-              << std::endl;
-    std::cerr << "Currently supported loggers: Console, Text" << std::endl;
-    std::cerr << "Currently supported readers: Console, Text" << std::endl;
+              << "\n";
+    std::cerr << "Currently supported loggers: Console, Text" << "\n";
+    std::cerr << "Currently supported readers: Console, Text" << "\n";
 }
