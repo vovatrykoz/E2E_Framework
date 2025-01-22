@@ -23,7 +23,7 @@ namespace scheduling {
  * @return 0 if the path is empty, or the LCM of the periods of the tasks in the
  * path.
  */
-int calculateLcmForEndToEndPath(const std::vector<PeriodicTask>& endToEndPath);
+int calculateLcmForEndToEndPath(const std::vector<OffsetPeriodicTask>& endToEndPath);
 
 /**
  * @brief Generates task instances from a task path.
@@ -38,7 +38,7 @@ int calculateLcmForEndToEndPath(const std::vector<PeriodicTask>& endToEndPath);
  * for each task in the path.
  */
 std::vector<std::vector<PeriodicTaskInstance>> generateTaskInstancesFromPath(
-    const std::vector<PeriodicTask>& taskPath);
+    const std::vector<OffsetPeriodicTask>& taskPath);
 
 /**
  * @brief Generates timed paths from task instances.

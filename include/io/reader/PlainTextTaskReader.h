@@ -13,7 +13,7 @@ public:
     virtual std::vector<NamedTask> readTaskChain() const override;
 
 private:
-    PeriodicTask parseTask(const std::string& taskStr) const;
+    OffsetPeriodicTask parseTask(const std::string& taskStr) const;
 
     const std::string filePath;
     static const std::string startStr;

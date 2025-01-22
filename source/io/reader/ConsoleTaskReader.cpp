@@ -53,5 +53,5 @@ NamedTask ConsoleTaskReader::readTask() const {
     int priority = readInt("Enter task priority: ");
     int offset = readInt("Enter task offset: ");
 
-    return NamedTask(PeriodicTask(period, wcrt, priority, offset), name);
+    return NamedTask(OffsetPeriodicTask(period, wcrt, priority, offset), name);
 }

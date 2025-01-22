@@ -7,7 +7,7 @@ using namespace e2e;
 // Calculates the least common multiple (LCM) of the periods of tasks in the
 // path
 int scheduling::calculateLcmForEndToEndPath(
-    const std::vector<PeriodicTask>& endToEndPath) {
+    const std::vector<OffsetPeriodicTask>& endToEndPath) {
     // Return 0 if the path is empty, as there's no LCM to calculate
     if (endToEndPath.empty()) {
         return 0;
@@ -16,7 +16,7 @@ int scheduling::calculateLcmForEndToEndPath(
     int acc = 1;
     // Calculate the LCM of all task periods
     for (const auto& task : endToEndPath) {
-        acc = std::lcm(task.period, acc);
+        acc = std::lcm(task.baseTask.period, acc);
     }
 
     return acc;
@@ -26,7 +26,7 @@ int scheduling::calculateLcmForEndToEndPath(
 // offsets
 std::vector<std::vector<PeriodicTaskInstance>>
 scheduling::generateTaskInstancesFromPath(
-    const std::vector<PeriodicTask>& endToEndPath) {
+    const std::vector<OffsetPeriodicTask>& endToEndPath) {
     if (endToEndPath.empty()) {
         // empty vector
         return std::vector<std::vector<PeriodicTaskInstance>>();
@@ -37,13 +37,13 @@ scheduling::generateTaskInstancesFromPath(
 
     // Generate task instances for each task in the path
     for (int i = 0; i < endToEndPath.size(); i++) {
-        int instanceCount = lcm / endToEndPath[i].period;
+        int instanceCount = lcm / endToEndPath[i].baseTask.period;
 
         // Generate each task instance based on offset and period
         for (int j = 0; j < instanceCount; j++) {
             PeriodicTaskInstance taskInstance(
-                endToEndPath[i],
-                endToEndPath[i].offset + endToEndPath[i].period * j);
+                endToEndPath[i].baseTask,
+                endToEndPath[i].offset + endToEndPath[i].baseTask.period * j);
 
             result[i].push_back(taskInstance);
         }

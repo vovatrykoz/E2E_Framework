@@ -48,7 +48,7 @@ public:
  * debugging, or task management.
  */
 struct NamedTask {
-    PeriodicTask task;  // The task object that contains task-specific data like
+    OffsetPeriodicTask task;  // The task object that contains task-specific data like
                         // period, latency, etc.
     std::string name;  // The name associated with the task.
 
@@ -60,7 +60,7 @@ struct NamedTask {
      * @param task The PeriodicTask object representing the task's properties.
      * @param name The name associated with the task.
      */
-    NamedTask(const PeriodicTask& task, const std::string& name)
+    NamedTask(OffsetPeriodicTask task, const std::string& name)
         : task(task), name(name) {}
 };
 

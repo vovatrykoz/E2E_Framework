@@ -62,7 +62,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    std::vector<PeriodicTask> taskChain;
+    std::vector<OffsetPeriodicTask> taskChain;
     taskChain.reserve(namedTasks.size());
     for (const auto& namedTask : namedTasks) {
         taskChain.push_back(namedTask.task);

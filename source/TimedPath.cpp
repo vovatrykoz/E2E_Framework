@@ -17,13 +17,12 @@ int TimedPath::endToEndDelay() const {
         return 0;
     }
 
-    const std::size_t size = this->tasks.size();
-    if (size == 1) {
-        return this->tasks[0].baseTask.wcrt;
+    if (this->tasks.size() == 1) {
+        return this->tasks.front().baseTask.wcrt;
     }
 
-    const PeriodicTaskInstance& lastTaskInstance = this->tasks[size - 1];
-    const PeriodicTaskInstance& firstTaskInstance = this->tasks[0];
+    const PeriodicTaskInstance& lastTaskInstance = this->tasks.back();
+    const PeriodicTaskInstance& firstTaskInstance = this->tasks.front();
 
     return lastTaskInstance.activationTime + lastTaskInstance.baseTask.wcrt -
            firstTaskInstance.activationTime;

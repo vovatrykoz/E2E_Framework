@@ -26,8 +26,8 @@ namespace mathframework {
  * writer).
  * @return false if activation time travel does not occur.
  */
-bool att(const PeriodicTaskInstance& writerTaskInstance,
-         const PeriodicTaskInstance& readerTaskInstance);
+bool att(PeriodicTaskInstance writerTaskInstance,
+         PeriodicTaskInstance readerTaskInstance);
 
 /**
  * @brief Determines if the writer and reader tasks overlap in execution.
@@ -41,8 +41,8 @@ bool att(const PeriodicTaskInstance& writerTaskInstance,
  * @return true if there is an overlap in execution between writer and reader.
  * @return false if there is no overlap in execution.
  */
-bool crit(const PeriodicTaskInstance& writerTaskInstance,
-          const PeriodicTaskInstance& readerTaskInstance);
+bool crit(PeriodicTaskInstance writerTaskInstance,
+          PeriodicTaskInstance readerTaskInstance);
 
 /**
  * @brief Determines if the reader task must wait due to the writer's priority.
@@ -57,7 +57,7 @@ bool crit(const PeriodicTaskInstance& writerTaskInstance,
  * priority.
  * @return false if the reader does not need to wait for the writer.
  */
-bool wait(const PeriodicTask& writerTask, const PeriodicTask& readerTask);
+bool wait(PeriodicTask writerTask, PeriodicTask readerTask);
 
 /**
  * @brief Determines the forward reachability between two task instances.
@@ -73,8 +73,8 @@ bool wait(const PeriodicTask& writerTask, const PeriodicTask& readerTask);
  * @return true if forward reachability conditions are met.
  * @return false if forward reachability conditions are not met.
  */
-bool forw(const PeriodicTaskInstance& writerTaskInstance,
-          const PeriodicTaskInstance& readerTaskInstance);
+bool forw(PeriodicTaskInstance writerTaskInstance,
+          PeriodicTaskInstance readerTaskInstance);
 
 /**
  * @brief Checks if a writer task instance can reach a reader task instance,
@@ -95,9 +95,9 @@ bool forw(const PeriodicTaskInstance& writerTaskInstance,
  * @return false if it cannot reach the reader task instance, indicating an
  * overwrite.
  */
-bool reach(const PeriodicTaskInstance& currentWriterTaskInstance,
-           const PeriodicTaskInstance& readerTaskInstance,
-           const PeriodicTaskInstance& nextWriterTaskInstance);
+bool reach(PeriodicTaskInstance currentWriterTaskInstance,
+           PeriodicTaskInstance readerTaskInstance,
+           PeriodicTaskInstance nextWriterTaskInstance);
 
 /**
  * @brief Determines reachability for an entire timed path of task instances.

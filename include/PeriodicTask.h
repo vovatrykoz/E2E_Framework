@@ -21,8 +21,6 @@ struct PeriodicTask {
     int wcrt;      // The worst-case response time (in time units).
     int priority;  // The priority of the task (higher value means higher
                    // priority).
-    int offset =
-        0;  // The offset (initial delay before task execution), default is 0.
 
     /**
      * @brief Constructs a PeriodicTask with a specified period, WCRT, and
@@ -35,29 +33,59 @@ struct PeriodicTask {
         : period(period), wcrt(wcrt), priority(priority) {}
 
     /**
-     * @brief Constructs a PeriodicTask with a specified period, WCRT, priority,
-     * and offset.
-     * @param period The period of the task.
-     * @param wcrt The worst-case response time of the task.
-     * @param priority The priority of the task.
-     * @param offset The offset (initial delay) for the task.
-     */
-    PeriodicTask(int period, int wcrt, int priority, int offset)
-        : period(period), wcrt(wcrt), priority(priority), offset(offset) {}
-
-    /**
      * @brief Equality operator for comparing two PeriodicTask objects.
      * @param other The task to compare with.
      * @return True if the tasks are equal, false otherwise.
      */
-    bool operator==(const PeriodicTask& other) const;
+    bool operator==(PeriodicTask other) const;
 
     /**
      * @brief Inequality operator for comparing two PeriodicTask objects.
      * @param other The task to compare with.
      * @return True if the tasks are not equal, false otherwise.
      */
-    bool operator!=(const PeriodicTask& other) const;
+    bool operator!=(PeriodicTask other) const;
+};
+
+struct OffsetPeriodicTask {
+    PeriodicTask baseTask;
+    int offset =
+        0;  // The offset (initial delay before task execution), default is 0.
+
+    /**
+     * @brief Constructs a PeriodicTask with a specified period, WCRT, and
+     * priority.
+     * @param period The period of the task.
+     * @param wcrt The worst-case response time of the task.
+     * @param priority The priority of the task.
+     */
+    OffsetPeriodicTask(int period, int wcrt, int priority)
+        : baseTask(period, wcrt, priority) {}
+
+    /**
+     * @brief Constructs an OffsetPeriodicTask with a specified period, WCRT,
+     * priority, and offset.
+     * @param period The period of the task.
+     * @param wcrt The worst-case response time of the task.
+     * @param priority The priority of the task.
+     * @param offset The offset (initial delay) for the task.
+     */
+    OffsetPeriodicTask(int period, int wcrt, int priority, int offset)
+        : baseTask(period, wcrt, priority), offset(offset) {}
+
+    /**
+     * @brief Equality operator for comparing two OffsetPeriodicTask objects.
+     * @param other The task to compare with.
+     * @return True if the tasks are equal, false otherwise.
+     */
+    bool operator==(OffsetPeriodicTask other) const;
+
+    /**
+     * @brief Inequality operator for comparing two OffsetPeriodicTask objects.
+     * @param other The task to compare with.
+     * @return True if the tasks are not equal, false otherwise.
+     */
+    bool operator!=(OffsetPeriodicTask other) const;
 };
 
 /**
@@ -98,7 +126,7 @@ struct PeriodicTaskInstance {
      * @param other The task instance to compare with.
      * @return True if the task instances are equal, false otherwise.
      */
-    bool operator==(const PeriodicTaskInstance& other) const;
+    bool operator==(PeriodicTaskInstance other) const;
 
     /**
      * @brief Inequality operator for comparing two PeriodicTaskInstance
@@ -106,26 +134,32 @@ struct PeriodicTaskInstance {
      * @param other The task instance to compare with.
      * @return True if the task instances are not equal, false otherwise.
      */
-    bool operator!=(const PeriodicTaskInstance& other) const;
+    bool operator!=(PeriodicTaskInstance other) const;
 };
 
-inline bool PeriodicTask::operator==(const PeriodicTask& other) const {
+inline bool PeriodicTask::operator==(PeriodicTask other) const {
     return this->period == other.period && this->wcrt == other.wcrt &&
            this->priority == other.priority;
 }
 
-inline bool PeriodicTask::operator!=(const PeriodicTask& other) const {
+inline bool PeriodicTask::operator!=(PeriodicTask other) const {
     return !(*this == other);
 }
 
-inline bool PeriodicTaskInstance::operator==(
-    const PeriodicTaskInstance& other) const {
+inline bool PeriodicTaskInstance::operator==(PeriodicTaskInstance other) const {
     return this->baseTask == other.baseTask &&
            this->activationTime == other.activationTime;
 }
 
-inline bool PeriodicTaskInstance::operator!=(
-    const PeriodicTaskInstance& other) const {
+inline bool PeriodicTaskInstance::operator!=(PeriodicTaskInstance other) const {
+    return !(*this == other);
+}
+
+inline bool OffsetPeriodicTask::operator==(OffsetPeriodicTask other) const {
+    return this->baseTask == other.baseTask && this->offset == other.offset;
+}
+
+inline bool OffsetPeriodicTask::operator!=(OffsetPeriodicTask other) const {
     return !(*this == other);
 }
 
