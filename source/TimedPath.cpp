@@ -33,7 +33,7 @@ int TimedPath::firstTaskActivationTime() const {
         return 0;
     }
 
-    return this->tasks[0].activationTime;
+    return this->tasks.front().activationTime;
 }
 
 int TimedPath::lastTaskActivationTime() const {
@@ -41,8 +41,7 @@ int TimedPath::lastTaskActivationTime() const {
         return 0;
     }
 
-    const std::size_t lastElementIndex = this->tasks.size() - 1;
-    return this->tasks[lastElementIndex].activationTime;
+    return this->tasks.back().activationTime;
 }
 
 bool TimedPath::succeeds(const TimedPath& other) const {
