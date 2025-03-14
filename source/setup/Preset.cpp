@@ -28,9 +28,11 @@ std::unique_ptr<ITaskReader> e2e::setup::preset::makeDefaultTaskReader() {
 }
 
 std::unique_ptr<ILogger> e2e::setup::preset::makeDefaultLogger() {
+    std::cout << "Logger type: console" << std::endl;
     return factory::makeLogger<ConsoleLogger>();
 }
 
 std::unique_ptr<ILogger> e2e::setup::preset::makeDefaultSimplifiedLogger() {
+    std::cout << "Logger type: console" << std::endl;
     return factory::makeLogger<SimplifiedConsoleLogger>();
 }
