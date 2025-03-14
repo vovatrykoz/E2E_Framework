@@ -106,7 +106,7 @@ int main(int argc, char* argv[]) {
 
     // get a set for Last-To-First semantics analysis
     const std::multiset<TimedPath> validPathSet_LF =
-        analysis::removePathsProducingDublicateValues(validPathSet_LL);
+        analysis::removePathsProducingDuplicateValues(validPathSet_LL);
 
     // perform end-to-end analysis using Last-To-First semantics
     const std::optional<TimedPath> maximumLatencyPath_LF =

@@ -38,7 +38,7 @@ std::multiset<TimedPath> removeUnreachablePaths(
  * @return A new multiset of TimedPath objects that do not produce duplicate
  * values.
  */
-std::multiset<TimedPath> removePathsProducingDublicateValues(
+std::multiset<TimedPath> removePathsProducingDuplicateValues(
     const std::multiset<TimedPath>& pathSet);
 
 /**

@@ -23,7 +23,7 @@ std::multiset<TimedPath> analysis::removeUnreachablePaths(
 // Iterate through all paths and check if they produce duplicate values due to
 // identical start time. A path is considered duplicate if it finishes later
 // than another path with the same start time.
-std::multiset<TimedPath> analysis::removePathsProducingDublicateValues(
+std::multiset<TimedPath> analysis::removePathsProducingDuplicateValues(
     const std::multiset<TimedPath>& pathSet) {
     std::multiset<TimedPath> output;
 
