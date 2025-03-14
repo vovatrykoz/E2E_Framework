@@ -102,8 +102,8 @@ int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
 // the current path starts.
 std::optional<TimedPath> analysis::findPredecessor(
     const TimedPath& path, const std::multiset<TimedPath>& pathSet) {
-    auto predecessorIt = std::find_if(
-        pathSet.begin(), pathSet.end(), [path](const TimedPath& otherPath) {
+    const auto predecessorIt = std::find_if(
+        pathSet.begin(), pathSet.end(), [&path](const TimedPath& otherPath) {
             return path != otherPath && path.succeeds(otherPath);
         });
 
