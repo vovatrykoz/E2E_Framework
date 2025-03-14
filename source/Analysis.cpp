@@ -81,7 +81,7 @@ int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
     int maxDelay = 0;
 
     for (const auto& currentPath : pathSet) {
-        std::optional<TimedPath> predecessor =
+        const std::optional<TimedPath> predecessor =
             findPredecessor(currentPath, pathSet);
 
         int delayAdjustment = 0;
