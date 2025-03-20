@@ -12,6 +12,7 @@ bool mathframework::att(PeriodicTaskInstance writerTaskInstance,
 
     return false;
 }
+
 // Check if the reader task overlaps with the writer task, considering the
 // writer's worst-case response time (wcrt).
 bool mathframework::crit(PeriodicTaskInstance writerTaskInstance,

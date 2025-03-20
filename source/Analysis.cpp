@@ -35,11 +35,11 @@ std::multiset<TimedPath> analysis::removePathsProducingDuplicateValues(
                 continue;
             }
 
-            bool pathInstancesHaveSameStart =
+            const bool pathInstancesHaveSameStart =
                 (currentPath.firstTaskActivationTime() ==
                  otherPath.firstTaskActivationTime());
 
-            bool currentInstanceFinishesLaterThanOther =
+            const bool currentInstanceFinishesLaterThanOther =
                 (otherPath.lastTaskActivationTime() <
                  currentPath.lastTaskActivationTime());
 
@@ -84,13 +84,17 @@ int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
         const std::optional<TimedPath> predecessor =
             findPredecessor(currentPath, pathSet);
 
-        int delayAdjustment = 0;
-        if (predecessor.has_value()) {
-            delayAdjustment = currentPath.firstTaskActivationTime() -
-                              predecessor->firstTaskActivationTime();
-        }
+        const int delayAdjustment = [&predecessor, &currentPath]() {
+            if (predecessor.has_value()) {
+                return currentPath.firstTaskActivationTime() -
+                       predecessor->firstTaskActivationTime();
+            }
 
-        int firstToLastDelay = currentPath.endToEndDelay() + delayAdjustment;
+            return 0;
+        }();
+
+        const int firstToLastDelay =
+            currentPath.endToEndDelay() + delayAdjustment;
 
         maxDelay = std::max(maxDelay, firstToLastDelay);
     }
