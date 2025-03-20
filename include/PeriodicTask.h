@@ -98,8 +98,8 @@ struct OffsetPeriodicTask {
  * at a specific point in time.
  */
 struct PeriodicTaskInstance {
-    const PeriodicTask baseTask;  // The base task, which contains the task's
-                                  // period, WCRT, priority, and offset.
+    PeriodicTask baseTask;  // The base task, which contains the task's
+                            // period, WCRT, priority, and offset.
     int activationTime;  // The time at which this task instance is activated.
 
     /**
