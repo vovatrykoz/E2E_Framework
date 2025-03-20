@@ -67,6 +67,9 @@ template <typename TaskReaderType, typename... Args>
 std::unique_ptr<ITaskReader> makeTaskReader(Args... args)
     requires std::is_base_of_v<ITaskReader, TaskReaderType>;
 
+// INLINE FUNCTION DEFINITIONS BELOW
+// ---------------------------------------------
+
 template <typename LoggerType, typename... Args>
 inline std::unique_ptr<ILogger> makeLogger(Args... args)
     requires std::is_base_of_v<ILogger, LoggerType>
