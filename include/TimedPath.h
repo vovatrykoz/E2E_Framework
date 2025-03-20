@@ -16,7 +16,7 @@ namespace e2e {
  * delay, and retrieve the sequence in different forms.
  */
 class TimedPath {
-public:
+   public:
     /**
      * @brief Default constructor for TimedPath.
      *
@@ -86,7 +86,8 @@ public:
     void appendTaskInstance(const PeriodicTaskInstance& taskInstance);
 
     /**
-     * @brief Removes the last task instance from the timed path.
+     * @brief Removes the last task instance from the timed path. Popping from
+     * an empty TimedPath is a harmless no-op
      */
     void popTaskInstance();
 
@@ -189,7 +190,7 @@ public:
      */
     bool operator!=(const TimedPath& other) const;
 
-private:
+   private:
     /**
      * Stores the sequence of task instances in the path.
      */
