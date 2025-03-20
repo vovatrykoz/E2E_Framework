@@ -6,8 +6,8 @@ This framework implements the mathematical framework presented in "A Composition
 
 The code is split into the include folder containing all the headers and the source folder containing the code that implements the functions defined in the headers. There are several components in there
 
-### io/
-The include/io/ and source/io/ subfolders contain implementation and definitions for code that is responsible for taking in user input and logging the analysis results. Right now, two ways for reading and writing are supported: console-based and text-based. 
+### executable/
+The source/executable/ subfolder contains the code that is used to build the 2 main executables: 1 executable for analyzing individual task instance sequences (individualPathAnalyzer) and 1 executable for a more high-level analysis using tasks with certain parameters (taskAnalyzer). In the case of taskAnalyzer, it will try to generate individual task instances based on the task parameters and will perform the same kind of E2E analysis that the individualPathAnalyzer would apply to a pre-defined task instance sequence. With the se Right now, two ways for reading and writing are supported: console-based and text-based. 
 
 #### individualPathAnalyzer
 
