@@ -6,7 +6,7 @@
 using namespace e2e;
 using namespace e2e::io;
 
-e2e::io::PlainTextTaskReader::PlainTextTaskReader(const std::string& filePath)
+PlainTextTaskReader::PlainTextTaskReader(const std::string& filePath)
     : filePath(filePath) {}
 
 std::vector<NamedTask> PlainTextTaskReader::readTaskChain() const {
@@ -24,11 +24,11 @@ std::vector<NamedTask> PlainTextTaskReader::readTaskChain() const {
     NamedTask namedTask(OffsetPeriodicTask(0, 0, 0, 0), "");
 
     while (std::getline(file, line)) {
-        size_t startStringPos = line.find(this->startStr);
+        const size_t startStringPos = line.find(this->startStr);
         if (startStringPos != std::string::npos) {
             isOnTask = true;
-            size_t namePos = startStringPos + 6;
-            std::string name = line.substr(namePos);
+            const size_t namePos = startStringPos + 6;
+            const std::string name = line.substr(namePos);
             namedTask.name = name;
             continue;
         }
@@ -39,7 +39,7 @@ std::vector<NamedTask> PlainTextTaskReader::readTaskChain() const {
         }
 
         if (isOnTask) {
-            OffsetPeriodicTask task = this->parseTask(line);
+            const OffsetPeriodicTask task = this->parseTask(line);
             namedTask.task = task;
         }
     }
@@ -47,7 +47,8 @@ std::vector<NamedTask> PlainTextTaskReader::readTaskChain() const {
     return output;
 }
 
-OffsetPeriodicTask PlainTextTaskReader::parseTask(const std::string& taskStr) const {
+OffsetPeriodicTask PlainTextTaskReader::parseTask(
+    const std::string& taskStr) const {
     std::vector<std::string> taskParams;
     std::stringstream ss(taskStr);
 
@@ -62,10 +63,10 @@ OffsetPeriodicTask PlainTextTaskReader::parseTask(const std::string& taskStr) co
     }
 
     try {
-        int period = std::stoi(taskParams[0]);
-        int wcrt = std::stoi(taskParams[1]);
-        int priority = std::stoi(taskParams[2]);
-        int offset = std::stoi(taskParams[3]);
+        const int period = std::stoi(taskParams[0]);
+        const int wcrt = std::stoi(taskParams[1]);
+        const int priority = std::stoi(taskParams[2]);
+        const int offset = std::stoi(taskParams[3]);
 
         return OffsetPeriodicTask(period, wcrt, priority, offset);
     } catch (...) {

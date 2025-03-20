@@ -11,7 +11,7 @@ std::vector<NamedTask> ConsoleTaskReader::readTaskChain() const {
     const int numOfChains = readInt("How many tasks should be in the system: ");
 
     for (int i = 0; i < numOfChains; i++) {
-        NamedTask task = this->readTask();
+        const NamedTask task = this->readTask();
         result.push_back(task);
 
         std::cout << std::endl;
@@ -48,10 +48,10 @@ NamedTask ConsoleTaskReader::readTask() const {
     std::cout << "Enter task name: ";
     std::cin >> name;
 
-    int period = readInt("Enter task period: ");
-    int wcrt = readInt("Enter worst case response time for the task: ");
-    int priority = readInt("Enter task priority: ");
-    int offset = readInt("Enter task offset: ");
+    const int period = readInt("Enter task period: ");
+    const int wcrt = readInt("Enter worst case response time for the task: ");
+    const int priority = readInt("Enter task priority: ");
+    const int offset = readInt("Enter task offset: ");
 
     return NamedTask(OffsetPeriodicTask(period, wcrt, priority, offset), name);
 }

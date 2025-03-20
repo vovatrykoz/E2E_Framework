@@ -1,7 +1,7 @@
-#include "io/reader/PlainTextTaskInstanceReader.h"
-
 #include <fstream>
 #include <sstream>
+
+#include "io/reader/PlainTextTaskInstanceReader.h"
 
 using namespace e2e;
 using namespace e2e::io;
@@ -25,11 +25,11 @@ std::multiset<TimedPath> PlainTextTaskInstanceReader::readPathsSet() const {
     TimedPath path;
 
     while (std::getline(file, line)) {
-        size_t startStringPos = line.find(this->startStr);
+        const size_t startStringPos = line.find(this->startStr);
         if (startStringPos != std::string::npos) {
             isOnTaskChain = true;
-            size_t namePos = startStringPos + 6;
-            std::string name = line.substr(namePos);
+            const size_t namePos = startStringPos + 6;
+            const std::string name = line.substr(namePos);
             path = TimedPath(name);
             continue;
         }
@@ -40,7 +40,8 @@ std::multiset<TimedPath> PlainTextTaskInstanceReader::readPathsSet() const {
         }
 
         if (isOnTaskChain) {
-            PeriodicTaskInstance taskInstance = this->parseTaskInstance(line);
+            const PeriodicTaskInstance taskInstance =
+                this->parseTaskInstance(line);
             path.appendTaskInstance(taskInstance);
         }
     }
@@ -64,10 +65,10 @@ PeriodicTaskInstance PlainTextTaskInstanceReader::parseTaskInstance(
     }
 
     try {
-        int period = std::stoi(taskInstanceParams[0]);
-        int wcrt = std::stoi(taskInstanceParams[1]);
-        int priority = std::stoi(taskInstanceParams[2]);
-        int activaionTime = std::stoi(taskInstanceParams[3]);
+        const int period = std::stoi(taskInstanceParams[0]);
+        const int wcrt = std::stoi(taskInstanceParams[1]);
+        const int priority = std::stoi(taskInstanceParams[2]);
+        const int activaionTime = std::stoi(taskInstanceParams[3]);
 
         return PeriodicTaskInstance(PeriodicTask(period, wcrt, priority),
                                     activaionTime);

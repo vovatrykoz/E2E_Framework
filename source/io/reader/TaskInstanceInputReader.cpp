@@ -47,11 +47,12 @@ int ConsoleTaskInstanceReader::readInt(const std::string& message) const {
 }
 
 PeriodicTaskInstance ConsoleTaskInstanceReader::readTaskInstance() const {
-    const int period = readInt("Enter task period: ");
-    const int wcrt = readInt("Enter worst case response time for the task: ");
-    const int priority = readInt("Enter task priority: ");
+    const int period = this->readInt("Enter task period: ");
+    const int wcrt =
+        this->readInt("Enter worst case response time for the task: ");
+    const int priority = this->readInt("Enter task priority: ");
     const int activationTime =
-        readInt("Enter task activation time or offset: ");
+        this->readInt("Enter task activation time or offset: ");
 
     return PeriodicTaskInstance(PeriodicTask(period, wcrt, priority),
                                 activationTime);
@@ -65,7 +66,7 @@ TimedPath ConsoleTaskInstanceReader::readTimedPath(
 
     for (int i = 0; i < numOfTasks; i++) {
         std::cout << "Reading Task " << i + 1 << std::endl;
-        PeriodicTaskInstance taskInstance = readTaskInstance();
+        const PeriodicTaskInstance taskInstance = this->readTaskInstance();
         timedPath.appendTaskInstance(taskInstance);
         std::cout << std::endl;
     }
