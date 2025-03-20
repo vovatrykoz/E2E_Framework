@@ -16,9 +16,9 @@ namespace mathframework {
 /**
  * @brief Checks if "activation time travel" occurs between two tasks.
  *
- * The following boolean function att returns true if “activation
+ * "The following boolean function att returns true if “activation
  * time travel” occurs (i.e. when the reader is activated
- * before the writer), and false if it doesn’t
+ * before the writer), and false if it doesn’t" Feiertag et al. page 5
  *
  * @param writerTask The task instance representing the writer task.
  * @param readerTask The task instance representing the reader task.
@@ -32,12 +32,12 @@ bool att(PeriodicTaskInstance writerTaskInstance,
 /**
  * @brief Determines if the writer and reader tasks overlap in execution.
  *
- * The more important “critical function” crit determines if
+ * "The more important “critical function” crit determines if
  * (even in case of non-activation time travel) writer and reader
- * overlap in execution:
+ * overlap in execution" Feiertag et al. page 5
  *
- * @param writerTask The task instance representing the writer.
- * @param readerTask The task instance representing the reader.
+ * @param writerTaskInstance The task instance representing the writer.
+ * @param readerTaskInstance The task instance representing the reader.
  * @return true if there is an overlap in execution between writer and reader.
  * @return false if there is no overlap in execution.
  */
@@ -47,9 +47,9 @@ bool crit(PeriodicTaskInstance writerTaskInstance,
 /**
  * @brief Determines if the reader task must wait due to the writer's priority.
  *
- * The waiting function wait determines if (in case of
- * overlapped but not time-traveling execution) the writer finishes
- * first, because the reader has to wait due to its priority
+ * "The waiting function wait determines if (in case of overlapped but not
+ * time-traveling execution) the writer finishes first, because the reader has
+ * to wait due to its priority" Feiertag et al. page 5
  *
  * @param writerTask The task representing the writer.
  * @param readerTask The task representing the reader.
@@ -62,14 +62,14 @@ bool wait(PeriodicTask writerTask, PeriodicTask readerTask);
 /**
  * @brief Determines the forward reachability between two task instances.
  *
- * Now, we can combine these to define a boolean function
+ * "Now, we can combine these to define a boolean function
  * forw determining the forward reachability of the two
  * instances. The instances must not time travel (Eqn. 3)
  * and additionally be either not critical (Eqn. 4) or wait
- * (Eqn. 5)
+ * (Eqn. 5)" Feiertag et al. page 5
  *
- * @param writerTask The task representing the writer.
- * @param readerTask The task representing the reader.
+ * @param writerTaskInstance The task representing the writer.
+ * @param readerTaskInstance The task representing the reader.
  * @return true if forward reachability conditions are met.
  * @return false if forward reachability conditions are not met.
  */
@@ -80,12 +80,12 @@ bool forw(PeriodicTaskInstance writerTaskInstance,
  * @brief Checks if a writer task instance can reach a reader task instance,
  * detecting potential overwrites.
  *
- * From this forward reachability, we can also detect overwrites.
- * The output of an instance tw(i) is overwritten by
- * instance tw(i + 1) when both instances can forward reach
- * the same reading task instance tr(j). In other words, tw(i)
- * can reach tr(j) if and only if the following function returns
- * true
+ * "From this forward reachability, we can also detect overwrites.
+ * The output of an instance `tw(i)` is overwritten by
+ * instance `tw(i + 1)` when both instances can forward reach
+ * the same reading task instance `tr(j)`. In other words, `tw(i)`
+ * can reach `tr(j)` if and only if the following function returns
+ * true" Feiertag et al. page 5
  *
  * @param currentWriterTaskInstance The current writer task instance, `tw(i)`.
  * @param readerTaskInstance The reader task instance, `tr(j)`.
@@ -102,10 +102,11 @@ bool reach(PeriodicTaskInstance currentWriterTaskInstance,
 /**
  * @brief Determines reachability for an entire timed path of task instances.
  *
- * From this reachability between two task instances, we
+ * "From this reachability between two task instances, we
  * can now define the reachability function for a whole timed
  * path. A timed path is reachable, if and only if every two
- * consecutive task instances within that path are reachable.
+ * consecutive task instances within that path are reachable." Feiertag et al.
+ * page 5
  *
  * @param timedPath A vector of task instances representing the timed path.
  * @return true if the entire timed path is reachable.
