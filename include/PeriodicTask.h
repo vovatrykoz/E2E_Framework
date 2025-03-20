@@ -17,10 +17,10 @@ namespace e2e {
  * execution).
  */
 struct PeriodicTask {
-    int period;    // The period of the task (in time units).
-    int wcrt;      // The worst-case response time (in time units).
-    int priority;  // The priority of the task (higher value means higher
-                   // priority).
+    int period;  // The period of the task (in time units).
+    int wcrt;    // The worst-case response time (in time units).
+    // The priority of the task (higher value means higher priority).
+    int priority;
 
     /**
      * @brief Constructs a PeriodicTask with a specified period, WCRT, and
@@ -48,9 +48,11 @@ struct PeriodicTask {
 };
 
 struct OffsetPeriodicTask {
+    // The base task, which contains the task's period, WCRT, and priority
     PeriodicTask baseTask;
-    int offset =
-        0;  // The offset (initial delay before task execution), default is 0.
+
+    // The offset (initial delay before task execution), default is 0.
+    int offset = 0;
 
     /**
      * @brief Constructs a PeriodicTask with a specified period, WCRT, and
@@ -72,6 +74,15 @@ struct OffsetPeriodicTask {
      */
     OffsetPeriodicTask(int period, int wcrt, int priority, int offset)
         : baseTask(period, wcrt, priority), offset(offset) {}
+
+    /**
+     * @brief Constructs an OffsetPeriodicTask with a base task and an
+     * offset
+     * @param baseTask The base task object representing the task.
+     * @param offset The offset (initial delay) for the task.
+     */
+    OffsetPeriodicTask(PeriodicTask baseTask, int offset)
+        : baseTask(baseTask), offset(offset) {}
 
     /**
      * @brief Equality operator for comparing two OffsetPeriodicTask objects.
@@ -98,9 +109,22 @@ struct OffsetPeriodicTask {
  * at a specific point in time.
  */
 struct PeriodicTaskInstance {
-    PeriodicTask baseTask;  // The base task, which contains the task's
-                            // period, WCRT, priority, and offset.
-    int activationTime;  // The time at which this task instance is activated.
+    // The base task, which contains the task's period, WCRT, and priority
+    PeriodicTask baseTask;
+
+    // The time at which this task instance is
+    // activated. Default value is at 0
+    int activationTime = 0;
+
+    /**
+     * @brief Constructs a PeriodicTask with a specified period, WCRT, and
+     * priority.
+     * @param period The period of the task.
+     * @param wcrt The worst-case response time of the task.
+     * @param priority The priority of the task.
+     */
+    PeriodicTaskInstance(int period, int wcrt, int priority)
+        : baseTask(period, wcrt, priority) {}
 
     /**
      * @brief Constructs a PeriodicTaskInstance with a base task and an
@@ -108,7 +132,7 @@ struct PeriodicTaskInstance {
      * @param baseTask The base task object representing the task.
      * @param activationTime The activation time of this task instance.
      */
-    PeriodicTaskInstance(const PeriodicTask& baseTask, int activationTime)
+    PeriodicTaskInstance(PeriodicTask baseTask, int activationTime)
         : baseTask(baseTask), activationTime(activationTime) {}
 
     /**
