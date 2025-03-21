@@ -114,7 +114,8 @@ bool reach(PeriodicTaskInstance currentWriterTaskInstance,
  * @return false if any two consecutive task instances in the path are not
  * reachable.
  */
-bool pathReach(const std::vector<PeriodicTaskInstance>& timedPath);
+bool pathReach(const std::vector<PeriodicTaskInstance>& timedPath)
+    __attribute__((pure));
 
 }  // namespace mathframework
 }  // namespace e2e
