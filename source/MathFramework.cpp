@@ -4,8 +4,8 @@ using namespace e2e;
 
 // Return true if the reader task is activated before the writer task
 // (activation time travel occurs).
-bool mathframework::att(const PeriodicTaskInstance& writerTaskInstance,
-                        const PeriodicTaskInstance& readerTaskInstance) {
+bool mathframework::att(PeriodicTaskInstance writerTaskInstance,
+                        PeriodicTaskInstance readerTaskInstance) {
     if (readerTaskInstance.activationTime < writerTaskInstance.activationTime) {
         return true;
     }
@@ -15,8 +15,8 @@ bool mathframework::att(const PeriodicTaskInstance& writerTaskInstance,
 
 // Check if the reader task overlaps with the writer task, considering the
 // writer's worst-case response time (wcrt).
-bool mathframework::crit(const PeriodicTaskInstance& writerTaskInstance,
-                         const PeriodicTaskInstance& readerTaskInstance) {
+bool mathframework::crit(PeriodicTaskInstance writerTaskInstance,
+                         PeriodicTaskInstance readerTaskInstance) {
     const int writerTaskTerminationTime =
         writerTaskInstance.activationTime + writerTaskInstance.baseTask.wcrt;
 
@@ -29,8 +29,7 @@ bool mathframework::crit(const PeriodicTaskInstance& writerTaskInstance,
 
 // Return true if the reader task must wait for the writer task to finish due to
 // the writer's higher priority.
-bool mathframework::wait(const PeriodicTask& writerTask,
-                         const PeriodicTask& readerTask) {
+bool mathframework::wait(PeriodicTask writerTask, PeriodicTask readerTask) {
     if (readerTask.priority < writerTask.priority) {
         return true;
     }
@@ -40,8 +39,8 @@ bool mathframework::wait(const PeriodicTask& writerTask,
 
 // Determine if the reader task can reach the writer task, based on activation
 // time travel, criticality, and priority.
-bool mathframework::forw(const PeriodicTaskInstance& writerTaskInstance,
-                         const PeriodicTaskInstance& readerTaskInstance) {
+bool mathframework::forw(PeriodicTaskInstance writerTaskInstance,
+                         PeriodicTaskInstance readerTaskInstance) {
     const bool instancesDoNotTimeTravel =
         !att(writerTaskInstance, readerTaskInstance);
     const bool instancesAreNonCritical =
@@ -59,9 +58,9 @@ bool mathframework::forw(const PeriodicTaskInstance& writerTaskInstance,
 
 // Check if a writer task instance can reach a reader task instance, detecting
 // potential overwrites based on forward reachability.
-bool mathframework::reach(const PeriodicTaskInstance& currentWriterTaskInstance,
-                          const PeriodicTaskInstance& readerTaskInstance,
-                          const PeriodicTaskInstance& nextWriterTaskInstance) {
+bool mathframework::reach(PeriodicTaskInstance currentWriterTaskInstance,
+                          PeriodicTaskInstance readerTaskInstance,
+                          PeriodicTaskInstance nextWriterTaskInstance) {
     const bool readerInstanceIsReachable =
         forw(currentWriterTaskInstance, readerTaskInstance);
     const bool nextWriterInstanceCannotReachReaderInstance =
