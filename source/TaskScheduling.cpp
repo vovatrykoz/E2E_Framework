@@ -33,7 +33,7 @@ scheduling::generateTaskInstancesFromPath(
     }
 
     std::vector<std::vector<PeriodicTaskInstance>> result(endToEndPath.size());
-    int lcm = scheduling::calculateLcmForEndToEndPath(endToEndPath);
+    const int lcm = scheduling::calculateLcmForEndToEndPath(endToEndPath);
 
     // Generate task instances for each task in the path
     for (int i = 0; i < endToEndPath.size(); i++) {
@@ -41,7 +41,7 @@ scheduling::generateTaskInstancesFromPath(
 
         // Generate each task instance based on offset and period
         for (int j = 0; j < instanceCount; j++) {
-            PeriodicTaskInstance taskInstance(
+            const PeriodicTaskInstance taskInstance(
                 endToEndPath[i].baseTask,
                 endToEndPath[i].offset + endToEndPath[i].baseTask.period * j);
 
@@ -64,7 +64,7 @@ std::multiset<TimedPath> scheduling::generateTimedPathsFromInstances(
     int counter = 1;
     // Insert each timed path into the multiset with a unique path ID
     for (const auto& instanceChain : timedPaths) {
-        std::string pathId = "#" + std::to_string(counter);
+        const std::string pathId = "#" + std::to_string(counter);
         result.insert(TimedPath(pathId, instanceChain));
         counter++;
     }
