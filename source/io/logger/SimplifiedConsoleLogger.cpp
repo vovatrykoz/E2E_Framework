@@ -4,6 +4,19 @@
 
 using namespace e2e::io;
 
+void SimplifiedConsoleLogger::logInfo(const std::string& infoMessage) const {
+    std::cout << "INFO: " << infoMessage << "\n";
+}
+
+void SimplifiedConsoleLogger::logWarning(
+    const std::string& warningMessage) const {
+    std::cout << "WARNING: " << warningMessage << "\n";
+}
+
+void SimplifiedConsoleLogger::logError(const std::string& errorMessage) const {
+    std::cout << "ERROR: " << errorMessage << "\n";
+}
+
 void SimplifiedConsoleLogger::logValidAndInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,

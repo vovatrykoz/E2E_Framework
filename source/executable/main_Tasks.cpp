@@ -70,37 +70,35 @@ int main(int argc, char* argv[]) {
 
     // given a set of tasks, we generate every possible task instance in the
     // set, as well as every possible timed path
-
-    std::cout << "Generating task instances" << "\n";
+    logger->logInfo("Generating task instances");
     std::vector<std::vector<PeriodicTaskInstance>> taskInstances;
     try {
         taskInstances = scheduling::generateTaskInstancesFromPath(taskChain);
     } catch (std::bad_alloc) {
-        std::cout << "The provided input resulted in too many task instances "
-                     "being generated. Review your task parameters to ensure "
-                     "a reasonable number of task instances can be generated"
-                  << "\n";
+        logger->logError(
+            "The provided input resulted in too many task instances "
+            "being generated. Review your task parameters to ensure "
+            "a reasonable number of task instances can be generated");
         return 0;
     }
 
-    std::cout << "Building all possible execution paths" << "\n";
+    logger->logInfo("Building all possible execution paths");
     std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths;
     try {
         allPossiblePaths = scheduling::buildTaskExecutionPaths(taskInstances);
     } catch (std::bad_alloc) {
-        std::cout
-            << "The provided input resulted in too many task exectution paths "
-               "being genereated. Review your task parameters to ensure "
-               "a reasonable number of task instances can be generated"
-            << "\n";
+        logger->logError(
+            "The provided input resulted in too many task exectution paths "
+            "being genereated. Review your task parameters to ensure "
+            "a reasonable number of task instances can be generated");
         return 0;
     }
 
-    std::cout << "Preparing the timed paths for the analysis" << "\n";
+    logger->logInfo("Preparing the timed paths for the analysis");
     const std::multiset<TimedPath> pathSet =
         scheduling::generateTimedPathsFromInstances(allPossiblePaths);
 
-    std::cout << "Performing end-to-end analysis with LL semantics" << "\n";
+    logger->logInfo("Performing end-to-end analysis with LL semantics");
     // perform the analysis
     const std::multiset<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
@@ -109,7 +107,7 @@ int main(int argc, char* argv[]) {
     const std::optional<TimedPath> maximumLatencyPath_LL =
         analysis::getPathWithMaximumLatency(validPathSet_LL);
 
-    std::cout << "Performing end-to-end analysis with LF semantics" << "\n";
+    logger->logInfo("Performing end-to-end analysis with LF semantics");
     // get a set for Last-To-First semantics analysis
     const std::multiset<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDuplicateValues(validPathSet_LL);
@@ -118,17 +116,17 @@ int main(int argc, char* argv[]) {
     const std::optional<TimedPath> maximumLatencyPath_LF =
         analysis::getPathWithMaximumLatency(validPathSet_LF);
 
-    std::cout << "Performing end-to-end analysis with FL semantics" << "\n";
+    logger->logInfo("Performing end-to-end analysis with FL semantics");
     // perform end-to-end analysis using First-To-Last semantics
     const int maxFirstToLastDelay =
         analysis::getOverarchingDelay(validPathSet_LL);
 
-    std::cout << "Performing end-to-end analysis with FF semantics" << "\n";
+    logger->logInfo("Performing end-to-end analysis with FF semantics");
     // perform end-to-end analysis using First-To-First semantics
     const int maxFirstToFirstDelay =
         analysis::getOverarchingDelay(validPathSet_LF);
 
-    std::cout << "Identifying invalid paths" << "\n";
+    logger->logInfo("Identifying invalid paths");
     // indentify which paths turned out to be invalid
     const std::multiset<TimedPath> invalidPathSet = [&validPathSet_LL,
                                                      &pathSet]() {

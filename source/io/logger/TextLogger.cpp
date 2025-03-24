@@ -8,6 +8,33 @@ using namespace e2e::io;
 PlainTextLogger::PlainTextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
+void PlainTextLogger::logInfo(const std::string& infoMessage) const {
+    std::stringstream output;
+    output << "INFO: " << infoMessage << "\n";
+
+    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
+
+    this->writeOutputToFile(output.str());
+}
+
+void PlainTextLogger::logWarning(const std::string& warningMessage) const {
+    std::stringstream output;
+    output << "WARNING: " << warningMessage << "\n";
+
+    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
+
+    this->writeOutputToFile(output.str());
+}
+
+void PlainTextLogger::logError(const std::string& errorMessage) const {
+    std::stringstream output;
+    output << "ERROR: " << errorMessage << "\n";
+
+    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
+
+    this->writeOutputToFile(output.str());
+}
+
 void PlainTextLogger::logValidAndInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,

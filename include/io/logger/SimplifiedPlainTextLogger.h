@@ -10,6 +10,12 @@ class SimplifiedPlainTextLogger : public ILogger {
    public:
     SimplifiedPlainTextLogger(const std::string& pathToOutputFile);
 
+    virtual void logInfo(const std::string& infoMessage) const override;
+
+    virtual void logWarning(const std::string& warningMessage) const override;
+
+    virtual void logError(const std::string& errorMessage) const override;
+
     virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
