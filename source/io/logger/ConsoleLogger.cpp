@@ -13,7 +13,7 @@ void ConsoleLogger::logWarning(const std::string& warningMessage) const {
 }
 
 void ConsoleLogger::logError(const std::string& errorMessage) const {
-    std::cout << "ERROR: " << errorMessage << "\n";
+    std::cerr << "ERROR: " << errorMessage << "\n";
 }
 
 void ConsoleLogger::logValidAndInvalidPaths(

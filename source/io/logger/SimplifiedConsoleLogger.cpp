@@ -14,7 +14,7 @@ void SimplifiedConsoleLogger::logWarning(
 }
 
 void SimplifiedConsoleLogger::logError(const std::string& errorMessage) const {
-    std::cout << "ERROR: " << errorMessage << "\n";
+    std::cerr << "ERROR: " << errorMessage << "\n";
 }
 
 void SimplifiedConsoleLogger::logValidAndInvalidPaths(
