@@ -9,36 +9,6 @@ using namespace e2e::io;
 PlainTextLogger::PlainTextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
-void PlainTextLogger::logInfo(const std::string& infoMessage) const {
-    std::stringstream output;
-    output << "(" << this->currentTime() << ") " << "INFO: " << infoMessage
-           << "\n";
-
-    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
-
-    this->writeOutputToFile(output.str());
-}
-
-void PlainTextLogger::logWarning(const std::string& warningMessage) const {
-    std::stringstream output;
-    output << "(" << this->currentTime() << ") "
-           << "WARNING: " << warningMessage << "\n";
-
-    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
-
-    this->writeOutputToFile(output.str());
-}
-
-void PlainTextLogger::logError(const std::string& errorMessage) const {
-    std::stringstream output;
-    output << "(" << this->currentTime() << ") " << "ERROR: " << errorMessage
-           << "\n";
-
-    std::ofstream outFile(this->pathToOutputFile, std::ios::app);
-
-    this->writeOutputToFile(output.str());
-}
-
 void PlainTextLogger::logValidAndInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,
@@ -154,15 +124,4 @@ void PlainTextLogger::writeOutputToFile(const std::string& output) const {
 
     outFile << output;
     outFile.close();
-}
-
-std::string PlainTextLogger::currentTime() {
-    auto now = std::chrono::system_clock::now();
-    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
-    std::tm local_tm = *std::localtime(&now_time_t);
-
-    std::ostringstream oss;
-    oss << std::put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
-
-    return oss.str();
 }

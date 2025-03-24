@@ -1,20 +1,14 @@
 #ifndef _PLAIN_TEXT_LOGGER_H_
 #define _PLAIN_TEXT_LOGGER_H_
 
-#include <io/logger/ILogger.h>
+#include <io/logger/IResultLogger.h>
 
 namespace e2e {
 namespace io {
 
-class PlainTextLogger : public ILogger {
+class PlainTextLogger : public IResultLogger {
    public:
     PlainTextLogger(const std::string& pathToOutputFile);
-
-    virtual void logInfo(const std::string& infoMessage) const override;
-
-    virtual void logWarning(const std::string& warningMessage) const override;
-
-    virtual void logError(const std::string& errorMessage) const override;
 
     virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
@@ -35,7 +29,6 @@ class PlainTextLogger : public ILogger {
     const std::string pathToOutputFile;
 
     void writeOutputToFile(const std::string& output) const;
-    static std::string currentTime();
 };
 
 }  // namespace io

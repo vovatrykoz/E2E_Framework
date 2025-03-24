@@ -27,12 +27,13 @@ std::unique_ptr<ITaskReader> e2e::setup::preset::makeDefaultTaskReader() {
     return factory::makeTaskReader<PlainTextTaskReader>(inputPath);
 }
 
-std::unique_ptr<ILogger> e2e::setup::preset::makeDefaultLogger() {
+std::unique_ptr<IResultLogger> e2e::setup::preset::makeDefaultLogger() {
     std::cout << "Logger type: console" << std::endl;
     return factory::makeLogger<ConsoleLogger>();
 }
 
-std::unique_ptr<ILogger> e2e::setup::preset::makeDefaultSimplifiedLogger() {
+std::unique_ptr<IResultLogger>
+e2e::setup::preset::makeDefaultSimplifiedLogger() {
     std::cout << "Logger type: console" << std::endl;
     return factory::makeLogger<SimplifiedConsoleLogger>();
 }

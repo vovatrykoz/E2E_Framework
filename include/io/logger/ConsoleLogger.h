@@ -1,19 +1,13 @@
 #ifndef _CONSOLE_LOGGER_H_
 #define _CONSOLE_LOGGER_H_
 
-#include <io/logger/ILogger.h>
+#include <io/logger/IResultLogger.h>
 
 namespace e2e {
 namespace io {
 
-class ConsoleLogger : public ILogger {
+class ConsoleLogger : public IResultLogger {
    public:
-    virtual void logInfo(const std::string& infoMessage) const override;
-
-    virtual void logWarning(const std::string& warningMessage) const override;
-
-    virtual void logError(const std::string& errorMessage) const override;
-
     virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
@@ -28,9 +22,6 @@ class ConsoleLogger : public ILogger {
     virtual void logResults_FL(int maxFirstToLastPathDelay) const override;
 
     virtual void logResults_FF(int maxFirstToFirstPathDelay) const override;
-
-   private:
-    static std::string currentTime();
 };
 
 }  // namespace io

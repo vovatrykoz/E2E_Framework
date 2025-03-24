@@ -15,7 +15,7 @@
 using namespace e2e;
 using namespace e2e::io;
 
-std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
+std::unique_ptr<IResultLogger> setup::logger(const std::string& loggerStr) {
     std::string lowercaseLoggerStr;
     std::transform(loggerStr.begin(), loggerStr.end(),
                    std::back_inserter(lowercaseLoggerStr),
@@ -37,7 +37,8 @@ std::unique_ptr<ILogger> setup::logger(const std::string& loggerStr) {
     return nullptr;
 }
 
-std::unique_ptr<ILogger> setup::simpleLogger(const std::string& loggerStr) {
+std::unique_ptr<IResultLogger> setup::simpleLogger(
+    const std::string& loggerStr) {
     std::string lowercaseLoggerStr;
     std::transform(loggerStr.begin(), loggerStr.end(),
                    std::back_inserter(lowercaseLoggerStr),
