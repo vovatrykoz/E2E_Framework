@@ -145,7 +145,8 @@ int main(int argc, char* argv[]) {
 
     // log results
     try {
-        logger->logValidInvalidPaths(pathSet, validPathSet_LL, invalidPathSet);
+        logger->logValidAndInvalidPaths(pathSet, validPathSet_LL,
+                                        invalidPathSet);
         logger->logResults_LL(maximumLatencyPath_LL);
         logger->logResults_LF(maximumLatencyPath_LF);
         logger->logResults_FL(maxFirstToLastDelay);

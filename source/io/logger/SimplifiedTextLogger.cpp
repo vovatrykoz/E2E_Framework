@@ -1,14 +1,15 @@
-#include "io/logger/SimplifiedPlainTextLogger.h"
-
 #include <fstream>
 #include <sstream>
 
+#include "io/logger/SimplifiedPlainTextLogger.h"
+
 using namespace e2e::io;
 
-SimplifiedPlainTextLogger::SimplifiedPlainTextLogger(const std::string& pathToOutputFile)
+SimplifiedPlainTextLogger::SimplifiedPlainTextLogger(
+    const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
-void SimplifiedPlainTextLogger::logValidInvalidPaths(
+void SimplifiedPlainTextLogger::logValidAndInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,
     const std::multiset<TimedPath>& invalidPathSet) const {
@@ -74,7 +75,8 @@ void SimplifiedPlainTextLogger::logResults_LF(
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedPlainTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
+void SimplifiedPlainTextLogger::logResults_FL(
+    int maxFirstToLastPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -87,7 +89,8 @@ void SimplifiedPlainTextLogger::logResults_FL(int maxFirstToLastPathDelay) const
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedPlainTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
+void SimplifiedPlainTextLogger::logResults_FF(
+    int maxFirstToFirstPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
@@ -100,7 +103,8 @@ void SimplifiedPlainTextLogger::logResults_FF(int maxFirstToFirstPathDelay) cons
     this->writeOutputToFile(output.str());
 }
 
-void SimplifiedPlainTextLogger::writeOutputToFile(const std::string& output) const {
+void SimplifiedPlainTextLogger::writeOutputToFile(
+    const std::string& output) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
 
     if (!outFile.is_open()) {

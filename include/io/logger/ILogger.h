@@ -18,7 +18,7 @@ namespace io {
  * handle different logging mechanisms (e.g., console logging, file logging).
  */
 class ILogger {
-public:
+   public:
     /**
      * @brief Logs the valid and invalid paths.
      *
@@ -30,7 +30,7 @@ public:
      * @param validPathSet A multiset containing valid timed paths.
      * @param invalidPathSet A multiset containing invalid timed paths.
      */
-    virtual void logValidInvalidPaths(
+    virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
         const std::multiset<TimedPath>& invalidPathSet) const = 0;

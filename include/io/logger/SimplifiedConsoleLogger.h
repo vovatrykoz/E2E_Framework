@@ -7,8 +7,8 @@ namespace e2e {
 namespace io {
 
 class SimplifiedConsoleLogger : public ILogger {
-public:
-    virtual void logValidInvalidPaths(
+   public:
+    virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
         const std::multiset<TimedPath>& invalidPathSet) const override;

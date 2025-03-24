@@ -1,14 +1,14 @@
-#include "io/logger/PlainTextLogger.h"
-
 #include <fstream>
 #include <sstream>
+
+#include "io/logger/PlainTextLogger.h"
 
 using namespace e2e::io;
 
 PlainTextLogger::PlainTextLogger(const std::string& pathToOutputFile)
     : pathToOutputFile(pathToOutputFile) {}
 
-void PlainTextLogger::logValidInvalidPaths(
+void PlainTextLogger::logValidAndInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,
     const std::multiset<TimedPath>& invalidPathSet) const {
