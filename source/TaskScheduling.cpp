@@ -41,7 +41,7 @@ scheduling::generateTaskInstancesFromPath(
 
         // Generate each task instance based on offset and period
         for (int j = 0; j < instanceCount; j++) {
-            PeriodicTaskInstance taskInstance(
+            const PeriodicTaskInstance taskInstance(
                 endToEndPath[i].baseTask,
                 endToEndPath[i].offset + endToEndPath[i].baseTask.period * j);
 
