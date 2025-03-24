@@ -75,7 +75,7 @@ void SimplifiedPlainTextLogger::logResults_LL(
     output << "- Last-to-Last semantics:" << std::endl;
 
     if (maximumLatencyPath.has_value()) {
-        output << "    Maximum latency over all reachable paths"
+        output << "    Maximum latency over all reachable paths: "
                << maximumLatencyPath->endToEndDelay() << std::endl;
     } else {
         output << "    Maximum latency over all reachable paths: 0 (are "
