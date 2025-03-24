@@ -53,12 +53,12 @@ int main(int argc, char* argv[]) {
     try {
         namedTasks = inputReader->readTaskChain();
     } catch (const std::exception& ex) {
-        std::cerr << "Failed to load tasks! " << ex.what() << "\n";
+        logger->logError("Failed to load tasks! " + std::string(ex.what()));
         return -1;
     } catch (...) {
-        std::cerr << "Unknown error has occured while reading the task chain! "
-                     "Please try again! "
-                  << "\n";
+        logger->logError(
+            "Unknown error has occured while reading the task chain! "
+            "Please try again!");
         return -1;
     }
 
