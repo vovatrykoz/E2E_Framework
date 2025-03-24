@@ -35,6 +35,7 @@ class SimplifiedPlainTextLogger : public ILogger {
     const std::string pathToOutputFile;
 
     void writeOutputToFile(const std::string& output) const;
+    static std::string currentTime();
 };
 
 }  // namespace io

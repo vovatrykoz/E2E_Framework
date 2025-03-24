@@ -1,19 +1,23 @@
 #include "io/logger/ConsoleLogger.h"
 
+#include <chrono>
 #include <iostream>
 
 using namespace e2e::io;
 
 void ConsoleLogger::logInfo(const std::string& infoMessage) const {
-    std::cout << "INFO: " << infoMessage << "\n";
+    std::cout << "(" << this->currentTime() << ") " << "INFO: " << infoMessage
+              << "\n";
 }
 
 void ConsoleLogger::logWarning(const std::string& warningMessage) const {
-    std::cout << "WARNING: " << warningMessage << "\n";
+    std::cout << "(" << this->currentTime() << ") "
+              << "WARNING: " << warningMessage << "\n";
 }
 
 void ConsoleLogger::logError(const std::string& errorMessage) const {
-    std::cerr << "ERROR: " << errorMessage << "\n";
+    std::cerr << "(" << this->currentTime() << ") " << "ERROR: " << errorMessage
+              << "\n";
 }
 
 void ConsoleLogger::logValidAndInvalidPaths(
@@ -96,4 +100,15 @@ void ConsoleLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     std::cout << "  Maximum path delay: " << maxFirstToFirstPathDelay
               << std::endl;
     std::cout << std::endl;
+}
+
+std::string ConsoleLogger::currentTime() {
+    auto now = std::chrono::system_clock::now();
+    std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
+    std::tm local_tm = *std::localtime(&now_time_t);
+
+    std::ostringstream oss;
+    oss << std::put_time(&local_tm, "%Y-%m-%d %H:%M:%S");
+
+    return oss.str();
 }

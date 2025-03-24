@@ -28,6 +28,9 @@ class SimplifiedConsoleLogger : public ILogger {
     virtual void logResults_FL(int maxFirstToLastPathDelay) const override;
 
     virtual void logResults_FF(int maxFirstToFirstPathDelay) const override;
+
+   private:
+    static std::string currentTime();
 };
 
 }  // namespace io
