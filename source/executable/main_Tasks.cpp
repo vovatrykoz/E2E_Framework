@@ -166,6 +166,8 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    systemLogger->logInfo("Exiting the application");
+
     return 0;
 }
 
