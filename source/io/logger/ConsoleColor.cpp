@@ -54,27 +54,27 @@ static constexpr const int winWhiteColor = 7;
 static constexpr const int winDefaultColor = 7;
 }  // namespace
 
-void console::setColorTo(ConsoleColor color) {
+void console::setColorTo(Color color) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
     switch (color) {
-        case ConsoleColor::Red:
+        case Color::Red:
             SetConsoleTextAttribute(hConsole, winRedColor);
             break;
 
-        case ConsoleColor::Yellow:
+        case Color::Yellow:
             SetConsoleTextAttribute(hConsole, winYellowColor);
             break;
 
-        case ConsoleColor::Green:
+        case Color::Green:
             SetConsoleTextAttribute(hConsole, winGreenColor);
             break;
 
-        case ConsoleColor::White:
+        case Color::White:
             SetConsoleTextAttribute(hConsole, winWhiteColor);
             break;
 
-        case ConsoleColor::Default:
+        case Color::Default:
             SetConsoleTextAttribute(hConsole, winDefaultColor);
             break;
 
