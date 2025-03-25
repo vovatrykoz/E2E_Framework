@@ -11,7 +11,7 @@
 using namespace e2e;
 using namespace e2e::io;
 
-void printUsageInfo();
+void logUsageInfo(ISystemLogger* systemLogger);
 
 int main(int argc, char* argv[]) {
     // prepare the reader and the logger
@@ -47,7 +47,7 @@ int main(int argc, char* argv[]) {
 
     if (resultLogger == nullptr || inputReader == nullptr) {
         systemLogger->logError("Setup incomplete, please try again");
-        printUsageInfo();
+        logUsageInfo(systemLogger.get());
         return -1;
     }
 
@@ -171,8 +171,9 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-void printUsageInfo() {
-    std::cout << "Usage: taskAnalyzer <reader_type> <logger_type>" << "\n";
-    std::cout << "Currently supported loggers: Console, Text" << "\n";
-    std::cout << "Currently supported readers: Console, Text" << "\n";
+void logUsageInfo(ISystemLogger* systemLogger) {
+    systemLogger->logMessage(
+        "Usage: taskAnalyzer <reader_type> <logger_type>\n");
+    systemLogger->logMessage("Currently supported loggers: Console, Text\n");
+    systemLogger->logMessage("Currently supported readers: Console, Text\n");
 }

@@ -14,6 +14,8 @@ class ConsoleSystemLogger : public ISystemLogger {
 
     virtual void logError(const std::string& errorMessage) const override;
 
+    virtual void logMessage(const std::string& message) const override;
+
    private:
     static std::string currentTime();
 };

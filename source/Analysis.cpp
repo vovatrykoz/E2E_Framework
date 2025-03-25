@@ -82,7 +82,7 @@ int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
 
     for (const auto& currentPath : pathSet) {
         const std::optional<TimedPath> predecessor =
-            findPredecessor(currentPath, pathSet);
+            analysis::findPredecessor(currentPath, pathSet);
 
         const int delayAdjustment = [&predecessor, &currentPath]() {
             if (predecessor.has_value()) {

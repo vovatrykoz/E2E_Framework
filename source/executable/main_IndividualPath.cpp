@@ -1,4 +1,5 @@
 #include <Analysis.h>
+#include <io/logger/ConsoleSystemLogger.h>
 #include <setup/Preset.h>
 #include <setup/Setup.h>
 
@@ -9,12 +10,14 @@
 using namespace e2e;
 using namespace e2e::io;
 
-void printUsageInfo();
+void logUsageInfo(ISystemLogger* systemLogger);
 
 int main(int argc, char* argv[]) {
     // prepare the reader and the logger
     std::unique_ptr<ITaskInstanceReader> inputReader = nullptr;
     std::unique_ptr<IResultLogger> logger = nullptr;
+    std::unique_ptr<ISystemLogger> systemLogger =
+        std::make_unique<ConsoleSystemLogger>();
 
     // setup
     switch (argc) {
@@ -37,13 +40,13 @@ int main(int argc, char* argv[]) {
             break;
 
         default:
-            std::cerr << "Too many parameters" << "\n";
+            systemLogger->logError("Too many parameters");
             break;
     }
 
     if (logger == nullptr || inputReader == nullptr) {
-        std::cerr << "Setup incomplete, please try again" << "\n";
-        printUsageInfo();
+        systemLogger->logError("Setup incomplete, please try again");
+        logUsageInfo(systemLogger.get());
         return -1;
     }
 
@@ -53,15 +56,17 @@ int main(int argc, char* argv[]) {
     try {
         pathSet = inputReader->readPathsSet();
     } catch (const std::exception& ex) {
-        std::cerr << "Failed to load timed paths! " << ex.what() << "\n";
-        return 0;
+        systemLogger->logError("Failed to load timed path! " +
+                               std::string(ex.what()));
+        return -1;
     } catch (...) {
-        std::cerr << "Unknown error has occured while reading the path set! "
-                     "Please try again! "
-                  << "\n";
-        return 0;
+        systemLogger->logError(
+            "Unknown error has occured while reading the path set! "
+            "Please try again!");
+        return -1;
     }
 
+    systemLogger->logInfo("Performing end-to-end analysis with LL semantics");
     // perform the analysis
     const std::multiset<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
@@ -70,6 +75,7 @@ int main(int argc, char* argv[]) {
     const std::optional<TimedPath> maximumLatencyPath_LL =
         analysis::getPathWithMaximumLatency(validPathSet_LL);
 
+    systemLogger->logInfo("Performing end-to-end analysis with LF semantics");
     // get a set for Last-To-First semantics analysis
     const std::multiset<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDuplicateValues(validPathSet_LL);
@@ -78,15 +84,18 @@ int main(int argc, char* argv[]) {
     const std::optional<TimedPath> maximumLatencyPath_LF =
         analysis::getPathWithMaximumLatency(validPathSet_LF);
 
+    systemLogger->logInfo("Performing end-to-end analysis with FL semantics");
     // perform end-to-end analysis using First-To-Last semantics
     const int maxFirstToLastDelay =
         analysis::getOverarchingDelay(validPathSet_LL);
 
+    systemLogger->logInfo("Performing end-to-end analysis with FF semantics");
     // perform end-to-end analysis using First-To-First semantics
     const int maxFirstToFirstDelay =
         analysis::getOverarchingDelay(validPathSet_LF);
 
-    // idenrify which paths turned out to be invalid
+    systemLogger->logInfo("Identifying invalid paths");
+    // identify which paths turned out to be invalid
     const std::multiset<TimedPath> invalidPathSet = [&validPathSet_LL,
                                                      &pathSet]() {
         std::multiset<TimedPath> invalidPathSet;
@@ -109,21 +118,24 @@ int main(int argc, char* argv[]) {
         logger->logResults_FL(maxFirstToLastDelay);
         logger->logResults_FF(maxFirstToFirstDelay);
     } catch (const std::exception& ex) {
-        std::cerr << "Failed to log results! " << ex.what() << "\n";
+        systemLogger->logError("Failed to log results! " +
+                               std::string(ex.what()));
         return 0;
     } catch (...) {
-        std::cerr << "Unknown error has occured while logging the results! "
-                     "Please try again! "
-                  << "\n";
+        systemLogger->logError(
+            "Unknown error has occured while logging the results! "
+            "Please try again!");
         return 0;
     }
+
+    systemLogger->logInfo("Exiting the application");
 
     return 0;
 }
 
-void printUsageInfo() {
-    std::cerr << "Usage: individualPathAnalyzer <reader_type> <logger_type>"
-              << "\n";
-    std::cerr << "Currently supported loggers: Console, Text" << "\n";
-    std::cerr << "Currently supported readers: Console, Text" << "\n";
+void logUsageInfo(ISystemLogger* systemLogger) {
+    systemLogger->logMessage(
+        "Usage: taskAnalyzer <reader_type> <logger_type>\n");
+    systemLogger->logMessage("Currently supported loggers: Console, Text\n");
+    systemLogger->logMessage("Currently supported readers: Console, Text\n");
 }

@@ -20,6 +20,11 @@ void ConsoleSystemLogger::logError(const std::string& errorMessage) const {
               << "\n";
 }
 
+void e2e::io::ConsoleSystemLogger::logMessage(
+    const std::string& message) const {
+    std::cout << message;
+}
+
 std::string ConsoleSystemLogger::currentTime() {
     auto now = std::chrono::system_clock::now();
     std::time_t now_time_t = std::chrono::system_clock::to_time_t(now);
