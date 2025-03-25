@@ -1,5 +1,6 @@
 #include <Analysis.h>
 #include <TaskScheduling.h>
+#include <io/logger/ConsoleColor.h>
 #include <io/logger/ConsoleSystemLogger.h>
 #include <setup/Preset.h>
 #include <setup/Setup.h>
@@ -17,8 +18,11 @@ int main(int argc, char* argv[]) {
     // prepare the reader and the logger
     std::unique_ptr<ITaskReader> inputReader = nullptr;
     std::unique_ptr<IResultLogger> resultLogger = nullptr;
+
+    const std::function<void(console::Color)>& consoleColorFunc =
+        console::setColorTo;
     std::unique_ptr<ISystemLogger> systemLogger =
-        std::make_unique<ConsoleSystemLogger>();
+        std::make_unique<ConsoleSystemLogger>(consoleColorFunc);
 
     // setup
     switch (argc) {

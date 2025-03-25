@@ -5,23 +5,46 @@
 
 using namespace e2e::io;
 
+ConsoleSystemLogger::ConsoleSystemLogger(
+    const std::function<void(console::Color)>& setConsoleTextColor)
+    : setConsoleTextColor(setConsoleTextColor) {}
+
 void ConsoleSystemLogger::logInfo(const std::string& infoMessage) const {
-    std::cout << "(" << this->currentTime() << ") " << "INFO: " << infoMessage
-              << "\n";
+    this->setConsoleTextColor(console::Color::White);
+    std::cout << "(" << this->currentTime() << ") ";
+
+    this->setConsoleTextColor(console::Color::Green);
+    std::cout << "INFO";
+
+    this->setConsoleTextColor(console::Color::White);
+    std::cout << ": " << infoMessage << "\n";
 }
 
 void ConsoleSystemLogger::logWarning(const std::string& warningMessage) const {
-    std::cout << "(" << this->currentTime() << ") "
-              << "WARNING: " << warningMessage << "\n";
+    this->setConsoleTextColor(console::Color::White);
+    std::cout << "(" << this->currentTime() << ") ";
+
+    this->setConsoleTextColor(console::Color::Yellow);
+    std::cout << "WARNING";
+
+    this->setConsoleTextColor(console::Color::White);
+    std::cout << ": " << warningMessage << "\n";
 }
 
 void ConsoleSystemLogger::logError(const std::string& errorMessage) const {
-    std::cerr << "(" << this->currentTime() << ") " << "ERROR: " << errorMessage
-              << "\n";
+    this->setConsoleTextColor(console::Color::White);
+    std::cout << "(" << this->currentTime() << ") ";
+
+    this->setConsoleTextColor(console::Color::Red);
+    std::cout << "ERROR";
+
+    this->setConsoleTextColor(console::Color::White);
+    std::cout << ": " << errorMessage << "\n";
 }
 
 void e2e::io::ConsoleSystemLogger::logMessage(
     const std::string& message) const {
+    this->setConsoleTextColor(console::Color::White);
     std::cout << message;
 }
 
