@@ -10,7 +10,7 @@
 using namespace e2e;
 using namespace e2e::io;
 
-void logUsageInfo(ISystemLogger* systemLogger);
+void logUsageInfo(const ISystemLogger* systemLogger);
 
 int main(int argc, char* argv[]) {
     // prepare the reader and the logger
@@ -136,7 +136,7 @@ int main(int argc, char* argv[]) {
     return 0;
 }
 
-void logUsageInfo(ISystemLogger* systemLogger) {
+void logUsageInfo(const ISystemLogger* systemLogger) {
     systemLogger->logMessage(
         "Usage: taskAnalyzer <reader_type> <logger_type>\n");
     systemLogger->logMessage("Currently supported loggers: Console, Text\n");
