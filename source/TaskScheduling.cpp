@@ -60,7 +60,7 @@ std::multiset<TimedPath> scheduling::generateTimedPathsFromInstances(
     int counter = 1;
     // Insert each timed path into the multiset with a unique path ID
     for (const auto& instanceChain : timedPaths) {
-        std::string pathId = "#" + std::to_string(counter);
+        const std::string pathId = "#" + std::to_string(counter);
         result.insert(TimedPath(pathId, instanceChain));
         counter++;
     }
