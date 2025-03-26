@@ -21,8 +21,8 @@ int TimedPath::endToEndDelay() const {
         return this->tasks.front().baseTask.wcrt;
     }
 
-    const PeriodicTaskInstance& lastTaskInstance = this->tasks.back();
-    const PeriodicTaskInstance& firstTaskInstance = this->tasks.front();
+    const PeriodicTaskInstance lastTaskInstance = this->tasks.back();
+    const PeriodicTaskInstance firstTaskInstance = this->tasks.front();
 
     return lastTaskInstance.activationTime + lastTaskInstance.baseTask.wcrt -
            firstTaskInstance.activationTime;

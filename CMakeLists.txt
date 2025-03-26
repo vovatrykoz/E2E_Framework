@@ -18,7 +18,9 @@ set(IO_READER_SOURCE_DIR ${CODE_SOURCE_DIR}/io/reader)
 add_library(
     e2e_io
 
+    ${IO_LOGGER_SOURCE_DIR}/ConsoleColor.cpp
     ${IO_LOGGER_SOURCE_DIR}/ConsoleLogger.cpp
+    ${IO_LOGGER_SOURCE_DIR}/ConsoleSystemLogger.cpp
     ${IO_LOGGER_SOURCE_DIR}/SimplifiedConsoleLogger.cpp
     ${IO_LOGGER_SOURCE_DIR}/TextLogger.cpp
     ${IO_LOGGER_SOURCE_DIR}/SimplifiedTextLogger.cpp

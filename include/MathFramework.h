@@ -26,6 +26,7 @@ namespace mathframework {
  * writer).
  * @return false if activation time travel does not occur.
  */
+[[gnu::pure]]
 bool att(const PeriodicTaskInstance& writerTaskInstance,
          const PeriodicTaskInstance& readerTaskInstance);
 
@@ -41,6 +42,7 @@ bool att(const PeriodicTaskInstance& writerTaskInstance,
  * @return true if there is an overlap in execution between writer and reader.
  * @return false if there is no overlap in execution.
  */
+[[gnu::pure]]
 bool crit(const PeriodicTaskInstance& writerTaskInstance,
           const PeriodicTaskInstance& readerTaskInstance);
 
@@ -57,6 +59,7 @@ bool crit(const PeriodicTaskInstance& writerTaskInstance,
  * priority.
  * @return false if the reader does not need to wait for the writer.
  */
+[[gnu::pure]]
 bool wait(const PeriodicTask& writerTask, const PeriodicTask& readerTask);
 
 /**
@@ -73,6 +76,7 @@ bool wait(const PeriodicTask& writerTask, const PeriodicTask& readerTask);
  * @return true if forward reachability conditions are met.
  * @return false if forward reachability conditions are not met.
  */
+[[gnu::pure]]
 bool forw(const PeriodicTaskInstance& writerTaskInstance,
           const PeriodicTaskInstance& readerTaskInstance);
 
@@ -95,6 +99,7 @@ bool forw(const PeriodicTaskInstance& writerTaskInstance,
  * @return false if it cannot reach the reader task instance, indicating an
  * overwrite.
  */
+[[gnu::pure]]
 bool reach(const PeriodicTaskInstance& currentWriterTaskInstance,
            const PeriodicTaskInstance& readerTaskInstance,
            const PeriodicTaskInstance& nextWriterTaskInstance);
@@ -113,6 +118,7 @@ bool reach(const PeriodicTaskInstance& currentWriterTaskInstance,
  * @return false if any two consecutive task instances in the path are not
  * reachable.
  */
+[[gnu::pure]]
 bool pathReach(const std::vector<PeriodicTaskInstance>& timedPath);
 
 }  // namespace mathframework

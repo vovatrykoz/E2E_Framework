@@ -1,5 +1,7 @@
 #include <Analysis.h>
 #include <TaskScheduling.h>
+#include <io/logger/ConsoleColor.h>
+#include <io/logger/ConsoleSystemLogger.h>
 #include <setup/Preset.h>
 #include <setup/Setup.h>
 
@@ -10,41 +12,48 @@
 using namespace e2e;
 using namespace e2e::io;
 
-void printUsageInfo();
+void logUsageInfo(const ISystemLogger* systemLogger);
 
 int main(int argc, char* argv[]) {
     // prepare the reader and the logger
     std::unique_ptr<ITaskReader> inputReader = nullptr;
-    std::unique_ptr<ILogger> logger = nullptr;
+    std::unique_ptr<IResultLogger> resultLogger = nullptr;
+
+    const std::function<void(console::Color)>&
+        functionForSettingConsoleTextColor = console::setColorTo;
+
+    const std::unique_ptr<ISystemLogger> systemLogger =
+        std::make_unique<ConsoleSystemLogger>(
+            functionForSettingConsoleTextColor);
 
     // setup
     switch (argc) {
         case 1:
             // use presets the user has not provided any input
             inputReader = setup::preset::makeDefaultTaskReader();
-            logger = setup::preset::makeDefaultSimplifiedLogger();
+            resultLogger = setup::preset::makeDefaultSimplifiedLogger();
             break;
 
         case 2:
             // if only one parameter is provided, we assume that to be a reader
             // default to presets for the logger
             inputReader = setup::taskReader(argv[1]);
-            logger = setup::preset::makeDefaultSimplifiedLogger();
+            resultLogger = setup::preset::makeDefaultSimplifiedLogger();
             break;
 
         case 3:
             inputReader = setup::taskReader(argv[1]);
-            logger = setup::simpleLogger(argv[2]);
+            resultLogger = setup::simpleLogger(argv[2]);
             break;
 
         default:
-            std::cerr << "Too many parameters" << "\n";
+            systemLogger->logError("Too many parameters");
             break;
     }
 
-    if (logger == nullptr || inputReader == nullptr) {
-        std::cerr << "Setup incomplete, please try again" << "\n";
-        printUsageInfo();
+    if (resultLogger == nullptr || inputReader == nullptr) {
+        systemLogger->logError("Setup incomplete, please try again");
+        logUsageInfo(systemLogger.get());
         return -1;
     }
 
@@ -53,12 +62,13 @@ int main(int argc, char* argv[]) {
     try {
         namedTasks = inputReader->readTaskChain();
     } catch (const std::exception& ex) {
-        std::cerr << "Failed to load tasks! " << ex.what() << "\n";
+        systemLogger->logError("Failed to load tasks! " +
+                               std::string(ex.what()));
         return -1;
     } catch (...) {
-        std::cerr << "Unknown error has occured while reading the task chain! "
-                     "Please try again! "
-                  << "\n";
+        systemLogger->logError(
+            "Unknown error has occured while reading the task chain! "
+            "Please try again!");
         return -1;
     }
 
@@ -70,32 +80,35 @@ int main(int argc, char* argv[]) {
 
     // given a set of tasks, we generate every possible task instance in the
     // set, as well as every possible timed path
+    systemLogger->logInfo("Generating task instances");
     std::vector<std::vector<PeriodicTaskInstance>> taskInstances;
     try {
         taskInstances = scheduling::generateTaskInstancesFromPath(taskChain);
     } catch (std::bad_alloc) {
-        std::cout << "The provided input resulted in too many task instances "
-                     "being generated. Review your task parameters to ensure "
-                     "a reasonable number of task instances can be generated"
-                  << "\n";
+        systemLogger->logError(
+            "The provided input resulted in too many task instances "
+            "being generated. Review your task parameters to ensure "
+            "a reasonable number of task instances can be generated");
         return 0;
     }
 
+    systemLogger->logInfo("Building all possible execution paths");
     std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths;
     try {
         allPossiblePaths = scheduling::buildTaskExecutionPaths(taskInstances);
     } catch (std::bad_alloc) {
-        std::cout
-            << "The provided input resulted in too many task exectution paths "
-               "being genereated. Review your task parameters to ensure "
-               "a reasonable number of task instances can be generated"
-            << "\n";
+        systemLogger->logError(
+            "The provided input resulted in too many task exectution paths "
+            "being genereated. Review your task parameters to ensure "
+            "a reasonable number of task instances can be generated");
         return 0;
     }
 
+    systemLogger->logInfo("Preparing the timed paths for the analysis");
     const std::multiset<TimedPath> pathSet =
         scheduling::generateTimedPathsFromInstances(allPossiblePaths);
 
+    systemLogger->logInfo("Performing end-to-end analysis with LL semantics");
     // perform the analysis
     const std::multiset<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
@@ -104,6 +117,7 @@ int main(int argc, char* argv[]) {
     const std::optional<TimedPath> maximumLatencyPath_LL =
         analysis::getPathWithMaximumLatency(validPathSet_LL);
 
+    systemLogger->logInfo("Performing end-to-end analysis with LF semantics");
     // get a set for Last-To-First semantics analysis
     const std::multiset<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDuplicateValues(validPathSet_LL);
@@ -112,14 +126,17 @@ int main(int argc, char* argv[]) {
     const std::optional<TimedPath> maximumLatencyPath_LF =
         analysis::getPathWithMaximumLatency(validPathSet_LF);
 
+    systemLogger->logInfo("Performing end-to-end analysis with FL semantics");
     // perform end-to-end analysis using First-To-Last semantics
     const int maxFirstToLastDelay =
         analysis::getOverarchingDelay(validPathSet_LL);
 
+    systemLogger->logInfo("Performing end-to-end analysis with FF semantics");
     // perform end-to-end analysis using First-To-First semantics
     const int maxFirstToFirstDelay =
         analysis::getOverarchingDelay(validPathSet_LF);
 
+    systemLogger->logInfo("Identifying invalid paths");
     // indentify which paths turned out to be invalid
     const std::multiset<TimedPath> invalidPathSet = [&validPathSet_LL,
                                                      &pathSet]() {
@@ -134,28 +151,35 @@ int main(int argc, char* argv[]) {
         return invalidPathSet;
     }();
 
+    systemLogger->logInfo("Analysis done!");
+
     // log results
     try {
-        logger->logValidInvalidPaths(pathSet, validPathSet_LL, invalidPathSet);
-        logger->logResults_LL(maximumLatencyPath_LL);
-        logger->logResults_LF(maximumLatencyPath_LF);
-        logger->logResults_FL(maxFirstToLastDelay);
-        logger->logResults_FF(maxFirstToFirstDelay);
+        resultLogger->logValidAndInvalidPaths(pathSet, validPathSet_LL,
+                                              invalidPathSet);
+        resultLogger->logResults_LL(maximumLatencyPath_LL);
+        resultLogger->logResults_LF(maximumLatencyPath_LF);
+        resultLogger->logResults_FL(maxFirstToLastDelay);
+        resultLogger->logResults_FF(maxFirstToFirstDelay);
     } catch (const std::exception& ex) {
-        std::cerr << "Failed to log results! " << ex.what() << "\n";
+        systemLogger->logError("Failed to log results! " +
+                               std::string(ex.what()));
         return 0;
     } catch (...) {
-        std::cerr << "Unknown error has occured while logging the results! "
-                     "Please try again! "
-                  << "\n";
+        systemLogger->logError(
+            "Unknown error has occured while logging the results! "
+            "Please try again!");
         return 0;
     }
+
+    systemLogger->logInfo("Exiting the application");
 
     return 0;
 }
 
-void printUsageInfo() {
-    std::cerr << "Usage: taskAnalyzer <reader_type> <logger_type>" << "\n";
-    std::cerr << "Currently supported loggers: Console, Text" << "\n";
-    std::cerr << "Currently supported readers: Console, Text" << "\n";
+void logUsageInfo(const ISystemLogger* systemLogger) {
+    systemLogger->logMessage(
+        "Usage: taskAnalyzer <reader_type> <logger_type>\n");
+    systemLogger->logMessage("Currently supported loggers: Console, Text\n");
+    systemLogger->logMessage("Currently supported readers: Console, Text\n");
 }

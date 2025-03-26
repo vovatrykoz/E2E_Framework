@@ -1,14 +1,14 @@
 #ifndef _SIMPLIFIED_CONSOLE_LOGGER_H_
 #define _SIMPLIFIED_CONSOLE_LOGGER_H_
 
-#include <io/logger/ILogger.h>
+#include <io/logger/IResultLogger.h>
 
 namespace e2e {
 namespace io {
 
-class SimplifiedConsoleLogger : public ILogger {
-public:
-    virtual void logValidInvalidPaths(
+class SimplifiedConsoleLogger : public IResultLogger {
+   public:
+    virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
         const std::multiset<TimedPath>& invalidPathSet) const override;

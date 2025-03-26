@@ -1,16 +1,16 @@
 #ifndef _PLAIN_TEXT_LOGGER_H_
 #define _PLAIN_TEXT_LOGGER_H_
 
-#include <io/logger/ILogger.h>
+#include <io/logger/IResultLogger.h>
 
 namespace e2e {
 namespace io {
 
-class PlainTextLogger : public ILogger {
-public:
+class PlainTextLogger : public IResultLogger {
+   public:
     PlainTextLogger(const std::string& pathToOutputFile);
 
-    virtual void logValidInvalidPaths(
+    virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
         const std::multiset<TimedPath>& invalidPathSet) const override;
@@ -25,7 +25,7 @@ public:
 
     virtual void logResults_FF(int maxFirstToFirstPathDelay) const override;
 
-private:
+   private:
     const std::string pathToOutputFile;
 
     void writeOutputToFile(const std::string& output) const;

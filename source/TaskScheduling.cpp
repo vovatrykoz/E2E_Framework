@@ -37,7 +37,7 @@ scheduling::generateTaskInstancesFromPath(
 
     // Generate task instances for each task in the path
     for (int i = 0; i < endToEndPath.size(); i++) {
-        int instanceCount = lcm / endToEndPath[i].baseTask.period;
+        const int instanceCount = lcm / endToEndPath[i].baseTask.period;
 
         // Generate each task instance based on offset and period
         for (int j = 0; j < instanceCount; j++) {
@@ -56,10 +56,6 @@ scheduling::generateTaskInstancesFromPath(
 std::multiset<TimedPath> scheduling::generateTimedPathsFromInstances(
     const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths) {
     std::multiset<TimedPath> result;
-    if (timedPaths.empty()) {
-        // empty multiset
-        return result;
-    }
 
     int counter = 1;
     // Insert each timed path into the multiset with a unique path ID

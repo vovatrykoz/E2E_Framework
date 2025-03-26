@@ -1,7 +1,7 @@
 #ifndef _FACTORY_H_
 #define _FACTORY_H_
 
-#include <io/logger/ILogger.h>
+#include <io/logger/IResultLogger.h>
 #include <io/reader/ITaskInstanceReader.h>
 #include <io/reader/ITaskReader.h>
 
@@ -27,8 +27,8 @@ using namespace e2e::io;
  * @return A unique pointer to the created logger instance.
  */
 template <typename LoggerType, typename... Args>
-std::unique_ptr<ILogger> makeLogger(Args... args)
-    requires std::is_base_of_v<ILogger, LoggerType>;
+std::unique_ptr<IResultLogger> makeLogger(Args... args)
+    requires std::is_base_of_v<IResultLogger, LoggerType>;
 
 /**
  * @brief Creates a task instance reader of the specified type.
@@ -71,8 +71,8 @@ std::unique_ptr<ITaskReader> makeTaskReader(Args... args)
 // ---------------------------------------------
 
 template <typename LoggerType, typename... Args>
-inline std::unique_ptr<ILogger> makeLogger(Args... args)
-    requires std::is_base_of_v<ILogger, LoggerType>
+inline std::unique_ptr<IResultLogger> makeLogger(Args... args)
+    requires std::is_base_of_v<IResultLogger, LoggerType>
 {
     return std::make_unique<LoggerType>(args...);
 }

@@ -1,7 +1,7 @@
 #ifndef _SETUP_H_
 #define _SETUP_H_
 
-#include <io/logger/ILogger.h>
+#include <io/logger/IResultLogger.h>
 #include <io/reader/ITaskInstanceReader.h>
 #include <io/reader/ITaskReader.h>
 
@@ -13,8 +13,8 @@ namespace setup {
 
 using namespace e2e::io;
 
-std::unique_ptr<ILogger> logger(const std::string& loggerStr);
-std::unique_ptr<ILogger> simpleLogger(const std::string& loggerStr);
+std::unique_ptr<IResultLogger> logger(const std::string& loggerStr);
+std::unique_ptr<IResultLogger> simpleLogger(const std::string& loggerStr);
 std::unique_ptr<ITaskInstanceReader> taskInstanceReader(
     const std::string& readerStr);
 std::unique_ptr<ITaskReader> taskReader(const std::string& readerStr);

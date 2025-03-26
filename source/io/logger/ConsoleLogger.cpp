@@ -1,10 +1,11 @@
 #include "io/logger/ConsoleLogger.h"
 
+#include <chrono>
 #include <iostream>
 
 using namespace e2e::io;
 
-void ConsoleLogger::logValidInvalidPaths(
+void ConsoleLogger::logValidAndInvalidPaths(
     const std::multiset<TimedPath>& allPathsSet,
     const std::multiset<TimedPath>& validPathSet,
     const std::multiset<TimedPath>& invalidPathSet) const {

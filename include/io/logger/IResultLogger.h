@@ -1,3 +1,6 @@
+#ifndef _I_RESULT_LOGGER_H_
+#define _I_RESULT_LOGGER_H_
+
 #ifndef _I_LOGGER_H_
 #define _I_LOGGER_H_
 
@@ -12,13 +15,14 @@ namespace io {
 /**
  * @brief Interface for logging various timed path results.
  *
- * The ILogger interface defines methods for logging the results related to
- * timed paths, including valid/invalid paths, maximum latency, and path delays.
- * This interface is intended to be implemented by concrete logger classes that
- * handle different logging mechanisms (e.g., console logging, file logging).
+ * The IResultLogger interface defines methods for logging the results related
+ * to timed paths, including valid/invalid paths, maximum latency, and path
+ * delays. This interface is intended to be implemented by concrete logger
+ * classes that handle different logging mechanisms (e.g., console logging, file
+ * logging).
  */
-class ILogger {
-public:
+class IResultLogger {
+   public:
     /**
      * @brief Logs the valid and invalid paths.
      *
@@ -30,7 +34,7 @@ public:
      * @param validPathSet A multiset containing valid timed paths.
      * @param invalidPathSet A multiset containing invalid timed paths.
      */
-    virtual void logValidInvalidPaths(
+    virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
         const std::multiset<TimedPath>& invalidPathSet) const = 0;
@@ -84,10 +88,12 @@ public:
      *
      * This virtual destructor ensures proper cleanup of any derived classes.
      */
-    virtual ~ILogger() = default;
+    virtual ~IResultLogger() = default;
 };
 
 }  // namespace io
 }  // namespace e2e
+
+#endif
 
 #endif
