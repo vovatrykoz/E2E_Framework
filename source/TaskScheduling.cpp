@@ -56,10 +56,6 @@ scheduling::generateTaskInstancesFromPath(
 std::multiset<TimedPath> scheduling::generateTimedPathsFromInstances(
     const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths) {
     std::multiset<TimedPath> result;
-    if (timedPaths.empty()) {
-        // empty multiset
-        return result;
-    }
 
     int counter = 1;
     // Insert each timed path into the multiset with a unique path ID
