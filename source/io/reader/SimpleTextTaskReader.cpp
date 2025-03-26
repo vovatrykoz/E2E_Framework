@@ -13,7 +13,8 @@ std::vector<NamedTask> PlainTextTaskReader::readTaskChain() const {
     std::ifstream file(this->filePath);
 
     if (!file) {
-        throw std::runtime_error("Error: file not found");
+        throw std::runtime_error("Error: file at path \"" + this->filePath +
+                                 "\" not found");
     }
 
     std::vector<NamedTask> output;
