@@ -223,7 +223,8 @@ int main(int argc, char* argv[]) {
 
 void logUsageInfo(const ISystemLogger* systemLogger) {
     systemLogger->logMessage(
-        "Usage: taskAnalyzer <reader_type> <logger_type>\n");
+        "Usage: taskAnalyzer <file_path> [-r|-reader <reader_type>] "
+        "[-l|-logger <logger_type>]\n");
     systemLogger->logMessage("Currently supported loggers: Console, Text\n");
     systemLogger->logMessage("Currently supported readers: Console, Text\n");
 }
