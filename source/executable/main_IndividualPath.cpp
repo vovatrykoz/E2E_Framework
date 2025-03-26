@@ -17,10 +17,12 @@ int main(int argc, char* argv[]) {
     std::unique_ptr<ITaskInstanceReader> inputReader = nullptr;
     std::unique_ptr<IResultLogger> logger = nullptr;
 
-    const std::function<void(console::Color)>& consoleColorFunc =
-        console::setColorTo;
-    std::unique_ptr<ISystemLogger> systemLogger =
-        std::make_unique<ConsoleSystemLogger>(consoleColorFunc);
+    const std::function<void(console::Color)>&
+        functionForSettingConsoleTextColor = console::setColorTo;
+
+    const std::unique_ptr<ISystemLogger> systemLogger =
+        std::make_unique<ConsoleSystemLogger>(
+            functionForSettingConsoleTextColor);
 
     // setup
     switch (argc) {
