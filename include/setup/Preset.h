@@ -8,7 +8,7 @@ namespace setup {
 namespace preset {
 
 std::unique_ptr<ITaskInstanceReader> makeDefaultTaskInstanceReader();
-std::unique_ptr<ITaskReader> makeDefaultTaskReader();
+std::unique_ptr<ITaskReader> makeDefaultTaskReader(const std::string& filePath);
 std::unique_ptr<IResultLogger> makeDefaultLogger();
 std::unique_ptr<IResultLogger> makeDefaultSimplifiedLogger();
 

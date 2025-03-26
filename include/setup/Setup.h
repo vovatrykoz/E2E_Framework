@@ -2,6 +2,7 @@
 #define _SETUP_H_
 
 #include <io/logger/IResultLogger.h>
+#include <io/logger/ISystemLogger.h>
 #include <io/reader/ITaskInstanceReader.h>
 #include <io/reader/ITaskReader.h>
 
@@ -17,7 +18,9 @@ std::unique_ptr<IResultLogger> logger(const std::string& loggerStr);
 std::unique_ptr<IResultLogger> simpleLogger(const std::string& loggerStr);
 std::unique_ptr<ITaskInstanceReader> taskInstanceReader(
     const std::string& readerStr);
-std::unique_ptr<ITaskReader> taskReader(const std::string& readerStr);
+std::unique_ptr<ITaskReader> taskReader(const std::string& readerStr,
+                                        const std::string& filePath,
+                                        const ISystemLogger* systemLogger);
 
 }  // namespace setup
 }  // namespace e2e

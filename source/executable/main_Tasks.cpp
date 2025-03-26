@@ -12,13 +12,16 @@
 using namespace e2e;
 using namespace e2e::io;
 
+enum class ArgsProcessingStep { Unspecified, ReadingReader, ReadingLogger };
+
+static const std::string readerOptionShort = "-r";
+static const std::string readerOptionLong = "-reader";
+static const std::string loggerOptionShort = "-l";
+static const std::string loggerOptionLong = "-logger";
+
 void logUsageInfo(const ISystemLogger* systemLogger);
 
 int main(int argc, char* argv[]) {
-    // prepare the reader and the logger
-    std::unique_ptr<ITaskReader> inputReader = nullptr;
-    std::unique_ptr<IResultLogger> resultLogger = nullptr;
-
     const std::function<void(console::Color)>&
         functionForSettingConsoleTextColor = console::setColorTo;
 
@@ -26,29 +29,70 @@ int main(int argc, char* argv[]) {
         std::make_unique<ConsoleSystemLogger>(
             functionForSettingConsoleTextColor);
 
-    // setup
-    switch (argc) {
-        case 1:
-            // use presets the user has not provided any input
-            inputReader = setup::preset::makeDefaultTaskReader();
-            resultLogger = setup::preset::makeDefaultSimplifiedLogger();
-            break;
+    // prepare the reader and the logger
+    std::unique_ptr<ITaskReader> inputReader = nullptr;
+    std::unique_ptr<IResultLogger> resultLogger = nullptr;
 
-        case 2:
-            // if only one parameter is provided, we assume that to be a reader
-            // default to presets for the logger
-            inputReader = setup::taskReader(argv[1]);
-            resultLogger = setup::preset::makeDefaultSimplifiedLogger();
-            break;
+    std::string filePath;
 
-        case 3:
-            inputReader = setup::taskReader(argv[1]);
-            resultLogger = setup::simpleLogger(argv[2]);
-            break;
+    ArgsProcessingStep currentStep = ArgsProcessingStep::Unspecified;
 
-        default:
-            systemLogger->logError("Too many parameters");
-            break;
+    if (argc <= 1) {
+        systemLogger->logError(
+            "Too few arguments! The path to the file to be analyzed is "
+            "required");
+        logUsageInfo(systemLogger.get());
+        return -1;
+    } else {
+        for (int i = 1; i < argc; i++) {
+            if (currentStep == ArgsProcessingStep::ReadingReader) {
+                inputReader =
+                    setup::taskReader(argv[i], filePath, systemLogger.get());
+                currentStep = ArgsProcessingStep::Unspecified;
+                continue;
+            }
+
+            if (currentStep == ArgsProcessingStep::ReadingLogger) {
+                resultLogger = setup::simpleLogger(argv[i]);
+                currentStep = ArgsProcessingStep::Unspecified;
+                continue;
+            }
+
+            if (argv[i] == readerOptionShort || argv[i] == readerOptionLong) {
+                currentStep = ArgsProcessingStep::ReadingReader;
+            } else if (argv[i] == loggerOptionShort ||
+                       argv[i] == loggerOptionLong) {
+                currentStep = ArgsProcessingStep::ReadingLogger;
+            } else {
+                filePath = argv[i];
+            }
+        }
+    }
+
+    if (currentStep == ArgsProcessingStep::ReadingReader) {
+        systemLogger->logError(
+            "The reader type has to be provided if the -r|-reader "
+            "option is used");
+        logUsageInfo(systemLogger.get());
+        return -1;
+    }
+
+    if (currentStep == ArgsProcessingStep::ReadingLogger) {
+        systemLogger->logError(
+            "The logger type has to be provided if the -l|-logger "
+            "option is used");
+        logUsageInfo(systemLogger.get());
+        return -1;
+    }
+
+    if (inputReader == nullptr) {
+        systemLogger->logInfo("Using default reader type: text-based");
+        inputReader = setup::preset::makeDefaultTaskReader(filePath);
+    }
+
+    if (resultLogger == nullptr) {
+        systemLogger->logInfo("Using default result logger type: console");
+        resultLogger = setup::preset::makeDefaultSimplifiedLogger();
     }
 
     if (resultLogger == nullptr || inputReader == nullptr) {

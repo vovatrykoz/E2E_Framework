@@ -19,12 +19,9 @@ e2e::setup::preset::makeDefaultTaskInstanceReader() {
         inputPath);
 }
 
-std::unique_ptr<ITaskReader> e2e::setup::preset::makeDefaultTaskReader() {
-    std::string inputPath;
-    std::cout << "Reader type: text" << std::endl;
-    std::cout << "Enter path to input file: ";
-    std::cin >> inputPath;
-    return factory::makeTaskReader<PlainTextTaskReader>(inputPath);
+std::unique_ptr<ITaskReader> e2e::setup::preset::makeDefaultTaskReader(
+    const std::string& filePath) {
+    return factory::makeTaskReader<PlainTextTaskReader>(filePath);
 }
 
 std::unique_ptr<IResultLogger> e2e::setup::preset::makeDefaultLogger() {

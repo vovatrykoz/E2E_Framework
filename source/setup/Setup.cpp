@@ -87,25 +87,25 @@ std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
 }
 
 std::unique_ptr<ITaskReader> e2e::setup::taskReader(
-    const std::string& readerStr) {
+    const std::string& readerStr, const std::string& filePath,
+    const ISystemLogger* systemLogger) {
     std::string lowercaseReaderStr;
     std::transform(readerStr.begin(), readerStr.end(),
                    std::back_inserter(lowercaseReaderStr),
                    [](unsigned char c) { return std::tolower(c); });
 
     if (lowercaseReaderStr == "console") {
-        std::cout << "Reader type: console" << std::endl;
+        systemLogger->logInfo("Reader type: console");
+        systemLogger->logWarning(
+            "Console reader is chosen! Discarding the provided file path");
         return factory::makeTaskReader<ConsoleTaskReader>();
     }
 
     if (lowercaseReaderStr == "text") {
-        std::string inputPath;
-        std::cout << "Reader type: text" << std::endl;
-        std::cout << "Enter path to input file: ";
-        std::cin >> inputPath;
-        return factory::makeTaskReader<PlainTextTaskReader>(inputPath);
+        systemLogger->logInfo("Reader type: text");
+        return factory::makeTaskReader<PlainTextTaskReader>(filePath);
     }
 
-    std::cout << "Entered task reader is not supported" << std::endl;
+    systemLogger->logError("Entered task reader is not supported");
     return nullptr;
 }
