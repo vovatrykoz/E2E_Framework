@@ -59,7 +59,7 @@ std::string ConsoleSystemLogger::currentTime() {
     const std::time_t currentTimeInTimeT =
         std::chrono::system_clock::to_time_t(currentTime);
 #ifdef _MSC_VER
-    std::tm localTime {}
+    std::tm localTime{};
     localtime_s(&localTime, &currentTimeInTimeT);
 #else
     const std::tm localTime = *std::localtime(&currentTimeInTimeT);
