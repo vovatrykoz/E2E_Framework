@@ -153,7 +153,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::vector<PeriodicTaskInstance>> taskInstances;
     try {
         taskInstances = scheduling::generateTaskInstancesFromPath(taskChain);
-    } catch (std::bad_alloc) {
+    } catch (const std::bad_alloc&) {
         systemLogger->logError(
             "The provided input resulted in too many task instances "
             "being generated. Review your task parameters to ensure "
@@ -165,7 +165,7 @@ int main(int argc, char* argv[]) {
     std::vector<std::vector<PeriodicTaskInstance>> allPossiblePaths;
     try {
         allPossiblePaths = scheduling::buildTaskExecutionPaths(taskInstances);
-    } catch (std::bad_alloc) {
+    } catch (const std::bad_alloc&) {
         systemLogger->logError(
             "The provided input resulted in too many task exectution paths "
             "being genereated. Review your task parameters to ensure "

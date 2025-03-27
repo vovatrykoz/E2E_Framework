@@ -36,7 +36,7 @@ scheduling::generateTaskInstancesFromPath(
     const int lcm = scheduling::calculateLcmForEndToEndPath(endToEndPath);
 
     // Generate task instances for each task in the path
-    for (int i = 0; i < endToEndPath.size(); i++) {
+    for (std::size_t i = 0; i < endToEndPath.size(); i++) {
         const int instanceCount = lcm / endToEndPath[i].baseTask.period;
 
         // Generate each task instance based on offset and period

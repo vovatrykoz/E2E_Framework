@@ -80,8 +80,6 @@ TEST(Analysis, CanCalculateLongestEndToEndTime) {
     std::multiset<TimedPath> timedPaths = {timedPath_A, timedPath_B,
                                            timedPath_C, timedPath_D};
 
-    // 72 + 1 - 0
-    int expectedLatency = 73;
     TimedPath expectedPath = timedPath_C;
     std::optional<TimedPath> actualValueContainer =
         getPathWithMaximumLatency(timedPaths);
@@ -89,7 +87,6 @@ TEST(Analysis, CanCalculateLongestEndToEndTime) {
     ASSERT_TRUE(actualValueContainer.has_value());
 
     TimedPath actualPath = actualValueContainer.value();
-    int actualLatency = actualPath.endToEndDelay();
 
     EXPECT_EQ(expectedPath, actualPath);
 }
