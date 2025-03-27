@@ -38,26 +38,30 @@ std::unique_ptr<IResultLogger> setup::logger(const std::string& loggerStr) {
 }
 
 std::unique_ptr<IResultLogger> setup::simpleLogger(
-    const std::string& loggerStr) {
+    const std::string& loggerStr, const ISystemLogger* systemLogger) {
     std::string lowercaseLoggerStr;
     std::transform(loggerStr.begin(), loggerStr.end(),
                    std::back_inserter(lowercaseLoggerStr),
                    [](unsigned char c) { return std::tolower(c); });
 
     if (lowercaseLoggerStr == "console") {
-        std::cout << "Logger type: console" << std::endl;
+        systemLogger->logInfo("Logger type: console");
         return factory::makeLogger<SimplifiedConsoleLogger>();
     }
 
     if (lowercaseLoggerStr == "text") {
-        std::string outputPath;
-        std::cout << "Logger type: text" << std::endl;
-        std::cout << "Enter output path: ";
-        std::cin >> outputPath;
+        systemLogger->logInfo("Logger type: text");
+        systemLogger->logMessage("Enter output path: ");
+        const std::string outputPath = []() {
+            std::string userInput;
+            std::cin >> userInput;
+            return userInput;
+        }();
         return factory::makeLogger<SimplifiedPlainTextLogger>(outputPath);
     }
 
-    std::cout << "Entered logger is not supported" << std::endl;
+    systemLogger->logError("Entered logger is not supported: \"" + loggerStr +
+                           "\"");
     return nullptr;
 }
 
@@ -106,6 +110,7 @@ std::unique_ptr<ITaskReader> e2e::setup::taskReader(
         return factory::makeTaskReader<PlainTextTaskReader>(filePath);
     }
 
-    systemLogger->logError("Entered task reader is not supported");
+    systemLogger->logError("Entered task reader is not supported: \"" +
+                           readerStr + "\"");
     return nullptr;
 }

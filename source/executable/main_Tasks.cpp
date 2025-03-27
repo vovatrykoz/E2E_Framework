@@ -35,6 +35,18 @@ int main(int argc, char* argv[]) {
 
     std::string filePath;
 
+    std::function<std::unique_ptr<ITaskReader>()> taskReaderSetupCallback =
+        [&filePath, &systemLogger]() {
+            systemLogger->logInfo("Using default reader type: text-based");
+            return setup::preset::makeDefaultTaskReader(filePath);
+        };
+
+    std::function<std::unique_ptr<IResultLogger>()> resultLoggerSetupCallback =
+        [&systemLogger]() {
+            systemLogger->logInfo("Using default result logger type: console");
+            return setup::preset::makeDefaultSimplifiedLogger();
+        };
+
     ArgsProcessingStep currentStep = ArgsProcessingStep::Unspecified;
 
     if (argc <= 1) {
@@ -46,14 +58,21 @@ int main(int argc, char* argv[]) {
     } else {
         for (int i = 1; i < argc; i++) {
             if (currentStep == ArgsProcessingStep::ReadingReader) {
-                inputReader =
-                    setup::taskReader(argv[i], filePath, systemLogger.get());
+                taskReaderSetupCallback = [i, argv, &filePath,
+                                           &systemLogger]() {
+                    return setup::taskReader(argv[i], filePath,
+                                             systemLogger.get());
+                };
+
                 currentStep = ArgsProcessingStep::Unspecified;
                 continue;
             }
 
             if (currentStep == ArgsProcessingStep::ReadingLogger) {
-                resultLogger = setup::simpleLogger(argv[i]);
+                resultLoggerSetupCallback = [i, argv, &systemLogger]() {
+                    return setup::simpleLogger(argv[i], systemLogger.get());
+                };
+
                 currentStep = ArgsProcessingStep::Unspecified;
                 continue;
             }
@@ -85,15 +104,8 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    if (inputReader == nullptr) {
-        systemLogger->logInfo("Using default reader type: text-based");
-        inputReader = setup::preset::makeDefaultTaskReader(filePath);
-    }
-
-    if (resultLogger == nullptr) {
-        systemLogger->logInfo("Using default result logger type: console");
-        resultLogger = setup::preset::makeDefaultSimplifiedLogger();
-    }
+    inputReader = taskReaderSetupCallback();
+    resultLogger = resultLoggerSetupCallback();
 
     if (resultLogger == nullptr || inputReader == nullptr) {
         systemLogger->logError("Setup incomplete, please try again");
