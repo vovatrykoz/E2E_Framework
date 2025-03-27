@@ -5,6 +5,14 @@ if(CMAKE_VERSION VERSION_GREATER_EQUAL "3.24.0")
     cmake_policy(SET CMP0135 NEW)
 endif()
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang|GNU")
+    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+endif()
+
+if (MSVC)
+    add_compile_options(/W4 /WX)
+endif()
+
 set(CMAKE_CXX_STANDARD 20)
 
 set(INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
