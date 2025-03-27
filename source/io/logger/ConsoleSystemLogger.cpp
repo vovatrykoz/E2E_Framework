@@ -10,8 +10,10 @@ ConsoleSystemLogger::ConsoleSystemLogger(
     : setConsoleTextColor(setConsoleTextColor) {}
 
 void ConsoleSystemLogger::logInfo(const std::string& infoMessage) const {
+    const std::string currentTime = this->currentTime();
+
     this->setConsoleTextColor(console::Color::White);
-    std::cout << "(" << this->currentTime() << ") ";
+    std::cout << "(" << currentTime << ") ";
 
     this->setConsoleTextColor(console::Color::Green);
     std::cout << "INFO";
@@ -21,8 +23,10 @@ void ConsoleSystemLogger::logInfo(const std::string& infoMessage) const {
 }
 
 void ConsoleSystemLogger::logWarning(const std::string& warningMessage) const {
+    const std::string currentTime = this->currentTime();
+
     this->setConsoleTextColor(console::Color::White);
-    std::cout << "(" << this->currentTime() << ") ";
+    std::cout << "(" << currentTime << ") ";
 
     this->setConsoleTextColor(console::Color::Yellow);
     std::cout << "WARNING";
@@ -32,8 +36,10 @@ void ConsoleSystemLogger::logWarning(const std::string& warningMessage) const {
 }
 
 void ConsoleSystemLogger::logError(const std::string& errorMessage) const {
+    const std::string currentTime = this->currentTime();
+
     this->setConsoleTextColor(console::Color::White);
-    std::cout << "(" << this->currentTime() << ") ";
+    std::cout << "(" << currentTime << ") ";
 
     this->setConsoleTextColor(console::Color::Red);
     std::cout << "ERROR";
