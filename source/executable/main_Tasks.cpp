@@ -33,7 +33,7 @@ int main(int argc, char* argv[]) {
     std::unique_ptr<ITaskReader> inputReader = nullptr;
     std::unique_ptr<IResultLogger> resultLogger = nullptr;
 
-    std::string filePath;
+    std::string filePath = "";
 
     std::function<std::unique_ptr<ITaskReader>()> taskReaderSetupCallback =
         [&filePath, &systemLogger]() {
@@ -83,6 +83,19 @@ int main(int argc, char* argv[]) {
                        argv[i] == loggerOptionLong) {
                 currentStep = ArgsProcessingStep::ReadingLogger;
             } else {
+                if (filePath != "") {
+                    const std::string unexpectedFilePath = argv[i];
+
+                    systemLogger->logWarning(
+                        "Received multiple paths for analysis! The program "
+                        "only supports analysing one file at a time. "
+                        "Discarding file at \"" +
+                        unexpectedFilePath + "\" and keeping \"" + filePath +
+                        "\" as the file to analyze");
+
+                    continue;
+                }
+
                 filePath = argv[i];
             }
         }
