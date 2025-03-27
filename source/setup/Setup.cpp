@@ -100,8 +100,12 @@ std::unique_ptr<ITaskReader> e2e::setup::taskReader(
 
     if (lowercaseReaderStr == "console") {
         systemLogger->logInfo("Reader type: console");
-        systemLogger->logWarning(
-            "Console reader is chosen! Discarding the provided file path");
+
+        if (filePath != "") {
+            systemLogger->logWarning(
+                "Console reader is chosen! Discarding the provided file path");
+        }
+
         return factory::makeTaskReader<ConsoleTaskReader>();
     }
 
