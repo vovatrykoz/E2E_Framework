@@ -19,7 +19,7 @@ std::unique_ptr<IResultLogger> setup::logger(const std::string& loggerStr) {
     std::string lowercaseLoggerStr;
     std::transform(loggerStr.begin(), loggerStr.end(),
                    std::back_inserter(lowercaseLoggerStr),
-                   [](unsigned char c) { return std::tolower(int(c)); });
+                   [](unsigned char c) { return std::tolower((int)c); });
 
     if (lowercaseLoggerStr == "console") {
         std::cout << "Logger type: console" << std::endl;
@@ -42,7 +42,7 @@ std::unique_ptr<IResultLogger> setup::simpleLogger(
     std::string lowercaseLoggerStr;
     std::transform(loggerStr.begin(), loggerStr.end(),
                    std::back_inserter(lowercaseLoggerStr),
-                   [](unsigned char c) { return std::tolower(int(c)); });
+                   [](unsigned char c) { return std::tolower((int)c); });
 
     if (lowercaseLoggerStr == "console") {
         systemLogger->logInfo("Logger type: console");
@@ -70,7 +70,7 @@ std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
     std::string lowercaseReaderStr;
     std::transform(readerStr.begin(), readerStr.end(),
                    std::back_inserter(lowercaseReaderStr),
-                   [](unsigned char c) { return std::tolower(int(c)); });
+                   [](unsigned char c) { return std::tolower((int)c); });
 
     if (lowercaseReaderStr == "console") {
         std::cout << "Reader type: console" << std::endl;
