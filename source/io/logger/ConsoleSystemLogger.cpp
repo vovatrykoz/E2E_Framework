@@ -1,13 +1,17 @@
 #include "io/logger/ConsoleSystemLogger.h"
 
 #include <chrono>
+#include <ctime>
+#include <iomanip>
 #include <iostream>
+#include <sstream>
 
 using namespace e2e::io;
 
 ConsoleSystemLogger::ConsoleSystemLogger(
     const std::function<void(console::Color)>& setConsoleTextColor)
-    : setConsoleTextColor(setConsoleTextColor) {}
+    : setConsoleTextColor(setConsoleTextColor) {
+}
 
 void ConsoleSystemLogger::logInfo(const std::string& infoMessage) const {
     const std::string currentTime = this->currentTime();
