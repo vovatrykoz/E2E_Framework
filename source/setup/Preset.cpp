@@ -31,6 +31,5 @@ std::unique_ptr<IResultLogger> e2e::setup::preset::makeDefaultLogger() {
 
 std::unique_ptr<IResultLogger>
 e2e::setup::preset::makeDefaultSimplifiedLogger() {
-    std::cout << "Logger type: console" << std::endl;
     return factory::makeLogger<SimplifiedConsoleLogger>();
 }
