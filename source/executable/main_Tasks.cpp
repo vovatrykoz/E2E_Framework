@@ -5,6 +5,7 @@
 #include <e2e/setup/Preset.h>
 #include <e2e/setup/Setup.h>
 
+#include <algorithm>
 #include <iostream>
 #include <memory>
 #include <optional>
