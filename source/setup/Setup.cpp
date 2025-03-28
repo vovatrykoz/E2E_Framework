@@ -1,13 +1,13 @@
-#include <io/logger/ConsoleLogger.h>
-#include <io/logger/PlainTextLogger.h>
-#include <io/logger/SimplifiedConsoleLogger.h>
-#include <io/logger/SimplifiedPlainTextLogger.h>
-#include <io/reader/ConsoleTaskInstanceReader.h>
-#include <io/reader/ConsoleTaskReader.h>
-#include <io/reader/PlainTextTaskInstanceReader.h>
-#include <io/reader/PlainTextTaskReader.h>
-#include <setup/Factory.h>
-#include <setup/Setup.h>
+#include <e2e/io/logger/ConsoleLogger.h>
+#include <e2e/io/logger/PlainTextLogger.h>
+#include <e2e/io/logger/SimplifiedConsoleLogger.h>
+#include <e2e/io/logger/SimplifiedPlainTextLogger.h>
+#include <e2e/io/reader/ConsoleTaskInstanceReader.h>
+#include <e2e/io/reader/ConsoleTaskReader.h>
+#include <e2e/io/reader/PlainTextTaskInstanceReader.h>
+#include <e2e/io/reader/PlainTextTaskReader.h>
+#include <e2e/setup/Factory.h>
+#include <e2e/setup/Setup.h>
 
 #include <algorithm>
 #include <iostream>

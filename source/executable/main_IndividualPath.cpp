@@ -1,7 +1,7 @@
-#include <Analysis.h>
-#include <io/logger/ConsoleSystemLogger.h>
-#include <setup/Preset.h>
-#include <setup/Setup.h>
+#include <e2e/Analysis.h>
+#include <e2e/io/logger/ConsoleSystemLogger.h>
+#include <e2e/setup/Preset.h>
+#include <e2e/setup/Setup.h>
 
 #include <iostream>
 #include <memory>

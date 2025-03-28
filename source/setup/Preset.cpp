@@ -1,9 +1,9 @@
-#include <io/logger/ConsoleLogger.h>
-#include <io/logger/SimplifiedConsoleLogger.h>
-#include <io/reader/PlainTextTaskInstanceReader.h>
-#include <io/reader/PlainTextTaskReader.h>
-#include <setup/Factory.h>
-#include <setup/Preset.h>
+#include <e2e/io/logger/ConsoleLogger.h>
+#include <e2e/io/logger/SimplifiedConsoleLogger.h>
+#include <e2e/io/reader/PlainTextTaskInstanceReader.h>
+#include <e2e/io/reader/PlainTextTaskReader.h>
+#include <e2e/setup/Factory.h>
+#include <e2e/setup/Preset.h>
 
 #include <iostream>
 

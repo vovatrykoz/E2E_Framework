@@ -1,7 +1,7 @@
 #ifndef _I_TASK_READER_H_
 #define _I_TASK_READER_H_
 
-#include <PeriodicTask.h>
+#include <e2e/PeriodicTask.h>
 
 #include <string>
 #include <vector>
@@ -20,7 +20,7 @@ struct NamedTask;
  * file, database, or another source).
  */
 class ITaskReader {
-public:
+   public:
     /**
      * @brief Reads a chain of named tasks.
      *
@@ -48,8 +48,8 @@ public:
  * debugging, or task management.
  */
 struct NamedTask {
-    OffsetPeriodicTask task;  // The task object that contains task-specific data like
-                        // period, latency, etc.
+    OffsetPeriodicTask task;  // The task object that contains task-specific
+                              // data like period, latency, etc.
     std::string name;  // The name associated with the task.
 
     /**

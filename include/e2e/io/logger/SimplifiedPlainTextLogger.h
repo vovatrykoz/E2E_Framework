@@ -1,13 +1,15 @@
-#ifndef _CONSOLE_LOGGER_H_
-#define _CONSOLE_LOGGER_H_
+#ifndef _SIMPLIFIED_PLAIN_TEXT_LOGGER_H_
+#define _SIMPLIFIED_PLAIN_TEXT_LOGGER_H_
 
-#include <io/logger/IResultLogger.h>
+#include <e2e/io/logger/IResultLogger.h>
 
 namespace e2e {
 namespace io {
 
-class ConsoleLogger : public IResultLogger {
+class SimplifiedPlainTextLogger : public IResultLogger {
    public:
+    SimplifiedPlainTextLogger(const std::string& pathToOutputFile);
+
     virtual void logValidAndInvalidPaths(
         const std::multiset<TimedPath>& allPathsSet,
         const std::multiset<TimedPath>& validPathSet,
@@ -22,6 +24,11 @@ class ConsoleLogger : public IResultLogger {
     virtual void logResults_FL(int maxFirstToLastPathDelay) const override;
 
     virtual void logResults_FF(int maxFirstToFirstPathDelay) const override;
+
+   private:
+    const std::string pathToOutputFile;
+
+    void writeOutputToFile(const std::string& output) const;
 };
 
 }  // namespace io

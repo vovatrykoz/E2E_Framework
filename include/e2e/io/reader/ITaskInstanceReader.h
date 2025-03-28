@@ -1,7 +1,7 @@
 #ifndef _I_TASK_INSTANCE_READER_H_
 #define _I_TASK_INSTANCE_READER_H_
 
-#include <TimedPath.h>
+#include <e2e/TimedPath.h>
 
 #include <set>
 #include <string>
@@ -18,7 +18,7 @@ namespace io {
  * implementations to read paths from various sources (e.g., files, databases).
  */
 class ITaskInstanceReader {
-public:
+   public:
     /**
      * @brief Reads a multiset of timed paths.
      *

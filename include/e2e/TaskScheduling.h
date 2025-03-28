@@ -1,8 +1,8 @@
 #ifndef _TASK_SCHEDULING_H_
 #define _TASK_SCHEDULING_H_
 
-#include <PeriodicTask.h>
-#include <TimedPath.h>
+#include <e2e/PeriodicTask.h>
+#include <e2e/TimedPath.h>
 
 #include <set>
 #include <vector>
@@ -23,7 +23,8 @@ namespace scheduling {
  * @return 0 if the path is empty, or the LCM of the periods of the tasks in the
  * path.
  */
-int calculateLcmForEndToEndPath(const std::vector<OffsetPeriodicTask>& endToEndPath);
+int calculateLcmForEndToEndPath(
+    const std::vector<OffsetPeriodicTask>& endToEndPath);
 
 /**
  * @brief Generates task instances from a task path.

@@ -1,7 +1,7 @@
+#include <e2e/io/reader/ConsoleTaskInstanceReader.h>
+
 #include <iostream>
 #include <limits>
-
-#include "io/reader/ConsoleTaskInstanceReader.h"
 
 using namespace e2e;
 using namespace e2e::io;

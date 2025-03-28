@@ -1,7 +1,7 @@
 #ifndef _CONSOLE_INSTANCE_READER_H_
 #define _CONSOLE_INSTANCE_READER_H_
 
-#include <io/reader/ITaskInstanceReader.h>
+#include <e2e/io/reader/ITaskInstanceReader.h>
 
 #include <set>
 #include <string>
@@ -10,10 +10,10 @@ namespace e2e {
 namespace io {
 
 class ConsoleTaskInstanceReader : public ITaskInstanceReader {
-public:
+   public:
     virtual std::multiset<TimedPath> readPathsSet() const override;
 
-private:
+   private:
     int readInt(const std::string& message) const;
     PeriodicTaskInstance readTaskInstance() const;
     TimedPath readTimedPath(const std::string& name) const;

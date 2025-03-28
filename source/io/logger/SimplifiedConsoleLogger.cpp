@@ -1,4 +1,4 @@
-#include "io/logger/SimplifiedConsoleLogger.h"
+#include <e2e/io/logger/SimplifiedConsoleLogger.h>
 
 #include <chrono>
 #include <iostream>

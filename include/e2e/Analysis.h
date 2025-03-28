@@ -1,7 +1,7 @@
 #ifndef _ANALYSIS_H_
 #define _ANALYSIS_H_
 
-#include <TimedPath.h>
+#include <e2e/TimedPath.h>
 
 #include <optional>
 #include <set>

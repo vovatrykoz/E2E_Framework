@@ -1,7 +1,7 @@
+#include <e2e/io/reader/PlainTextTaskInstanceReader.h>
+
 #include <fstream>
 #include <sstream>
-
-#include "io/reader/PlainTextTaskInstanceReader.h"
 
 using namespace e2e;
 using namespace e2e::io;

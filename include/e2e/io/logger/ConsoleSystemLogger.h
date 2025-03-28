@@ -1,8 +1,8 @@
 #ifndef _CONSOLE_LOGGER_H_
 #define _CONSOLE_LOGGER_H_
 
-#include <io/logger/ConsoleColor.h>
-#include <io/logger/ISystemLogger.h>
+#include <e2e/io/logger/ConsoleColor.h>
+#include <e2e/io/logger/ISystemLogger.h>
 
 #include <functional>
 

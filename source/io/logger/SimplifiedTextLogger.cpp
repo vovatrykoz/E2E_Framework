@@ -1,8 +1,8 @@
+#include <e2e/io/logger/SimplifiedPlainTextLogger.h>
+
 #include <chrono>
 #include <fstream>
 #include <sstream>
-
-#include "io/logger/SimplifiedPlainTextLogger.h"
 
 using namespace e2e::io;
 

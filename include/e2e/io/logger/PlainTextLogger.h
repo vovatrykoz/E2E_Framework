@@ -1,7 +1,7 @@
 #ifndef _PLAIN_TEXT_LOGGER_H_
 #define _PLAIN_TEXT_LOGGER_H_
 
-#include <io/logger/IResultLogger.h>
+#include <e2e/io/logger/IResultLogger.h>
 
 namespace e2e {
 namespace io {

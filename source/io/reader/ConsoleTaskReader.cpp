@@ -1,4 +1,4 @@
-#include <io/reader/ConsoleTaskReader.h>
+#include <e2e/io/reader/ConsoleTaskReader.h>
 
 #include <iostream>
 #include <limits>

@@ -1,9 +1,9 @@
-#include <Analysis.h>
-#include <TaskScheduling.h>
-#include <io/logger/ConsoleColor.h>
-#include <io/logger/ConsoleSystemLogger.h>
-#include <setup/Preset.h>
-#include <setup/Setup.h>
+#include <e2e/Analysis.h>
+#include <e2e/TaskScheduling.h>
+#include <e2e/io/logger/ConsoleColor.h>
+#include <e2e/io/logger/ConsoleSystemLogger.h>
+#include <e2e/setup/Preset.h>
+#include <e2e/setup/Setup.h>
 
 #include <iostream>
 #include <memory>

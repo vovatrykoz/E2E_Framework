@@ -1,4 +1,4 @@
-#include <TimedPath.h>
+#include <e2e/TimedPath.h>
 #include <gtest/gtest.h>
 
 using namespace e2e;

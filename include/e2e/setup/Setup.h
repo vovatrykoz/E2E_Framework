@@ -1,10 +1,10 @@
 #ifndef _SETUP_H_
 #define _SETUP_H_
 
-#include <io/logger/IResultLogger.h>
-#include <io/logger/ISystemLogger.h>
-#include <io/reader/ITaskInstanceReader.h>
-#include <io/reader/ITaskReader.h>
+#include <e2e/io/logger/IResultLogger.h>
+#include <e2e/io/logger/ISystemLogger.h>
+#include <e2e/io/reader/ITaskInstanceReader.h>
+#include <e2e/io/reader/ITaskReader.h>
 
 #include <memory>
 #include <optional>
