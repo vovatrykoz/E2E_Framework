@@ -10,7 +10,7 @@ class PlainTextTaskInstanceReader : public ITaskInstanceReader {
    public:
     PlainTextTaskInstanceReader(const std::string& filePath);
 
-    virtual std::multiset<TimedPath> readPathsSet() const override;
+    virtual std::vector<TimedPath> readPathsSet() const override;
 
    private:
     PeriodicTaskInstance parseTaskInstance(

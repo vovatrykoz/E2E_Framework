@@ -10,13 +10,9 @@
 using namespace e2e;
 using namespace e2e::io;
 
-// void logUsageInfo(const ISystemLogger* systemLogger);
+void logUsageInfo(const ISystemLogger* systemLogger);
 
-int main(void) {
-    return 0;
-
-    /*
-
+int main(int argc, char* argv[]) {
     // prepare the reader and the logger
     std::unique_ptr<ITaskInstanceReader> inputReader = nullptr;
     std::unique_ptr<IResultLogger> logger = nullptr;
@@ -59,7 +55,7 @@ int main(void) {
         return -1;
     }
 
-    std::multiset<TimedPath> pathSet;
+    std::vector<TimedPath> pathSet;
 
     // read user input
     try {
@@ -86,7 +82,7 @@ int main(void) {
 
     systemLogger->logInfo("Performing end-to-end analysis with LF semantics");
     // get a set for Last-To-First semantics analysis
-    const std::multiset<TimedPath> validPathSet_LF =
+    const std::vector<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDuplicateValues(validPathSet_LL);
 
     // perform end-to-end analysis using Last-To-First semantics
@@ -105,13 +101,14 @@ int main(void) {
 
     systemLogger->logInfo("Identifying invalid paths");
     // identify which paths turned out to be invalid
-    const std::multiset<TimedPath> invalidPathSet = [&validPathSet_LL,
-                                                     &pathSet]() {
-        std::multiset<TimedPath> invalidPathSet;
+    const std::vector<TimedPath> invalidPathSet = [&validPathSet_LL,
+                                                   &pathSet]() {
+        std::vector<TimedPath> invalidPathSet;
 
         for (const auto& path : pathSet) {
-            if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
-                invalidPathSet.insert(path);
+            if (std::find(validPathSet_LL.begin(), validPathSet_LL.end(),
+                          path) == validPathSet_LL.end()) {
+                invalidPathSet.push_back(path);
             }
         }
 
@@ -139,13 +136,12 @@ int main(void) {
 
     systemLogger->logInfo("Exiting the application");
 
-    return 0;*/
+    return 0;
 }
-/*
+
 void logUsageInfo(const ISystemLogger* systemLogger) {
     systemLogger->logMessage(
         "Usage: taskAnalyzer <reader_type> <logger_type>\n");
     systemLogger->logMessage("Currently supported loggers: Console, Text\n");
     systemLogger->logMessage("Currently supported readers: Console, Text\n");
 }
-*/

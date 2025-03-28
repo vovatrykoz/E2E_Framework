@@ -30,7 +30,7 @@ class ITaskInstanceReader {
      * @return A multiset of timed paths, where each path represents a valid
      * sequence of task instances.
      */
-    virtual std::multiset<TimedPath> readPathsSet() const = 0;
+    virtual std::vector<TimedPath> readPathsSet() const = 0;
 
     /**
      * @brief Virtual destructor for the task instance reader.

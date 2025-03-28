@@ -6,8 +6,8 @@
 using namespace e2e;
 using namespace e2e::io;
 
-std::multiset<TimedPath> ConsoleTaskInstanceReader::readPathsSet() const {
-    std::multiset<TimedPath> result;
+std::vector<TimedPath> ConsoleTaskInstanceReader::readPathsSet() const {
+    std::vector<TimedPath> result;
     std::string name;
     const int numOfChains =
         readInt("How many task chains do you want to analyse: ");
@@ -18,7 +18,7 @@ std::multiset<TimedPath> ConsoleTaskInstanceReader::readPathsSet() const {
         std::cout << std::endl;
 
         TimedPath timedPath = readTimedPath(name);
-        result.insert(timedPath);
+        result.push_back(timedPath);
     }
 
     return result;

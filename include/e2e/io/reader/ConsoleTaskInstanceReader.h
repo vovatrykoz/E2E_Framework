@@ -11,7 +11,7 @@ namespace io {
 
 class ConsoleTaskInstanceReader : public ITaskInstanceReader {
    public:
-    virtual std::multiset<TimedPath> readPathsSet() const override;
+    virtual std::vector<TimedPath> readPathsSet() const override;
 
    private:
     int readInt(const std::string& message) const;
