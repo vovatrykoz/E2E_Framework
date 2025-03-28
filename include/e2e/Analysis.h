@@ -4,7 +4,7 @@
 #include <e2e/TimedPath.h>
 
 #include <optional>
-#include <set>
+#include <vector>
 
 namespace e2e {
 namespace analysis {
@@ -23,8 +23,8 @@ namespace analysis {
  * @return A new multiset of TimedPath objects that are reachable according to
  * the reachability conditions.
  */
-std::multiset<TimedPath> removeUnreachablePaths(
-    const std::multiset<TimedPath>& pathSet);
+std::vector<TimedPath> removeUnreachablePaths(
+    const std::vector<TimedPath>& pathSet);
 
 /**
  * @brief Remove all paths that produce duplicate values
@@ -38,8 +38,8 @@ std::multiset<TimedPath> removeUnreachablePaths(
  * @return A new multiset of TimedPath objects that do not produce duplicate
  * values.
  */
-std::multiset<TimedPath> removePathsProducingDuplicateValues(
-    const std::multiset<TimedPath>& pathSet);
+std::vector<TimedPath> removePathsProducingDuplicateValues(
+    const std::vector<TimedPath>& pathSet);
 
 /**
  * @brief Finds the path with maximum end-to-end latency in the set
@@ -52,7 +52,7 @@ std::multiset<TimedPath> removePathsProducingDuplicateValues(
  * @return A TimedPath with the maximum end-to-end latency, is such exists
  */
 std::optional<TimedPath> getPathWithMaximumLatency(
-    const std::multiset<TimedPath>& pathSet);
+    const std::vector<TimedPath>& pathSet);
 
 /**
  * @brief Calculate path delay using First-to-x semantics
@@ -65,7 +65,7 @@ std::optional<TimedPath> getPathWithMaximumLatency(
  *
  * @return Maximum path delay with First-to-x semantics
  */
-int getOverarchingDelay(const std::multiset<TimedPath>& pathSet);
+int getOverarchingDelay(const std::vector<TimedPath>& pathSet);
 
 /**
  * @brief Determines if a path has a "predecessor"
@@ -78,8 +78,8 @@ int getOverarchingDelay(const std::multiset<TimedPath>& pathSet);
  *
  * @return Predecessor to path, if such exists
  */
-std::optional<TimedPath> findPredecessor(
-    const TimedPath& path, const std::multiset<TimedPath>& pathSet);
+std::optional<TimedPath> findPredecessor(const TimedPath& path,
+                                         const std::vector<TimedPath>& pathSet);
 
 }  // namespace analysis
 }  // namespace e2e

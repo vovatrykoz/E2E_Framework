@@ -35,9 +35,9 @@ class IResultLogger {
      * @param invalidPathSet A multiset containing invalid timed paths.
      */
     virtual void logValidAndInvalidPaths(
-        const std::multiset<TimedPath>& allPathsSet,
-        const std::multiset<TimedPath>& validPathSet,
-        const std::multiset<TimedPath>& invalidPathSet) const = 0;
+        const std::vector<TimedPath>& allPathsSet,
+        const std::vector<TimedPath>& validPathSet,
+        const std::vector<TimedPath>& invalidPathSet) const = 0;
 
     /**
      * @brief Logs the results of maximum latency path calculation (LL).

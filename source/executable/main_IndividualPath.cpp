@@ -10,9 +10,13 @@
 using namespace e2e;
 using namespace e2e::io;
 
-void logUsageInfo(const ISystemLogger* systemLogger);
+// void logUsageInfo(const ISystemLogger* systemLogger);
 
-int main(int argc, char* argv[]) {
+int main(void) {
+    return 0;
+
+    /*
+
     // prepare the reader and the logger
     std::unique_ptr<ITaskInstanceReader> inputReader = nullptr;
     std::unique_ptr<IResultLogger> logger = nullptr;
@@ -73,7 +77,7 @@ int main(int argc, char* argv[]) {
 
     systemLogger->logInfo("Performing end-to-end analysis with LL semantics");
     // perform the analysis
-    const std::multiset<TimedPath> validPathSet_LL =
+    const std::vector<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
 
     // perform end-to-end analysis using Last-to-Last semantics
@@ -135,12 +139,13 @@ int main(int argc, char* argv[]) {
 
     systemLogger->logInfo("Exiting the application");
 
-    return 0;
+    return 0;*/
 }
-
+/*
 void logUsageInfo(const ISystemLogger* systemLogger) {
     systemLogger->logMessage(
         "Usage: taskAnalyzer <reader_type> <logger_type>\n");
     systemLogger->logMessage("Currently supported loggers: Console, Text\n");
     systemLogger->logMessage("Currently supported readers: Console, Text\n");
 }
+*/

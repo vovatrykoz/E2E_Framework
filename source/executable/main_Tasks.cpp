@@ -174,12 +174,12 @@ int main(int argc, char* argv[]) {
     }
 
     systemLogger->logInfo("Preparing the timed paths for the analysis");
-    const std::multiset<TimedPath> pathSet =
+    const std::vector<TimedPath> pathSet =
         scheduling::generateTimedPathsFromInstances(allPossiblePaths);
 
     systemLogger->logInfo("Performing end-to-end analysis with LL semantics");
     // perform the analysis
-    const std::multiset<TimedPath> validPathSet_LL =
+    const std::vector<TimedPath> validPathSet_LL =
         analysis::removeUnreachablePaths(pathSet);
 
     // perform end-to-end analysis using Last-to-Last semantics
@@ -188,7 +188,7 @@ int main(int argc, char* argv[]) {
 
     systemLogger->logInfo("Performing end-to-end analysis with LF semantics");
     // get a set for Last-To-First semantics analysis
-    const std::multiset<TimedPath> validPathSet_LF =
+    const std::vector<TimedPath> validPathSet_LF =
         analysis::removePathsProducingDuplicateValues(validPathSet_LL);
 
     // perform end-to-end analysis using Last-To-First semantics
@@ -207,13 +207,14 @@ int main(int argc, char* argv[]) {
 
     systemLogger->logInfo("Identifying invalid paths");
     // indentify which paths turned out to be invalid
-    const std::multiset<TimedPath> invalidPathSet = [&validPathSet_LL,
-                                                     &pathSet]() {
-        std::multiset<TimedPath> invalidPathSet;
+    const std::vector<TimedPath> invalidPathSet = [&validPathSet_LL,
+                                                   &pathSet]() {
+        std::vector<TimedPath> invalidPathSet;
 
         for (const auto& path : pathSet) {
-            if (validPathSet_LL.find(path) == validPathSet_LL.end()) {
-                invalidPathSet.insert(path);
+            if (std::find(validPathSet_LL.begin(), validPathSet_LL.end(),
+                          path) == validPathSet_LL.end()) {
+                invalidPathSet.push_back(path);
             }
         }
 

@@ -53,15 +53,16 @@ scheduling::generateTaskInstancesFromPath(
 }
 
 // Generates timed paths from the task instances, each with a unique path ID
-std::multiset<TimedPath> scheduling::generateTimedPathsFromInstances(
+std::vector<TimedPath> scheduling::generateTimedPathsFromInstances(
     const std::vector<std::vector<PeriodicTaskInstance>>& timedPaths) {
-    std::multiset<TimedPath> result;
+    std::vector<TimedPath> result;
+    result.reserve(timedPaths.size());
 
     int counter = 1;
     // Insert each timed path into the multiset with a unique path ID
     for (const auto& instanceChain : timedPaths) {
         const std::string pathId = "#" + std::to_string(counter);
-        result.insert(TimedPath(pathId, instanceChain));
+        result.push_back(TimedPath(pathId, instanceChain));
         counter++;
     }
 

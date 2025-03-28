@@ -7,13 +7,13 @@ using namespace e2e;
 
 // Check if the path is reachable according to the conditions defined in
 // MathFramework.
-std::multiset<TimedPath> analysis::removeUnreachablePaths(
-    const std::multiset<TimedPath>& pathSet) {
-    std::multiset<TimedPath> output;
+std::vector<TimedPath> analysis::removeUnreachablePaths(
+    const std::vector<TimedPath>& pathSet) {
+    std::vector<TimedPath> output;
 
     for (const auto& path : pathSet) {
         if (mathframework::pathReach(path.asVector())) {
-            output.insert(path);
+            output.push_back(path);
         }
     }
 
@@ -23,9 +23,9 @@ std::multiset<TimedPath> analysis::removeUnreachablePaths(
 // Iterate through all paths and check if they produce duplicate values due to
 // identical start time. A path is considered duplicate if it finishes later
 // than another path with the same start time.
-std::multiset<TimedPath> analysis::removePathsProducingDuplicateValues(
-    const std::multiset<TimedPath>& pathSet) {
-    std::multiset<TimedPath> output;
+std::vector<TimedPath> analysis::removePathsProducingDuplicateValues(
+    const std::vector<TimedPath>& pathSet) {
+    std::vector<TimedPath> output;
 
     for (const auto& currentPath : pathSet) {
         bool isDuplicate = false;
@@ -51,7 +51,7 @@ std::multiset<TimedPath> analysis::removePathsProducingDuplicateValues(
         }
 
         if (!isDuplicate) {
-            output.insert(currentPath);
+            output.push_back(currentPath);
         }
     }
 
@@ -61,7 +61,7 @@ std::multiset<TimedPath> analysis::removePathsProducingDuplicateValues(
 // Find the path with the maximum end-to-end latency by comparing paths in the
 // set.
 std::optional<TimedPath> analysis::getPathWithMaximumLatency(
-    const std::multiset<TimedPath>& pathSet) {
+    const std::vector<TimedPath>& pathSet) {
     const auto maxLatencyIt =
         std::max_element(pathSet.begin(), pathSet.end(),
                          [](const TimedPath& a, const TimedPath& b) {
@@ -77,7 +77,7 @@ std::optional<TimedPath> analysis::getPathWithMaximumLatency(
 
 // For each path, calculate the delay between the current path and its
 // predecessor, then compute the overall maximum delay.
-int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
+int analysis::getOverarchingDelay(const std::vector<TimedPath>& pathSet) {
     int maxDelay = 0;
 
     for (const auto& currentPath : pathSet) {
@@ -105,7 +105,7 @@ int analysis::getOverarchingDelay(const std::multiset<TimedPath>& pathSet) {
 // Find the predecessor of the current path, which is a path that ends before
 // the current path starts.
 std::optional<TimedPath> analysis::findPredecessor(
-    const TimedPath& path, const std::multiset<TimedPath>& pathSet) {
+    const TimedPath& path, const std::vector<TimedPath>& pathSet) {
     const auto predecessorIt = std::find_if(
         pathSet.begin(), pathSet.end(), [&path](const TimedPath& otherPath) {
             return path != otherPath && path.succeeds(otherPath);

@@ -11,9 +11,9 @@ SimplifiedPlainTextLogger::SimplifiedPlainTextLogger(
     : pathToOutputFile(pathToOutputFile) {}
 
 void SimplifiedPlainTextLogger::logValidAndInvalidPaths(
-    const std::multiset<TimedPath>& allPathsSet,
-    const std::multiset<TimedPath>& validPathSet,
-    const std::multiset<TimedPath>& invalidPathSet) const {
+    const std::vector<TimedPath>& allPathsSet,
+    const std::vector<TimedPath>& validPathSet,
+    const std::vector<TimedPath>& invalidPathSet) const {
     std::stringstream output;
 
     output << "Results" << std::endl << std::endl;
