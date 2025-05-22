@@ -1,6 +1,12 @@
 #ifndef _TASK_H_
 #define _TASK_H_
 
+#ifdef __GNUC__
+#define PURE [[gnu::pure]]
+#else
+#define PURE
+#endif
+
 namespace e2e {
 
 /**
@@ -143,7 +149,7 @@ struct PeriodicTaskInstance {
      *
      * @return The next `PeriodicTaskInstance` based on the current one.
      */
-    PeriodicTaskInstance nextInstance() const;
+    PURE PeriodicTaskInstance nextInstance() const;
 
     /**
      * @brief Equality operator for comparing two PeriodicTaskInstance objects.
