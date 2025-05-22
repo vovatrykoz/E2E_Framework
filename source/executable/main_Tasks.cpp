@@ -13,14 +13,14 @@
 using namespace e2e;
 using namespace e2e::io;
 
-enum class ArgsProcessingStep { Unspecified, ReadingReader, ReadingLogger };
-
-static const std::string readerOptionShort = "-r";
-static const std::string readerOptionLong = "-reader";
-static const std::string loggerOptionShort = "-l";
-static const std::string loggerOptionLong = "-logger";
+using ReaderSetupFunction = std::function<std::unique_ptr<ITaskReader>()>;
+using LoggerSetupFunction = std::function<std::unique_ptr<IResultLogger>()>;
 
 void logUsageInfo(const ISystemLogger* systemLogger);
+int processCliArgs(const ISystemLogger* systemLogger, int argc, char* argv[],
+                   ReaderSetupFunction& taskReaderSetupCallback,
+                   LoggerSetupFunction& resultLoggerSetupCallback,
+                   std::string& filePath);
 
 int main(int argc, char* argv[]) {
     const std::function<void(console::Color)>&
@@ -36,85 +36,21 @@ int main(int argc, char* argv[]) {
 
     std::string filePath = "";
 
-    std::function<std::unique_ptr<ITaskReader>()> taskReaderSetupCallback =
-        [&filePath, &systemLogger]() {
-            systemLogger->logInfo("Using default reader type: text-based");
-            return setup::preset::makeDefaultTaskReader(filePath);
-        };
+    ReaderSetupFunction taskReaderSetupCallback = [&filePath, &systemLogger]() {
+        systemLogger->logInfo("Using default reader type: text-based");
+        return setup::preset::makeDefaultTaskReader(filePath);
+    };
 
-    std::function<std::unique_ptr<IResultLogger>()> resultLoggerSetupCallback =
-        [&systemLogger]() {
-            systemLogger->logInfo("Using default result logger type: console");
-            return setup::preset::makeDefaultSimplifiedLogger();
-        };
+    LoggerSetupFunction resultLoggerSetupCallback = [&systemLogger]() {
+        systemLogger->logInfo("Using default result logger type: console");
+        return setup::preset::makeDefaultSimplifiedLogger();
+    };
 
-    ArgsProcessingStep currentStep = ArgsProcessingStep::Unspecified;
+    const int cliArgsProcessingResult =
+        processCliArgs(systemLogger.get(), argc, argv, taskReaderSetupCallback,
+                       resultLoggerSetupCallback, filePath);
 
-    if (argc <= 1) {
-        systemLogger->logError(
-            "Too few arguments! The path to the file to be analyzed is "
-            "required");
-        logUsageInfo(systemLogger.get());
-        return -1;
-    } else {
-        for (int i = 1; i < argc; i++) {
-            if (currentStep == ArgsProcessingStep::ReadingReader) {
-                taskReaderSetupCallback = [i, argv, &filePath,
-                                           &systemLogger]() {
-                    return setup::taskReader(argv[i], filePath,
-                                             systemLogger.get());
-                };
-
-                currentStep = ArgsProcessingStep::Unspecified;
-                continue;
-            }
-
-            if (currentStep == ArgsProcessingStep::ReadingLogger) {
-                resultLoggerSetupCallback = [i, argv, &systemLogger]() {
-                    return setup::simpleLogger(argv[i], systemLogger.get());
-                };
-
-                currentStep = ArgsProcessingStep::Unspecified;
-                continue;
-            }
-
-            if (argv[i] == readerOptionShort || argv[i] == readerOptionLong) {
-                currentStep = ArgsProcessingStep::ReadingReader;
-            } else if (argv[i] == loggerOptionShort ||
-                       argv[i] == loggerOptionLong) {
-                currentStep = ArgsProcessingStep::ReadingLogger;
-            } else {
-                if (filePath != "") {
-                    const std::string unexpectedFilePath = argv[i];
-
-                    systemLogger->logWarning(
-                        "Received multiple paths for analysis! The program "
-                        "only supports analysing one file at a time. "
-                        "Discarding file at \"" +
-                        unexpectedFilePath + "\" and keeping \"" + filePath +
-                        "\" as the file to analyze");
-
-                    continue;
-                }
-
-                filePath = argv[i];
-            }
-        }
-    }
-
-    if (currentStep == ArgsProcessingStep::ReadingReader) {
-        systemLogger->logError(
-            "The reader type has to be provided if the -r|-reader "
-            "option is used");
-        logUsageInfo(systemLogger.get());
-        return -1;
-    }
-
-    if (currentStep == ArgsProcessingStep::ReadingLogger) {
-        systemLogger->logError(
-            "The logger type has to be provided if the -l|-logger "
-            "option is used");
-        logUsageInfo(systemLogger.get());
+    if (cliArgsProcessingResult != 0) {
         return -1;
     }
 
@@ -254,4 +190,89 @@ void logUsageInfo(const ISystemLogger* systemLogger) {
         "[-l|-logger <logger_type>]\n");
     systemLogger->logMessage("Currently supported loggers: Console, Text\n");
     systemLogger->logMessage("Currently supported readers: Console, Text\n");
+}
+
+enum class ArgsProcessingStep { Unspecified, ReadingReader, ReadingLogger };
+
+static const std::string readerOptionShort = "-r";
+static const std::string readerOptionLong = "-reader";
+static const std::string loggerOptionShort = "-l";
+static const std::string loggerOptionLong = "-logger";
+
+int processCliArgs(const ISystemLogger* systemLogger, int argc, char* argv[],
+                   ReaderSetupFunction& taskReaderSetupCallback,
+                   LoggerSetupFunction& resultLoggerSetupCallback,
+                   std::string& filePath) {
+    ArgsProcessingStep currentStep = ArgsProcessingStep::Unspecified;
+
+    if (argc <= 1) {
+        systemLogger->logError(
+            "Too few arguments! The path to the file to be analyzed is "
+            "required");
+        logUsageInfo(systemLogger);
+        return -1;
+    } else {
+        for (int i = 1; i < argc; i++) {
+            if (currentStep == ArgsProcessingStep::ReadingReader) {
+                taskReaderSetupCallback = [readerName = std::string(argv[i]),
+                                           filePath, systemLogger]() {
+                    return setup::taskReader(readerName, filePath,
+                                             systemLogger);
+                };
+
+                currentStep = ArgsProcessingStep::Unspecified;
+                continue;
+            }
+
+            if (currentStep == ArgsProcessingStep::ReadingLogger) {
+                resultLoggerSetupCallback = [loggerName = std::string(argv[i]),
+                                             systemLogger]() {
+                    return setup::simpleLogger(loggerName, systemLogger);
+                };
+
+                currentStep = ArgsProcessingStep::Unspecified;
+                continue;
+            }
+
+            if (argv[i] == readerOptionShort || argv[i] == readerOptionLong) {
+                currentStep = ArgsProcessingStep::ReadingReader;
+            } else if (argv[i] == loggerOptionShort ||
+                       argv[i] == loggerOptionLong) {
+                currentStep = ArgsProcessingStep::ReadingLogger;
+            } else {
+                if (filePath != "") {
+                    const std::string unexpectedFilePath = argv[i];
+
+                    systemLogger->logWarning(
+                        "Received multiple paths for analysis! The program "
+                        "only supports analysing one file at a time. "
+                        "Discarding file at \"" +
+                        unexpectedFilePath + "\" and keeping \"" + filePath +
+                        "\" as the file to analyze");
+
+                    continue;
+                }
+
+                filePath = std::string(argv[i]);
+            }
+        }
+    }
+
+    if (currentStep == ArgsProcessingStep::ReadingReader) {
+        systemLogger->logError(
+            "The reader type has to be provided if the -r|-reader "
+            "option is used");
+        logUsageInfo(systemLogger);
+        return -1;
+    }
+
+    if (currentStep == ArgsProcessingStep::ReadingLogger) {
+        systemLogger->logError(
+            "The logger type has to be provided if the -l|-logger "
+            "option is used");
+        logUsageInfo(systemLogger);
+        return -1;
+    }
+
+    return 0;
 }

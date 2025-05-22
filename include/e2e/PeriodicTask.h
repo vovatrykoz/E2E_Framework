@@ -37,14 +37,14 @@ struct PeriodicTask {
      * @param other The task to compare with.
      * @return True if the tasks are equal, false otherwise.
      */
-    bool operator==(PeriodicTask other) const;
+    bool operator==(const PeriodicTask& other) const;
 
     /**
      * @brief Inequality operator for comparing two PeriodicTask objects.
      * @param other The task to compare with.
      * @return True if the tasks are not equal, false otherwise.
      */
-    bool operator!=(PeriodicTask other) const;
+    bool operator!=(const PeriodicTask& other) const;
 };
 
 struct OffsetPeriodicTask {
@@ -81,7 +81,7 @@ struct OffsetPeriodicTask {
      * @param baseTask The base task object representing the task.
      * @param offset The offset (initial delay) for the task.
      */
-    OffsetPeriodicTask(PeriodicTask baseTask, int offset)
+    OffsetPeriodicTask(const PeriodicTask& baseTask, int offset)
         : baseTask(baseTask), offset(offset) {}
 
     /**
@@ -89,14 +89,14 @@ struct OffsetPeriodicTask {
      * @param other The task to compare with.
      * @return True if the tasks are equal, false otherwise.
      */
-    bool operator==(OffsetPeriodicTask other) const;
+    bool operator==(const OffsetPeriodicTask& other) const;
 
     /**
      * @brief Inequality operator for comparing two OffsetPeriodicTask objects.
      * @param other The task to compare with.
      * @return True if the tasks are not equal, false otherwise.
      */
-    bool operator!=(OffsetPeriodicTask other) const;
+    bool operator!=(const OffsetPeriodicTask& other) const;
 };
 
 /**
@@ -132,7 +132,7 @@ struct PeriodicTaskInstance {
      * @param baseTask The base task object representing the task.
      * @param activationTime The activation time of this task instance.
      */
-    PeriodicTaskInstance(PeriodicTask baseTask, int activationTime)
+    PeriodicTaskInstance(const PeriodicTask& baseTask, int activationTime)
         : baseTask(baseTask), activationTime(activationTime) {}
 
     /**
@@ -150,7 +150,7 @@ struct PeriodicTaskInstance {
      * @param other The task instance to compare with.
      * @return True if the task instances are equal, false otherwise.
      */
-    bool operator==(PeriodicTaskInstance other) const;
+    bool operator==(const PeriodicTaskInstance& other) const;
 
     /**
      * @brief Inequality operator for comparing two PeriodicTaskInstance
@@ -158,32 +158,36 @@ struct PeriodicTaskInstance {
      * @param other The task instance to compare with.
      * @return True if the task instances are not equal, false otherwise.
      */
-    bool operator!=(PeriodicTaskInstance other) const;
+    bool operator!=(const PeriodicTaskInstance& other) const;
 };
 
-inline bool PeriodicTask::operator==(PeriodicTask other) const {
+inline bool PeriodicTask::operator==(const PeriodicTask& other) const {
     return this->period == other.period && this->wcrt == other.wcrt &&
            this->priority == other.priority;
 }
 
-inline bool PeriodicTask::operator!=(PeriodicTask other) const {
+inline bool PeriodicTask::operator!=(const PeriodicTask& other) const {
     return !(*this == other);
 }
 
-inline bool PeriodicTaskInstance::operator==(PeriodicTaskInstance other) const {
+inline bool OffsetPeriodicTask::operator==(
+    const OffsetPeriodicTask& other) const {
+    return this->baseTask == other.baseTask && this->offset == other.offset;
+}
+
+inline bool OffsetPeriodicTask::operator!=(
+    const OffsetPeriodicTask& other) const {
+    return !(*this == other);
+}
+
+inline bool PeriodicTaskInstance::operator==(
+    const PeriodicTaskInstance& other) const {
     return this->baseTask == other.baseTask &&
            this->activationTime == other.activationTime;
 }
 
-inline bool PeriodicTaskInstance::operator!=(PeriodicTaskInstance other) const {
-    return !(*this == other);
-}
-
-inline bool OffsetPeriodicTask::operator==(OffsetPeriodicTask other) const {
-    return this->baseTask == other.baseTask && this->offset == other.offset;
-}
-
-inline bool OffsetPeriodicTask::operator!=(OffsetPeriodicTask other) const {
+inline bool PeriodicTaskInstance::operator!=(
+    const PeriodicTaskInstance& other) const {
     return !(*this == other);
 }
 
