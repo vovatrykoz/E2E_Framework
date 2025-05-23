@@ -2,9 +2,11 @@
 #define _TASK_H_
 
 #ifdef __GNUC__
-#define PURE [[gnu::pure]]
+#define PURE_NODISCARD \
+    [[gnu::pure, nodiscard("This function is pure and has no side effects")]]
 #else
-#define PURE
+#define PURE_NODISCARD \
+    [[nodiscard("This function is pure and has no side effects")]]
 #endif
 
 namespace e2e {
@@ -149,7 +151,7 @@ struct PeriodicTaskInstance {
      *
      * @return The next `PeriodicTaskInstance` based on the current one.
      */
-    PURE PeriodicTaskInstance nextInstance() const;
+    PURE_NODISCARD PeriodicTaskInstance nextInstance() const;
 
     /**
      * @brief Equality operator for comparing two PeriodicTaskInstance objects.
