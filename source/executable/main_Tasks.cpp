@@ -30,10 +30,6 @@ int main(int argc, char* argv[]) {
         std::make_unique<ConsoleSystemLogger>(
             functionForSettingConsoleTextColor);
 
-    // prepare the reader and the logger
-    std::unique_ptr<ITaskReader> inputReader = nullptr;
-    std::unique_ptr<IResultLogger> resultLogger = nullptr;
-
     std::string filePath = "";
 
     ReaderSetupFunction taskReaderSetupCallback = [&filePath, &systemLogger]() {
@@ -54,8 +50,9 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    inputReader = taskReaderSetupCallback();
-    resultLogger = resultLoggerSetupCallback();
+    const std::unique_ptr<ITaskReader> inputReader = taskReaderSetupCallback();
+    const std::unique_ptr<IResultLogger> resultLogger =
+        resultLoggerSetupCallback();
 
     if (resultLogger == nullptr || inputReader == nullptr) {
         systemLogger->logError("Setup incomplete, please try again");
