@@ -74,8 +74,7 @@ Contain data structures used to represnt tasks and task instances
 
 Entry point of the program. Reads user input, performs the analysis, and logs the results. The analysis itself starts on line 57:
 
-![image](https://github.com/user-attachments/assets/a6c05188-35ce-47c2-aa04-a5926c65f381)
-
+<img width="676" height="644" alt="image" src="https://github.com/user-attachments/assets/5176ddde-0e10-47d3-aec1-2467e4294d7d" />
 
 ## tests/
 
