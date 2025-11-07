@@ -72,7 +72,7 @@ Contain data structures used to represnt tasks and task instances
 
 ## main_IndividualPath.cpp
 
-Entry point of the program. Reads user input, performs the analysis, and logs the results. The analysis itself starts on line 57:
+Entry point of the program. Reads user input, performs the analysis, and logs the results. The analysis itself starts on line 110:
 
 <img width="676" height="644" alt="image" src="https://github.com/user-attachments/assets/5176ddde-0e10-47d3-aec1-2467e4294d7d" />
 
