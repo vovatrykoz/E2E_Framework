@@ -12,7 +12,7 @@ using namespace e2e::io;
 std::unique_ptr<ITaskInstanceReader>
 e2e::setup::preset::makeDefaultTaskInstanceReader() {
     std::string inputPath;
-    std::cout << "Reader type: text" << std::endl;
+    std::cout << "Reader type: text" << "\n";
     std::cout << "Enter path to input file: ";
     std::cin >> inputPath;
     return factory::makeTaskInstanceReader<PlainTextTaskInstanceReader>(
@@ -25,7 +25,7 @@ std::unique_ptr<ITaskReader> e2e::setup::preset::makeDefaultTaskReader(
 }
 
 std::unique_ptr<IResultLogger> e2e::setup::preset::makeDefaultLogger() {
-    std::cout << "Logger type: console" << std::endl;
+    std::cout << "Logger type: console" << "\n";
     return factory::makeLogger<ConsoleLogger>();
 }
 

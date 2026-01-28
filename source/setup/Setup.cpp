@@ -18,19 +18,19 @@ using namespace e2e::io;
 std::unique_ptr<IResultLogger> setup::logger(const std::string& loggerStr) {
     std::string lowercaseLoggerStr;
     std::transform(loggerStr.begin(), loggerStr.end(),
-        std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
-            return static_cast<unsigned char>(
-                std::tolower(static_cast<int>(c)));
-        });
+                   std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
+                       return static_cast<unsigned char>(
+                           std::tolower(static_cast<int>(c)));
+                   });
 
     if (lowercaseLoggerStr == "console") {
-        std::cout << "Logger type: console" << std::endl;
+        std::cout << "Logger type: console" << "\n";
         return factory::makeLogger<ConsoleLogger>();
     }
 
     if (lowercaseLoggerStr == "text") {
         std::string outputPath;
-        std::cout << "Logger type: text" << std::endl;
+        std::cout << "Logger type: text" << "\n";
         std::cout << "Enter output path: ";
         std::cin >> outputPath;
         return factory::makeLogger<PlainTextLogger>(outputPath);
@@ -43,10 +43,10 @@ std::unique_ptr<IResultLogger> setup::simpleLogger(
     const std::string& loggerStr, const ISystemLogger* systemLogger) {
     std::string lowercaseLoggerStr;
     std::transform(loggerStr.begin(), loggerStr.end(),
-        std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
-            return static_cast<unsigned char>(
-                std::tolower(static_cast<int>(c)));
-        });
+                   std::back_inserter(lowercaseLoggerStr), [](unsigned char c) {
+                       return static_cast<unsigned char>(
+                           std::tolower(static_cast<int>(c)));
+                   });
 
     if (lowercaseLoggerStr == "console") {
         systemLogger->logInfo("Logger type: console");
@@ -60,12 +60,12 @@ std::unique_ptr<IResultLogger> setup::simpleLogger(
             std::string userInput;
             std::cin >> userInput;
             return userInput;
-            }();
+        }();
         return factory::makeLogger<SimplifiedPlainTextLogger>(outputPath);
     }
 
     systemLogger->logError("Entered logger is not supported: \"" + loggerStr +
-        "\"");
+                           "\"");
     return nullptr;
 }
 
@@ -73,26 +73,26 @@ std::unique_ptr<ITaskInstanceReader> setup::taskInstanceReader(
     const std::string& readerStr) {
     std::string lowercaseReaderStr;
     std::transform(readerStr.begin(), readerStr.end(),
-        std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
-            return static_cast<unsigned char>(
-                std::tolower(static_cast<int>(c)));
-        });
+                   std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
+                       return static_cast<unsigned char>(
+                           std::tolower(static_cast<int>(c)));
+                   });
 
     if (lowercaseReaderStr == "console") {
-        std::cout << "Reader type: console" << std::endl;
+        std::cout << "Reader type: console" << "\n";
         return factory::makeTaskInstanceReader<ConsoleTaskInstanceReader>();
     }
 
     if (lowercaseReaderStr == "text") {
         std::string inputPath;
-        std::cout << "Reader type: text" << std::endl;
+        std::cout << "Reader type: text" << "\n";
         std::cout << "Enter path to input file: ";
         std::cin >> inputPath;
         return factory::makeTaskInstanceReader<PlainTextTaskInstanceReader>(
             inputPath);
     }
 
-    std::cout << "Entered task instance reader is not supported" << std::endl;
+    std::cout << "Entered task instance reader is not supported" << "\n";
     return nullptr;
 }
 
@@ -101,10 +101,10 @@ std::unique_ptr<ITaskReader> e2e::setup::taskReader(
     const ISystemLogger* systemLogger) {
     std::string lowercaseReaderStr;
     std::transform(readerStr.begin(), readerStr.end(),
-        std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
-            return static_cast<unsigned char>(
-                std::tolower(static_cast<int>(c)));
-        });
+                   std::back_inserter(lowercaseReaderStr), [](unsigned char c) {
+                       return static_cast<unsigned char>(
+                           std::tolower(static_cast<int>(c)));
+                   });
 
     if (lowercaseReaderStr == "console") {
         systemLogger->logInfo("Reader type: console");
@@ -123,6 +123,6 @@ std::unique_ptr<ITaskReader> e2e::setup::taskReader(
     }
 
     systemLogger->logError("Entered task reader is not supported: \"" +
-        readerStr + "\"");
+                           readerStr + "\"");
     return nullptr;
 }

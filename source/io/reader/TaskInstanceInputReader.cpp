@@ -15,7 +15,7 @@ std::vector<TimedPath> ConsoleTaskInstanceReader::readPathsSet() const {
     for (int i = 0; i < numOfChains; i++) {
         std::cout << "Enter task chain name: ";
         std::cin >> name;
-        std::cout << std::endl;
+        std::cout << "\n";
 
         TimedPath timedPath = readTimedPath(name);
         result.push_back(timedPath);
@@ -33,9 +33,9 @@ int ConsoleTaskInstanceReader::readInt(const std::string& message) const {
         std::cin >> output;
 
         if (std::cin.fail()) {
-            std::cout << std::endl
+            std::cout << "\n"
                       << "The input was not an integer, please try again"
-                      << std::endl;
+                      << "\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } else {
@@ -65,10 +65,10 @@ TimedPath ConsoleTaskInstanceReader::readTimedPath(
     const int numOfTasks = readInt("How many tasks should be in the chain: ");
 
     for (int i = 0; i < numOfTasks; i++) {
-        std::cout << "Reading Task " << i + 1 << std::endl;
+        std::cout << "Reading Task " << i + 1 << "\n";
         const PeriodicTaskInstance taskInstance = this->readTaskInstance();
         timedPath.appendTaskInstance(taskInstance);
-        std::cout << std::endl;
+        std::cout << "\n";
     }
 
     return timedPath;

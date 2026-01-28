@@ -14,7 +14,7 @@ std::vector<NamedTask> ConsoleTaskReader::readTaskChain() const {
         const NamedTask task = this->readTask();
         result.push_back(task);
 
-        std::cout << std::endl;
+        std::cout << "\n";
     }
 
     return result;
@@ -29,9 +29,9 @@ int ConsoleTaskReader::readInt(const std::string& message) const {
         std::cin >> output;
 
         if (std::cin.fail()) {
-            std::cout << std::endl
+            std::cout << "\n"
                       << "The input was not an integer, please try again"
-                      << std::endl;
+                      << "\n";
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         } else {

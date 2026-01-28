@@ -16,20 +16,19 @@ void SimplifiedPlainTextLogger::logValidAndInvalidPaths(
     const std::vector<TimedPath>& invalidPathSet) const {
     std::stringstream output;
 
-    output << "Results" << std::endl << std::endl;
-    output << "- Number of analyzed paths: " << allPathsSet.size() << std::endl;
+    output << "Results" << "\n" << "\n";
+    output << "- Number of analyzed paths: " << allPathsSet.size() << "\n";
 
-    output << std::endl;
+    output << "\n";
 
     output << "- Number of unreachable paths: " << invalidPathSet.size()
-           << std::endl;
+           << "\n";
 
-    output << std::endl;
+    output << "\n";
 
-    output << "- Number of reachable paths: " << validPathSet.size()
-           << std::endl;
+    output << "- Number of reachable paths: " << validPathSet.size() << "\n";
 
-    output << std::endl;
+    output << "\n";
 
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
 
@@ -40,18 +39,18 @@ void SimplifiedPlainTextLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
-    output << "- Last-to-Last semantics:" << std::endl;
+    output << "- Last-to-Last semantics:" << "\n";
 
     if (maximumLatencyPath.has_value()) {
         output << "    Maximum latency over all reachable paths: "
-               << maximumLatencyPath->endToEndDelay() << std::endl;
+               << maximumLatencyPath->endToEndDelay() << "\n";
     } else {
         output << "    Maximum latency over all reachable paths: 0 (are "
                   "there any valid paths?)"
-               << std::endl;
+               << "\n";
     }
 
-    output << std::endl;
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }
@@ -60,18 +59,18 @@ void SimplifiedPlainTextLogger::logResults_LF(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
-    output << "- Last-to-First semantics:" << std::endl;
+    output << "- Last-to-First semantics:" << "\n";
 
     if (maximumLatencyPath.has_value()) {
         output << "    Maximum latency over all reachable paths: "
-               << maximumLatencyPath->endToEndDelay() << std::endl;
+               << maximumLatencyPath->endToEndDelay() << "\n";
     } else {
         output << "    Maximum latency over all reachable paths: 0 (are "
                   "there any valid paths?)"
-               << std::endl;
+               << "\n";
     }
 
-    output << std::endl;
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }
@@ -81,11 +80,10 @@ void SimplifiedPlainTextLogger::logResults_FL(
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
-    output << "- First-to-Last semantics:" << std::endl;
+    output << "- First-to-Last semantics:" << "\n";
 
-    output << "    Maximum path delay: " << maxFirstToLastPathDelay
-           << std::endl;
-    output << std::endl;
+    output << "    Maximum path delay: " << maxFirstToLastPathDelay << "\n";
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }
@@ -95,11 +93,10 @@ void SimplifiedPlainTextLogger::logResults_FF(
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
-    output << "- First-to-First semantics:" << std::endl;
+    output << "- First-to-First semantics:" << "\n";
 
-    output << "    Maximum path delay: " << maxFirstToFirstPathDelay
-           << std::endl;
-    output << std::endl;
+    output << "    Maximum path delay: " << maxFirstToFirstPathDelay << "\n";
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }

@@ -15,28 +15,27 @@ void PlainTextLogger::logValidAndInvalidPaths(
     const std::vector<TimedPath>& invalidPathSet) const {
     std::stringstream output;
 
-    output << "Results" << std::endl << std::endl;
-    output << "- Number of analyzed paths: " << allPathsSet.size() << std::endl;
+    output << "Results" << "\n" << "\n";
+    output << "- Number of analyzed paths: " << allPathsSet.size() << "\n";
 
-    output << std::endl;
+    output << "\n";
 
     output << "- Number of unreachable paths: " << invalidPathSet.size()
-           << std::endl;
-    output << "Unreachable paths: " << std::endl;
+           << "\n";
+    output << "Unreachable paths: " << "\n";
     for (const auto& invalidPath : invalidPathSet) {
-        output << invalidPath.name << std::endl;
+        output << invalidPath.name << "\n";
     }
 
-    output << std::endl;
+    output << "\n";
 
-    output << "- Number of reachable paths: " << validPathSet.size()
-           << std::endl;
-    output << "Reachable paths: " << std::endl;
+    output << "- Number of reachable paths: " << validPathSet.size() << "\n";
+    output << "Reachable paths: " << "\n";
     for (const auto& validPath : validPathSet) {
-        output << validPath.name << std::endl;
+        output << validPath.name << "\n";
     }
 
-    output << std::endl;
+    output << "\n";
 
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
 
@@ -47,21 +46,21 @@ void PlainTextLogger::logResults_LL(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
-    output << "- Last-to-Last semantics:" << std::endl;
+    output << "- Last-to-Last semantics:" << "\n";
 
     if (maximumLatencyPath.has_value()) {
         output << "    Path with maximum latency over all reachable paths: "
-               << maximumLatencyPath->name << std::endl;
+               << maximumLatencyPath->name << "\n";
 
         output << "    Maximum latency over all reachable paths"
-               << maximumLatencyPath->endToEndDelay() << std::endl;
+               << maximumLatencyPath->endToEndDelay() << "\n";
     } else {
         output << "    Maximum latency over all reachable paths: 0 (are "
                   "there any valid paths?)"
-               << std::endl;
+               << "\n";
     }
 
-    output << std::endl;
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }
@@ -70,21 +69,21 @@ void PlainTextLogger::logResults_LF(
     const std::optional<TimedPath>& maximumLatencyPath) const {
     std::stringstream output;
 
-    output << "- Last-to-First semantics:" << std::endl;
+    output << "- Last-to-First semantics:" << "\n";
 
     if (maximumLatencyPath.has_value()) {
         output << "    Path with maximum latency over all reachable paths: "
-               << maximumLatencyPath->name << std::endl;
+               << maximumLatencyPath->name << "\n";
 
         output << "    Maximum latency over all reachable paths: "
-               << maximumLatencyPath->endToEndDelay() << std::endl;
+               << maximumLatencyPath->endToEndDelay() << "\n";
     } else {
         output << "    Maximum latency over all reachable paths: 0 (are "
                   "there any valid paths?)"
-               << std::endl;
+               << "\n";
     }
 
-    output << std::endl;
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }
@@ -93,11 +92,10 @@ void PlainTextLogger::logResults_FL(int maxFirstToLastPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
-    output << "- First-to-Last semantics:" << std::endl;
+    output << "- First-to-Last semantics:" << "\n";
 
-    output << "    Maximum path delay: " << maxFirstToLastPathDelay
-           << std::endl;
-    output << std::endl;
+    output << "    Maximum path delay: " << maxFirstToLastPathDelay << "\n";
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }
@@ -106,11 +104,10 @@ void PlainTextLogger::logResults_FF(int maxFirstToFirstPathDelay) const {
     std::ofstream outFile(this->pathToOutputFile, std::ios::app);
     std::stringstream output;
 
-    output << "- First-to-First semantics:" << std::endl;
+    output << "- First-to-First semantics:" << "\n";
 
-    output << "    Maximum path delay: " << maxFirstToFirstPathDelay
-           << std::endl;
-    output << std::endl;
+    output << "    Maximum path delay: " << maxFirstToFirstPathDelay << "\n";
+    output << "\n";
 
     this->writeOutputToFile(output.str());
 }
